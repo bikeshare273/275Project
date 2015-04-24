@@ -8,23 +8,23 @@
     <link rel="stylesheet" href="/quizapp/bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="/quizapp/bower_components/fontawesome/css/font-awesome.css">
     
+    <link rel="stylesheet" href="/quizapp/css/quizapp.css">
+    
     <!-- angularjs files -->
     <script type="text/javascript" src="/quizapp/bower_components/angular/angular.js"></script>
 	<script type="text/javascript" src="/quizapp/bower_components/angular-resource/angular-resource.js"></script>
 	<script type="text/javascript" src="/quizapp/bower_components/angular-route/angular-route.js"></script>
+    <script type="text/javascript" src="/quizapp/bower_components/angular-smart-table/dist/smart-table.js"></script>
     
 	<!-- angularjs script files -->
 	<script type="text/javascript" src="/quizapp/js/quiz_controller.js"></script>    
 	
 </head>
 
-<body ng-app="movieapp" class="mainform" onload="">
+<body ng-app="quizapp" class="mainform" onload="">
 
 	<div ng-include src="'header.html'"></div>
 	<div ng-view  onload="initialize();"></div>
-	<div ng-include src="'footer.html'"></div>
-
-
 	
 </body>
 

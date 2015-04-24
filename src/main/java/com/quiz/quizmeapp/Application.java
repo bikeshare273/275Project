@@ -1,4 +1,4 @@
-package quiz.quizmeapp;
+package com.quiz.quizmeapp;
 
 
 import org.springframework.boot.SpringApplication;
@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import quiz.controller.QuizAppController;
+import com.quiz.controller.QuizAppController;
 
 
 

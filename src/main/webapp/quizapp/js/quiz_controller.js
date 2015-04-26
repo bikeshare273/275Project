@@ -66,6 +66,11 @@ quizapp.config(function($routeProvider) {
 		templateUrl : 'HomeUser.html',
 		controller : 'homeUserController'
 	})
+	
+	.when('/quizhome', {
+		templateUrl : 'quizhome.html',
+		controller : 'quizhomeController'
+	})
 
 	.otherwise({
 		redirectTo : '/'
@@ -124,6 +129,35 @@ quizapp.controller('homeUserController',
 	
 	
 	console.log('homeUserController end');
+});
+
+
+quizapp.controller('quizhomeController',
+		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
+	console.log('quizhomeController start');
+	$rootScope.hideUserNavTabs = false;
+	$rootScope.hideStaticTabs = true;
+	
+	//get user created quiz data
+	var dataFormServer = new Array();
+	for(var i=0; i<20; i++){
+		dataFormServer[i] = {
+			"quizname":"quiz"+i,
+			"quizcreator":"swap",
+			"quizcategory":"science",
+			"quizmaxscore":"100",
+			"quiztopper":"swap"
+		};
+	}
+	
+	$scope.queue = {
+            transactions: []
+        };
+	for(var i=0; i<20; i++){
+		$scope.queue.transactions.push(dataFormServer[i]);
+	}
+	
+	console.log('quizhomeController end');
 });
 
 

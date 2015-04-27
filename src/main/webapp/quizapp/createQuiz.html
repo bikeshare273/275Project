@@ -10,7 +10,7 @@
 		<div class="col-md-1"></div>
 		<div class="col-md-4">
 			<input type="text" class="form-control" placeholder="Quiz Name" name="quiz_name"
-						ng-minlength="5" size="50" ng-model="quiz_name" required>
+						 ng-model="quizData.quizname" required>
 		</div>
 		<div class="col-md-7"></div>
 	</div>
@@ -19,7 +19,7 @@
 		<div class="col-md-1"></div>
 		<div class="col-md-5">
 			<textarea name="quiz_description" id="quiz_description" class="form-control" rows="4" placeholder="Describe Quiz ..." 
-				ng-model="quiz_description" required>
+				ng-model="quizData.quizdescription" required>
 			</textarea>
 		</div>
 		<div class="col-md-7"></div>
@@ -30,7 +30,7 @@
 		<div class="col-md-3">
 			<select
 				id="quiz_category" name="quiz_category" class="form-control" data-role="listview"
-				ng-model="quiz_category" ng-change="" required>
+				ng-model="quizData.quizcategory" ng-change="" required>
 				<option value="">Select Quiz Category</option>
 				<option value="1">Science</option>
 				<option value="2">Art</option>
@@ -39,7 +39,7 @@
 		<div class="col-md-3">
 			<select
 				id="quiz_difficulty" name="quiz_difficulty" class="form-control" data-role="listview"
-				ng-model="quiz_difficulty" ng-change="" required>
+				ng-model="quizData.quizdifficulty" ng-change="" required>
 				<option value="">Select Quiz Difficulty</option>
 				<option value="1">Hard</option>
 				<option value="2">Medium</option>
@@ -119,7 +119,37 @@
 		<div class="col-md-2" ></div>
 	</div>
 	
-	<div style="padding-top:10px; padding-bottom:100px">
+	<div class="col-md-12" style="padding-top:40px; padding-bottom:100px;">
+		<div class="col-md-1"></div>
+		<div class="col-md-8" style="padding: 1px 1px 1px 1px; border: 1px solid black;">
+			<div class="col-md-12">
+				<span style="font-weight: bold; font-size: 15px; padding-left:45%;">Quiz</span>
+			</div>
+			<div class="col-md-12" style="padding-top:20px;">
+				<span style="font-weight: bold; font-size: 15px; padding-left:45%; font-style: italic;">{{quizData.quizname}}</span>
+			</div>
+			<div class="col-md-12" style="padding-top:40px;">
+				<div ng-repeat="question in quizData.quizquestions track by $index">
+					<div style="padding-top:10px; padding-bottom:10px;">
+						{{($index+1)+") "+question.question}}
+					</div>
+					<div>
+						<span ng-repeat="option in question.options track by $index" style="padding-top:2px; padding-left:5px;padding-bottom:2px;">
+							<input type="radio" name="" value="" >{{" "+question.options[$index]}}</input></br>
+						</span>
+					</div>
+					<div style="padding-top:5px; padding-bottom:5px; font-weight: bold;">
+						{{"Correct Option : "+(question.correct_option_id+1)}}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-2"></div>
 	</div>
+	
+	<div style="padding-bottom:100px;">
+		{{quizData}}
+	</div>
+	
 	
 </div>

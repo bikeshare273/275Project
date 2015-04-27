@@ -220,7 +220,7 @@ quizapp.controller('createquizController',
 				"correct_option_id":" "
 		}
 		addQuestionData.question = new Object($scope.questionData.question);
-		addQuestionData.options = new Array($scope.questionData.options);
+		addQuestionData.options = $scope.questionData.options;
 		addQuestionData.correct_option_id = new Object($scope.questionData.correct_option_id);
 		console.log("add question data "+addQuestionData.question);
 		console.log("add question data "+addQuestionData.correct_option_id);

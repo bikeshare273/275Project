@@ -234,6 +234,15 @@ quizapp.controller('createquizController',
 		$scope.questionData.correct_option_id = new Object(" ");
 	};
 	
+	
+	//add question
+	$scope.deleteQuestion = function(questionid) {
+		console.log("delete question");
+		console.log("delete Question length "+$scope.quizData.quizquestions.length);
+		$scope.quizData.quizquestions.splice(questionid, 1);
+		console.log("delete Question length after "+$scope.quizData.quizquestions.length);
+	};
+	
 	console.log('createquizController end');
 });
 

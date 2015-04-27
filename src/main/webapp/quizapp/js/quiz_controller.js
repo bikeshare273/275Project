@@ -71,7 +71,12 @@ quizapp.config(function($routeProvider) {
 		templateUrl : 'quizhome.html',
 		controller : 'quizhomeController'
 	})
-
+	
+	.when('/createquiz', {
+		templateUrl : 'createQuiz.html',
+		controller : 'createquizController'
+	})
+	
 	.otherwise({
 		redirectTo : '/'
 	});
@@ -157,7 +162,78 @@ quizapp.controller('quizhomeController',
 		$scope.queue.transactions.push(dataFormServer[i]);
 	}
 	
+	$scope.createQuiz = function(item, event) {
+		console.log("create quiz");
+		$location.url("/createquiz");
+	};
+	
 	console.log('quizhomeController end');
 });
 
+quizapp.controller('createquizController',
+		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
+	console.log('createquizController start');
+	$rootScope.hideUserNavTabs = false;
+	$rootScope.hideStaticTabs = true;
+	
+	//structure to generate quiz
+	var questionCounter = 0;
+	$scope.questionData = {
+			"no":questionCounter+1,
+			"question":" ",
+			"options":[" "],
+			"correct_option_id":" "
+	}
+	
+	//add more options
+	$scope.addOption = function(item, event) {
+		console.log("add Option");
+		console.log("add Option length "+$scope.questionData.options.length);
+		$scope.questionData.options.splice($scope.questionData.options.length, 0, " ");
+		console.log("add Option length after "+$scope.questionData.options.length);
+	};
+
+	//delete options
+	$scope.deleteOption = function(optionid) {
+		console.log("delete Option");
+		console.log("delete Option length "+$scope.questionData.options.length);
+		$scope.questionData.options.splice(optionid, 1);
+		console.log("delete Option length after "+$scope.questionData.options.length);
+	};
+	
+	//quiz data
+	$scope.quizData = {
+			"quizname":" ",
+			"quizdescription":" ",
+			"quizcategory":" ",
+			"quizdifficulty":" ",
+			"quizquestions":[]
+	}
+	
+	//add question
+	$scope.addQuestion = function() {
+		console.log("add question");
+		var addQuestionData = {
+				"no":questionCounter+1,
+				"question":" ",
+				"options":[" "],
+				"correct_option_id":" "
+		}
+		addQuestionData.question = new Object($scope.questionData.question);
+		addQuestionData.options = new Array($scope.questionData.options);
+		addQuestionData.correct_option_id = new Object($scope.questionData.correct_option_id);
+		console.log("add question data "+addQuestionData.question);
+		console.log("add question data "+addQuestionData.correct_option_id);
+		console.log("add question data "+addQuestionData.question);
+		$scope.quizData.quizquestions.splice($scope.quizData.quizquestions.length, 0, addQuestionData);
+		questionCounter++;
+		//make question area empty
+		$scope.questionData.question = new Object(" ");
+		$scope.questionData.options = new Array();
+		$scope.questionData.options[0] = " ";
+		$scope.questionData.correct_option_id = new Object(" ");
+	};
+	
+	console.log('createquizController end');
+});
 

@@ -1,0 +1,125 @@
+<div ng-controller="quizhomeController">
+	
+	<div class="col-md-12"  style="padding-top:100px; padding-bottom:10px">
+		<div class="col-md-1"></div>
+		<div class="col-md-10"><span style="font-weight: bold; font-size: 15px;">Create New Quiz :</span></div>
+		<div class="col-md-1"></div>
+	</div>
+	
+	<div class="col-md-12"  style="padding-top:10px; padding-bottom:10px">
+		<div class="col-md-1"></div>
+		<div class="col-md-4">
+			<input type="text" class="form-control" placeholder="Quiz Name" name="quiz_name"
+						ng-minlength="5" size="50" ng-model="quiz_name" required>
+		</div>
+		<div class="col-md-7"></div>
+	</div>
+	
+	<div class="col-md-12"  style="padding-top:10px; padding-bottom:10px">
+		<div class="col-md-1"></div>
+		<div class="col-md-5">
+			<textarea name="quiz_description" id="quiz_description" class="form-control" rows="4" placeholder="Describe Quiz ..." 
+				ng-model="quiz_description" required>
+			</textarea>
+		</div>
+		<div class="col-md-7"></div>
+	</div>
+	
+	<div class="col-md-12"  style="padding-top:10px; padding-bottom:10px">
+		<div class="col-md-1"></div>
+		<div class="col-md-3">
+			<select
+				id="quiz_category" name="quiz_category" class="form-control" data-role="listview"
+				ng-model="quiz_category" ng-change="" required>
+				<option value="">Select Quiz Category</option>
+				<option value="1">Science</option>
+				<option value="2">Art</option>
+			</select>
+		</div>
+		<div class="col-md-3">
+			<select
+				id="quiz_difficulty" name="quiz_difficulty" class="form-control" data-role="listview"
+				ng-model="quiz_difficulty" ng-change="" required>
+				<option value="">Select Quiz Difficulty</option>
+				<option value="1">Hard</option>
+				<option value="2">Medium</option>
+				<option value="2">Easy</option>
+			</select>
+		</div>
+		<div class="col-md-5"></div>
+	</div>
+	
+	<div class="col-md-12"  style="padding-top:10px; padding-bottom:10px">
+		<div class="col-md-1"></div>
+		<div class="col-md-5">
+			<span style="font-weight: bold; font-style: italic; font-size: 13px;">
+				Each Quiz has to be minimum 5 Questions.
+			</span>
+		</div>
+		<div class="col-md-7"></div>
+	</div>
+	
+	<div class="col-md-12" style="padding-top:10px; padding-bottom:10px">
+		<div class="col-md-1" ></div>
+		<div class="col-md-8" style="padding: 10px 20px 10px 10px; border: 1px solid black;">
+			<div class="col-md-12" style="padding-top:5px; padding-bottom:5px">
+				<span style="font-weight: bold; font-style: italic; font-size: 13px;">
+					Question :
+				</span>
+			</div>
+			<div class="col-md-9" style="padding-top:5px; padding-bottom:5px">
+				<input type="text" class="form-control" placeholder="Question" name="{{questionData.question}}"
+						ng-model="questionData.question" required>
+			</div>
+			
+			<div class="col-md-12" style="padding-top:5px; padding-bottom:5px">
+				<div class="col-md-3">
+					<span style="font-weight: bold; font-style: italic; font-size: 13px;">
+						Options :
+					</span>
+				</div>
+				<div class="col-md-4">
+					<button class="btn btn-default btn-block" type="button" ng-click="addOption()">Add Option</button>
+				</div>
+			</div>
+			<div class="col-md-12" style="padding-top:5px; padding-bottom:5px" ng-repeat="option in questionData.options track by $index">
+				<div class="col-md-5">
+					<input type="text" class="form-control" placeholder="Question" name="{{questionData.options[$index]}}"
+						ng-model="questionData.options[$index]" required>
+				</div>
+				<div class="col-md-4">
+					<button class="btn btn-default btn-block" type="button" ng-click="deleteOption($index)">Delete Option</button>
+				</div>
+			</div>
+			
+			<div class="col-md-12" style="padding-top:5px; padding-bottom:5px">
+				<span style="font-weight: bold; font-style: italic; font-size: 13px;">
+					Correct Option :
+				</span>
+			</div>
+			
+			<div class="col-md-12" style="padding-top:5px; padding-bottom:5px">
+				<div class="col-md-5">
+					 <select
+						id="question_correct_option" name="question_correct_option" class="form-control" data-role="listview"
+						ng-model="questionData.correct_option_id" required>
+						<option ng-repeat="option in questionData.options track by $index" value="{{$index}}">{{questionData.options[$index]}}</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="col-md-12" style="padding-top:5px; padding-bottom:5px">
+				<div class="col-md-2"></div>
+				<div class="col-md-6">
+					<button class="btn btn-default btn-block" type="button" ng-click="addQuestion()">Add Question</button>
+				</div>
+			</div>
+			
+		</div>
+		<div class="col-md-2" ></div>
+	</div>
+	
+	<div style="padding-top:10px; padding-bottom:100px">
+	</div>
+	
+</div>

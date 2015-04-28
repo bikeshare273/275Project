@@ -1,0 +1,148 @@
+<!-- 
+	- Puneet Popli - 04/27/2015
+ -->
+
+<div class="container-fluid profile_container"
+	ng-controller="profileController">
+
+	<div
+		style="text-align: center; color: black; font-size: 25px; padding-bottom: 5px; padding-top: 5px;">
+		Edit Profile</div>
+
+	<div class="col-md-12">
+
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<form name="profileform">
+
+				<!-- Email is non editable. Read only! -->
+				<div style="padding-bottom: 10px; padding-top: 10px;">
+					<input type="email" class="form-control" placeholder="Email"
+						name="profileform_email" size="50" ng-model="profileform_email"
+						readonly>
+
+					<div class="error-container"
+						ng-show="profileform.profileform_email.$dirty && profileform.profileform_email.$invalid">
+					</div>
+				</div>
+
+				<!-- Old password -->
+				<div style="padding-bottom: 10px; padding-top: 10px;">
+					<input type="password" class="form-control"
+						placeholder="Old Password" name="profileform_oldpassword"
+						ng-minlength="5" size="50" ng-model="profileform_oldpassword"
+						required>
+
+					<div class="error-container"
+						ng-show="profileform.profileform_oldpassword.$dirty && profileform.profileform_oldpassword.$invalid">
+						<small class="errorbox"
+							ng-show="profileform.profileform_oldpassword.$error.required">Password
+							is required</small> <small class="errorbox"
+							ng-show="profileform.profileform_oldpassword.$error.minlength">Password
+							is incorrect</small>
+					</div>
+				</div>
+
+
+				<!-- New Password -->
+				<div style="padding-bottom: 10px; padding-top: 10px;">
+					<input type="password" class="form-control"
+						placeholder="New Password" name="profileform_newpassword"
+						ng-minlength="5" size="50" ng-model="profileform_newpassword"
+						required>
+
+					<div class="error-container"
+						ng-show="profileform.profileform_newpassword.$dirty && profileform.profileform_newpassword.$invalid">
+						<small class="errorbox"
+							ng-show="profileform.profileform_newpassword.$error.required">Password
+							is required</small> <small class="errorbox"
+							ng-show="profileform.profileform_newpassword.$error.minlength">Password
+							must be atleast 5 character</small>
+					</div>
+				</div>
+
+				<!-- Confirm Password -->
+				<div style="padding-bottom: 10px; padding-top: 10px;">
+					<input type="password" class="form-control"
+						placeholder="Confirm Password" name="profileform_confirmpassword"
+						size="50" ng-model="profileform_confirmpassword" required
+						password-match="profileform_newpassword">
+
+					<div class="error-container"
+						ng-show="profileform.profileform_confirmpassword.$dirty && profileform.profileform_confirmpassword.$invalid">
+						<small class="errorbox"
+							ng-show="profileform.profileform_confirmpassword.$error.required">Password
+							is required</small> </br> <small class="errorbox"
+							ng-show="profileform.profileform_confirmpassword.$error.unique">Passwords
+							do not match</small>
+					</div>
+				</div>
+
+				<!-- Phone -->
+
+				<div style="padding-bottom: 10px; padding-top: 10px;">
+					<input type="text" class="form-control" placeholder="Phone"
+						name="profileform_phone" size="50" ng-model="profileform_phone"
+						ng-minlength="10" ng-maxlength="10" required>
+
+					<div class="error-container"
+						ng-show="profileform.profileform_phone.$dirty && profileform.profileform_phone.$invalid">
+						<small class="errorbox"
+							ng-show="profileform.profileform_phone.$error.required">Phone
+							number is required</small> <small class="errorbox"
+							ng-show="profileform.profileform_phone.$error.minlength">Phone
+							number is invalid</small> <small class="errorbox"
+							ng-show="profileform.profileform_phone.$error.maxlength">Phone
+							number is invalid</small>
+					</div>
+				</div>
+
+				<!-- Country -->
+				<div style="padding-bottom: 10px; padding-top: 10px;">
+					<select id="profileform_country" class="form-control"
+						data-role="listview" ng-model="profileform_country" required>
+						<option value="">Select Country</option>
+						<option value="1">India</option>
+						<option value="2">United States</option>
+						<option value="3">China</option>
+						<option value="4">Japan</option>
+						<option value="5">South Africa</option>
+					</select>
+
+					<div class="error-container"
+						ng-show="profileform.profileform_country.$dirty && profileform.profileform_country.$invalid">
+						<small class="errorbox"
+							ng-show="profileform.profileform_country.$error.required">Country
+							is required</small>
+					</div>
+				</div>
+
+				<!-- profileform_edit button  -->
+				<div class="input-group"
+					style="padding-bottom: 5px; padding-top: 5px; text-align: center;">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button"
+							ng-click="profileform_edit()">Submit</button>
+					</span>
+				</div>
+
+				<!--  -->
+				<div class="input-group"
+					style="padding-bottom: 5px; padding-top: 5px; text-align: center;">
+					<div class="errorbox"
+						style="position: relative; padding-top: 1%; padding-left: 47%;">
+						<ul>
+							<li ng-repeat="err in error">{{ err }}</li>
+						</ul>
+					</div>
+					<div class="successbox"
+						style="position: relative; padding-top: 1%; padding-left: 47%;">{{profileform_success}}</div>
+				</div>
+
+			</form>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+
+</div>
+<div style="padding-top: 50px;" ng-include src="'footer.html'"></div>

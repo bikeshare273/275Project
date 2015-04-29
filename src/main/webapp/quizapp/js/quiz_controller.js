@@ -62,21 +62,11 @@ quizapp.config(function($routeProvider) {
 		controller : 'registerController'
 	})
 
-	.when('/home', {
-		templateUrl : 'userhome.html',
-		controller : 'homeUserController'
-	})
 
 	.when('/quizhome', {
 		templateUrl : 'quizhome.html',
 		controller : 'quizhomeController'
 	})
-
-	.when('/createquiz', {
-		templateUrl : 'createQuiz.html',
-		controller : 'createquizController'
-	})
-
 
 	.when('/profile', {
 		templateUrl : 'profile.html',
@@ -87,6 +77,18 @@ quizapp.config(function($routeProvider) {
 		templateUrl : 'globaldashboard.html',
 		controller : 'globalDashboardController'
 	})
+
+	.when('/home', {
+		templateUrl : 'userhome.html',
+		controller : 'homeUserController'
+	})
+
+	.when('/createquiz', {
+		templateUrl : 'createQuiz.html',
+		controller : 'createquizController'
+	})
+
+
 	.otherwise({
 		redirectTo : '/'
 	});
@@ -134,133 +136,6 @@ quizapp.controller('registerController',
 
 	};
 	console.log('registerController end');
-});
-
-/*
- * - Puneet Popli 04/27/2015
- * User home controller
- */
-quizapp.controller('homeUserController',
-		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
-	console.log('homeUserController start');
-	$rootScope.hideUserNavTabs = false;
-	$rootScope.hideStaticTabs = true;
-
-	//get quiz details of a user
-	var dataFormServer = new Array();
-	for(var i=0; i<20; i++){
-		dataFormServer[i] = {
-				//"quizname1":"quiz"+i,
-				"quizname1": "Java",
-				"quizcreator":"puneet",
-				"quizcategory":"programming",
-				"quizscore":"100",
-				"quizrank":"10000"
-		};
-	}
-
-	$scope.queue1 = {
-			transactions: []
-	};
-	for(var i=0; i<20; i++){
-		$scope.queue1.transactions.push(dataFormServer[i]);
-	}
-
-	/*
-	 * Get category ranking
-	 */
-	var dataFormServer1 = new Array();
-	for(var j=0; j<20; j++){
-		dataFormServer1[j]={
-				"quizcategory1":"programming",
-				"quizrank1":"10000",
-				"quizscore1":"100"
-		};
-	}
-	$scope.queue2 = {
-			transactions: []
-	};
-	for(var i=0; i<20; i++){
-		$scope.queue2.transactions.push(dataFormServer1[i]);
-	}
-
-	console.log("--> Populating global rank text box "
-			+ $scope.global_rank);
-	
-	/*
-	 * redirect to global dashboard
-	 *
-	$scope.globalDashboard = function(item, event) {
-		console.log("global dashboard");
-		$location.url("/globaldashboard");
-	};
-*/
-	console.log('homeUserController end');
-});
-
-
-/*
- * -Puneet Popli 04/27/2015
- * Global Dashboard Controller
- * 
- */
-
-quizapp.controller('globalDashboardController',
-		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
-	console.log('globalDashboardController start');
-	$rootScope.hideUserNavTabs = false;
-	$rootScope.hideStaticTabs = true;
-
-	//get quiz details of a user
-	var dataFormServer = new Array();
-	for(var i=0; i<20; i++){
-		dataFormServer[i] = {
-				//"quizname":"quiz"+i,
-				"gname":"puneet",
-				"gscore":"100",
-				"grank":"1",
-				"gcountry":"India"
-		};
-	}
-
-	$scope.queue1 = {
-			transactions: []
-	};
-	for(var i=0; i<20; i++){
-		$scope.queue1.transactions.push(dataFormServer[i]);
-	}
-	
-	/*
-	 * Select category and populate table.
-	 */
-	
-	$scope.searchCategory = function(item, event) {
-		console.log("search category");	
-		
-		//10 users
-		var dataFormServer1 = new Array();
-		for(var i=0; i<10; i++){
-			dataFormServer[i] = {
-					//"quizname":"quiz"+i,
-					"gn2":"puneet", // name
-					"gs2":"100", //category score
-					"cr2":"1", //category rank
-					"gr2":"10",//global rank
-					"gc2":"India"	//country
-			};
-		}
-
-		$scope.queue2 = {
-				transactions: []
-		};
-		
-		
-		for(var i=0; i<10; i++){
-			$scope.queue2.transactions.push(dataFormServer1[i]);
-		}
-	};
-
-	console.log('globalDashboardController end');
 });
 
 
@@ -373,6 +248,72 @@ quizapp.controller('createquizController',
 	console.log('createquizController end');
 });
 
+
+
+
+/*
+ * - Puneet Popli 04/27/2015
+ * User home controller
+ */
+quizapp.controller('homeUserController',
+		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
+	console.log('homeUserController start');
+	$rootScope.hideUserNavTabs = false;
+	$rootScope.hideStaticTabs = true;
+
+	//get quiz details of a user
+	var dataFormServer = new Array();
+	for(var i=0; i<20; i++){
+		dataFormServer[i] = {
+				//"quizname1":"quiz"+i,
+				"quizname1": "Java",
+				"quizcreator":"puneet",
+				"quizcategory":"programming",
+				"quizscore":"100",
+				"quizrank":"10000"
+		};
+	}
+
+	$scope.queue1 = {
+			transactions: []
+	};
+	for(var i=0; i<20; i++){
+		$scope.queue1.transactions.push(dataFormServer[i]);
+	}
+
+	/*
+	 * Get category ranking
+	 */
+	var dataFormServer1 = new Array();
+	for(var j=0; j<20; j++){
+		dataFormServer1[j]={
+				"quizcategory1":"programming",
+				"quizrank1":"10000",
+				"quizscore1":"100"
+		};
+	}
+	$scope.queue2 = {
+			transactions: []
+	};
+	for(var i=0; i<20; i++){
+		$scope.queue2.transactions.push(dataFormServer1[i]);
+	}
+
+	console.log("--> Populating global rank text box "
+			+ $scope.global_rank);
+
+	/*
+	 * redirect to global dashboard
+	 *
+	$scope.globalDashboard = function(item, event) {
+		console.log("global dashboard");
+		$location.url("/globaldashboard");
+	};
+	 */
+	console.log('homeUserController end');
+});
+
+
 /*
  * -Puneet Popli 04/27/2015
  * Profile Controller
@@ -407,3 +348,71 @@ quizapp.controller('profileController',
 	};
 	console.log('profileController end');
 });
+
+
+/*
+ * -Puneet Popli 04/27/2015
+ * Global Dashboard Controller
+ * 
+ */
+
+quizapp.controller('globalDashboardController',
+		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
+	console.log('globalDashboardController start');
+	$rootScope.hideUserNavTabs = false;
+	$rootScope.hideStaticTabs = true;
+
+	//get quiz details of a user
+	var dataFormServer = new Array();
+	for(var i=0; i<20; i++){
+		dataFormServer[i] = {
+				//"quizname":"quiz"+i,
+				"gname":"puneet",
+				"gscore":"100",
+				"grank":"1",
+				"gcountry":"India"
+		};
+	}
+
+	$scope.queue1 = {
+			transactions: []
+	};
+	for(var i=0; i<20; i++){
+		$scope.queue1.transactions.push(dataFormServer[i]);
+	}
+
+	/*
+	 * Select category and populate table.
+	 */
+
+	$scope.searchCategory = function(item, event) {
+		console.log("search category");	
+
+		//10 users
+		var dataFormServer1 = new Array();
+		for(var i=0; i<10; i++){
+			dataFormServer[i] = {
+					//"quizname":"quiz"+i,
+					"gn2":"puneet", // name
+					"gs2":"100", //category score
+					"cr2":"1", //category rank
+					"gr2":"10",//global rank
+					"gc2":"India"	//country
+			};
+		}
+
+		$scope.queue2 = {
+				transactions: []
+		};
+
+
+		for(var i=0; i<10; i++){
+			$scope.queue2.transactions.push(dataFormServer1[i]);
+		}
+	};
+
+	console.log('globalDashboardController end');
+});
+
+
+

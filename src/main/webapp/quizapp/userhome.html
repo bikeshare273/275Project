@@ -1,50 +1,24 @@
 <div ng-controller="homeUserController">
 
-	<div class="col-md-12" style="padding-top: 75px; padding-bottom: 10px">
-		<div class="col-md-10">
-			<span style="font-weight: bold; font-size: 15px;">Attempted
-				Quiz</span>
-			<!-- Global Ranking Text box-->
-			<div class="col-md-4"
-				style="padding-top: 10px; padding-bottom: 10px; float: right">
-
-
-				<div class="col-md-6"
-					style="text-align: center; padding-bottom: 20px; padding-top: 10%; margin-right: 40px; 
-					margin-bottom: 100px; margin-left: -90px">
-					Global Ranking: <input type="text" class="form-control"
-						placeholder="Global Ranking" name="global_ranking"
-						ng-model="global_ranking" readonly>
-				</div>
-
+	<div class="col-md-12" style="padding-top: 75px; padding-bottom: 100px" >
+		<div class="col-md-6">
+			<div class="col-md-12">
+				<span style="font-weight: bold; font-size: 15px;">Attempted Quiz :</span>
 			</div>
-		</div>
-		<div class="col-md-1"></div>
-	</div>
-
-
-	<div class="row">
-		<div class="col-md-4" style="padding-top: 50px; padding-bottom: 80px">
-
-			<div class="col-md-1"></div>
-			<div class="col-md-4">
-				<!-- <div class="col-md-12"></div> -->
-				<table st-safe-src="queue1.transactions" st-table="emptyArray"
-					class="table table-striped"
-					style="width: 60%; display: inline-block">
+			<div class="col-md-12"  style="; padding-bottom: 30px;">
+				<table st-safe-src="queue.transactions" st-table="emptyArray" class="table table-striped" >
 					<thead>
-						<tr>
-							<th style="width: 20%">No.</th>
-							<th style="width: 20%">Quiz Name</th>
-							<th style="width: 20%">Quiz Creator</th>
-							<th style="width: 20%">Category</th>
-							<th style="width: 20%">Score</th>
-							<th style="width: 20%">Rank</th>
-						</tr>
+					<tr >
+						<th style="width: 10%">No.</th>
+						<th style="width: 20%">Quiz Name</th>
+						<th style="width: 20%">Quiz Creator</th>
+						<th style="width: 20%">Category</th>
+						<th style="width: 10%">Score</th>
+						<th style="width: 20%">Rank</th>
+					</tr>
 					</thead>
-
 					<tbody ng-hide="isLoading">
-						<tr ng-repeat="row in emptyArray track by $index1">
+						<tr ng-repeat="row in emptyArray track by $index">
 							<td>{{$index1+1}}</td>
 							<td>{{row.quizname1}}</td>
 							<td>{{row.quizcreator}}</td>
@@ -56,36 +30,32 @@
 					<tfoot>
 						<tr>
 							<td colspan="5" class="text-center">
-								<div st-pagination="" st-items-by-page="itemsByPage"></div>
+								<div st-pagination="" st-items-by-page="itemsByPage" ></div>
 							</td>
 						</tr>
 					</tfoot>
 				</table>
-
-
 			</div>
-
-
 		</div>
-
-		<!-- Second table -->
-		<div class="col-md-8"
-			style="padding-top: 10px; padding-bottom: 20px; float: right;">
-			<div class="col-md-1"></div>
-			<div class="col-md-4">
-				<table st-safe-src="queue2.transactions" st-table="emptyArray"
-					class="table table-striped"
-					style="width: 30px; display: inline-block">
+		<div class="col-md-6">
+			<div class="col-md-12" style="height: 200px; padding: 10px 10px 50px 10px; border: 1px solid black;">
+				<div style="text-align: center; font-weight: bold; padding-top:10%; font-size: 30px;">
+					{{"Global Ranking : 100000"}}
+				</div>
+			</div>
+			<div class="col-md-12" style="padding-top: 20px;">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+					<table st-safe-src="queue.transactions" st-table="emptyArray" class="table table-striped" >
 					<thead>
-						<tr>
-							<th style="width: 20%">Category</th>
-							<th style="width: 20%">Ranking</th>
-							<th style="width: 20%">Score</th>
-						</tr>
+					<tr >
+						<th style="width: 20%">Category</th>
+						<th style="width: 20%">Ranking</th>
+						<th style="width: 20%">Score</th>
+					</tr>
 					</thead>
-
 					<tbody ng-hide="isLoading">
-						<tr ng-repeat="row in emptyArray track by $index2">
+						<tr ng-repeat="row in emptyArray track by $index">
 							<td>{{row.quizcategory1}}</td>
 							<td>{{row.quizrank1}}</td>
 							<td>{{row.quizscore1}}</td>
@@ -94,18 +64,17 @@
 					<tfoot>
 						<tr>
 							<td colspan="5" class="text-center">
-								<div st-pagination="" st-items-by-page="itemsByPage"></div>
+								<div st-pagination="" st-items-by-page="itemsByPage" ></div>
 							</td>
 						</tr>
 					</tfoot>
 				</table>
+				</div>
+				<div class="col-md-1"></div>
 			</div>
-
-		</div>
-
+		</div>	
 	</div>
-
-
-
+	
 </div>
+
 <div style="padding-top: 50px;" ng-include src="'footer.html'"></div>

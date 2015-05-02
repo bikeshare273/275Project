@@ -1,44 +1,24 @@
 <div ng-controller="globalDashboardController">
-	<div class="col-md-12"
-		style="padding-top: 100px; padding-bottom: 100px">
-		<div class="col-md-8">
+
+	<div  class="col-md-12" style="padding-top: 70px; padding-bottom: 100px">
 		
-			<div class="col-md-8" style="padding-bottom: 80px">
-				<span style="font-weight: bold; font-size: 15px;">Top Scorers</span>
-				<label style="margin-left: 850px;"><strong>Top 10 Users</strong></label>
-				<div class="col-md-6"
-					style="padding-bottom: 10px; margin-left: 900px; padding-top: 10px">
-					
-					<select id="globaldashboard_category" class="form-control"
-						data-role="listview" ng-model="globaldashboard_category" required>
-
-						<option value="">Select Category</option>
-						<option value="1">Programming</option>
-						<option value="2">Mathematics</option>
-						<option value="3">Science</option>
-					</select>
-
-					<button class="btn btn-default btn-lg btn-block"
-						ng-click="searchCategory()">Search</button>
-				</div>
-
+		<div  class="col-md-5">
+			<div  class="col-md-12" style="padding-top: 20px; padding-bottom: 20px; font-weight: bold; font-size: 15px;">
+				Top Scorers : 
 			</div>
-			<div class="col-md-12">
-				<table st-safe-src="queue1.transactions" st-table="emptyArray"
-					class="table table-striped"
-					style="width: 250; display: inline-block; float: left">
+			<div  class="col-md-12" style="padding-top: 10px; padding-bottom: 40px">
+				<table st-safe-src="queue.transactions" st-table="emptyArray" class="table table-striped" >
 					<thead>
-						<tr>
-							<th style="width: 10%">No.</th>
-							<th style="width: 15%">Name</th>
-							<th style="width: 15%">Score</th>
-							<th style="width: 15%">Global Rank</th>
-							<th style="width: 15%">Country</th>
-						</tr>
+					<tr >
+						<th style="width: 10%">No.</th>
+						<th style="width: 15%">Name</th>
+						<th style="width: 15%">Score</th>
+						<th style="width: 15%">Global Rank</th>
+						<th style="width: 15%">Country</th>
+					</tr>
 					</thead>
-
 					<tbody ng-hide="isLoading">
-						<tr ng-repeat="row in emptyArray track by $index1">
+						<tr ng-repeat="row in emptyArray track by $index">
 							<td>{{$index1+1}}</td>
 							<td>{{row.gname}}</td>
 							<td>{{row.gscore}}</td>
@@ -49,19 +29,48 @@
 					<tfoot>
 						<tr>
 							<td colspan="5" class="text-center">
-								<div st-pagination="" st-items-by-page="itemsByPage"></div>
+								<div st-pagination="" st-items-by-page="itemsByPage" ></div>
 							</td>
 						</tr>
 					</tfoot>
 				</table>
 			</div>
 		</div>
+		
+		<div  class="col-md-7">
+			<div class="col-md-12" style="padding-top: 20px; padding-bottom: 10px">
+				<div class="col-md-1"></div>
+				<div class="col-md-5">
+					<span style="font-weight: bold; font-size: 15px;">
+						Top 10 User Categorywise :
+					</span>
+				</div>
+				<div class="col-md-1"></div>
+				<div class="col-md-3"></div>
+				<div class="col-md-2"></div>
+			</div>
+			<div class="col-md-12" style="padding-top: 10px; padding-bottom: 10px;">
+				<div class="col-md-1"></div>
+				<div class="col-md-5">
+					<select id="globaldashboard_category" class="form-control"
+						data-role="listview" ng-model="globaldashboard_category" required>
 
-		<div class="col-md-4" style="margin-left: 670px">
-
-			<div class="col-md-12">
-
-				<table st-safe-src="queue2.transactions" st-table="emptyArray"
+						<option value="">Select Category</option>
+						<option value="1">Programming</option>
+						<option value="2">Mathematics</option>
+						<option value="3">Science</option>
+					</select>
+				</div>
+				<div class="col-md-1"></div>
+				<div class="col-md-3">
+					<button class="btn btn-default btn-lg btn-block" ng-click="searchCategory()">Search</button>
+				</div>
+				<div class="col-md-2"></div>
+			</div>
+			<div class="col-md-12" style="padding-top: 20px; padding-bottom: 40px;">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+					<table st-safe-src="queue2.transactions" st-table="emptyArray"
 					class="table table-striped"
 					style="width: 250; display: inline-block;">
 					<thead>
@@ -86,14 +95,13 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>
-
-
+				</div>
+				<div class="col-md-1"></div>
+			</div>		
 		</div>
-
-
+		
 	</div>
-</div>
 
+</div>
 
 <div style="padding-top: 50px;" ng-include src="'footer.html'"></div>

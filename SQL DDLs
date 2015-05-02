@@ -1,0 +1,131 @@
+
+CREATE TABLE QuizLevels (
+
+levelid				INTEGER(10),
+levelname			VARCHAR(100),
+leveldescription	VARCHAR(200),
+
+PRIMARY KEY (levelid));
+
+/**************************************************/
+
+CREATE TABLE Users (
+
+userid 				INTEGER(10),
+email				VARCHAR(100),
+name				VARCHAR(100),
+phonenumber			VARCHAR(20),
+country				VARCHAR(20),
+fieldofinterest		VARCHAR(100),
+credits				INTEGER(5),
+age					VARCHAR(3),
+state				VARCHAR(20),
+mobilenumber		VARCHAR(15),
+totalScore			INTEGER(5),
+totalQuizTaken		INTEGER(5),
+totalquizCreated	INTEGER(5),
+
+PRIMARY KEY(userid));
+
+
+/**************************************************/
+
+CREATE TABLE Logins(
+
+userid		INTEGER(10),
+email		VARCHAR(100),
+password	VARCHAR(100),
+sessionid	INTEGER(10),
+
+PRIMARY KEY(userid));
+
+/**************************************************/
+
+CREATE TABLE Categories(
+
+categoryid			INTEGER(10),
+categoryname		VARCHAR(100),
+categorydescription	VARCHAR(100),
+
+PRIMARY KEY(categoryid));
+
+/**************************************************/
+
+CREATE TABLE Quizzes(
+
+quizid			INTEGER(10),
+quizname		VARCHAR(100),
+quizdescription	VARCHAR(100),
+categoryid		INTEGER(10),
+quizCreatorId	INTEGER(10),
+quizLevelId		INTEGER(10),
+
+PRIMARY KEY(quizid));
+
+/**************************************************/
+
+CREATE TABLE QuestionConrrectAnswerRef(
+
+questioncorrectanswerpid	INTEGER(10),	
+questionid					INTEGER(10),	
+optionid					INTEGER(10),
+
+PRIMARY KEY(questioncorrectanswerpid));
+
+/**************************************************/
+
+CREATE TABLE Options(
+
+optionpid			INTEGER(10),
+quizid				INTEGER(10),
+questionid			INTEGER(10),
+optionvalue			VARCHAR(100),
+
+PRIMARY KEY(optionpid));
+
+/**************************************************/
+
+CREATE TABLE Questions(
+
+questionpid		INTEGER(10),
+quizid			INTEGER(10),			
+questionid		VARCHAR(200),
+
+PRIMARY KEY(questionpid));
+
+/**************************************************/
+
+CREATE TABLE QuizAttemptTracking(
+
+quizattemptpid 	INTEGER(10),
+userid			INTEGER(10),
+quizid			INTEGER(10),		
+categoryid		INTEGER(10),
+score			INTEGER(10),
+
+PRIMARY KEY(quizattemptpid));
+
+/**************************************************/
+
+
+CREATE TABLE QuizSharing(
+
+quizsharingpid	INTEGER(10),
+userid			INTEGER(10),
+recommenderid	INTEGER(10),
+completedflag	BOOLEAN,
+
+PRIMARY KEY(quizsharingpid));
+
+/**************************************************/
+
+CREATE TABLE Comments(
+
+commentid	INTEGER(10),
+quizid		INTEGER(10),
+userid		INTEGER(10),
+comment		VARCHAR(200),
+
+PRIMARY KEY(commentid));
+
+/**************************************************/

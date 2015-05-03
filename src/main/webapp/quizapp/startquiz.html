@@ -1,7 +1,84 @@
-<div ng-controller="quizhomeController">
+<div ng-controller="startQuizController">
 	
-	<div class="col-md-12"  style="padding-top:70px; padding-bottom:100px">
-		Start Quiz
+	<div class="col-md-12" style="padding-top:70px; padding-bottom:100px;">
+	
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			
+			<div class="col-md-12" style="padding-top:10px;">
+				<div class="col-md-2" style="font-weight: bold; font-size: 15px;">
+					Quiz Name : 
+				</div>
+				<div class="col-md-10">
+					{{quizData.quizName}}
+				</div>
+			</div>
+			<div class="col-md-12" style="padding-top:10px;">
+				<div class="col-md-2" style="font-weight: bold; font-size: 15px;">
+					Quiz Description :
+				</div>
+				<div class="col-md-10">
+					{{quizData.quizDescription}}
+				</div>
+			</div>
+			<div class="col-md-12" style="padding-top:10px;">
+				<div class="col-md-2" style="font-weight: bold; font-size: 15px;">
+					Quiz Category :
+				</div>
+				<div class="col-md-10">
+					{{quizData.quizCategory}}
+				</div>
+			</div>
+			<div class="col-md-12" style="padding-top:10px;">
+				<div class="col-md-2" style="font-weight: bold; font-size: 15px;">
+					Quiz Difficulty: 
+				</div>
+				<div class="col-md-10">
+					{{quizData.quizDiffficulty}}
+				</div>
+			</div>
+			
+			<div class="col-md-12" style="padding-top:40px;">
+				<div ng-repeat="question in quizData.quizQuestionDTOs track by $index" >
+					<div class="col-md-10" style="padding-bottom:20px;">
+						<div style="padding-top:10px; padding-bottom:5px; font-weight: bold; font-size: 15px;">
+							{{($index+1)+") "+question.question }}
+						</div>
+						<div>
+							<span ng-repeat="option in question.options track by $index" style="padding-top:2px; padding-left:5px;padding-bottom:2px;">
+								<input type="radio" name="" value="" >
+										{{" "+question.options[$index]}}
+								</input></br>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- model code -->
+			<script type="text/ng-template" id="submitQuizConfirm.html">
+        		<div class="modal-header">
+            		<h6 class="modal-title">Quiz Submit Confirmation</h6>
+        		</div>
+       			 <div class="modal-body">
+            		<div style="font-weight: bold; font-size:20px; text-align:center">Submit Quiz ????</div>
+        		</div>
+       		 	 <div class="modal-footer">
+           			 <button class="btn btn-primary" ng-click="submitQuiz()">Yes</button>
+            		<button class="btn btn-warning" ng-click="cancelSubmit()">No</button>
+        		</div>
+    		</script>
+			
+			<div class="col-md-12" style="padding-top:20px;">
+				<button class="btn btn-default btn-block" style="width:500px;" type="button" ng-click="submitQuizConfirmModal()">Submit Quiz</button>
+			</div>
+		</div>
+		<div class="col-md-1"></div>
 	</div>
 	
+	
 </div>
+
+
+
+<div style="padding-top: 50px;" ng-include src="'footer.html'"></div>

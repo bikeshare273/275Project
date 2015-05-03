@@ -1,4 +1,4 @@
-var quizapp = angular.module('quizapp', [ 'ngRoute', 'ngResource', 'smart-table' ]);
+var quizapp = angular.module('quizapp', [ 'ngRoute', 'ngResource', 'smart-table', 'ui.bootstrap']);
 
 quizapp.run(function($rootScope) {
 	$rootScope.hideUserNavTabs = true;
@@ -600,19 +600,94 @@ quizapp.controller('quizSearchController',
 
 	$scope.startQuiz = function(quizid) {
 		console.log("start quiz");
+		//get quiz by quizid
+		$scope.quizData = {
+				"quizName":"science quiz",
+				"quizDescription":"this is my first quiz",
+				"quizDiffficulty":"Hard",
+				"quizCategory":"science",
+				"quizQuestionDTOs":[
+					                    {"question":"first question",
+					                    "options":["option 1","option 2", "option 3","option 4"],
+					                    "correctOptionId":"1",
+					                    "userAnswerId":"3"},
+					                    
+					                    {"question":"first question",
+					                    "options":["option 1","option 2", "option 3","option 4"],
+					                    "correctOptionId":"2",
+					                    "userAnswerId":"1"},
+					                    
+					                    {"question":"first question",
+					                    "options":["option 1","option 2", "option 3","option 4"],
+					                    "correctOptionId":"2",
+					                    "userAnswerId":"1"},
+					                    
+					                    {"question":"first question",
+					                    "options":["option 1","option 2", "option 3","option 4"],
+					                    "correctOptionId":"3",
+					                    "userAnswerId":"3"},
+					                    
+					                    {"question":"first question",
+					                    "options":["option 1","option 2", "option 3","option 4"],
+					                    "correctOptionId":"2",
+					                    "userAnswerId":"1"},
+				                    ],
+				"quizCreator":"amol"
+		};
+		
+		var sharedData = new Array();
+		sharedData["quizData"] = $scope.quizData;
+		dataSharing.set(sharedData);
+		
 		$location.url("/startquiz");
 	};
 	
 });
 
 quizapp.controller('startQuizController',
-		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
+		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope, $modal) {
 	console.log('startQuizController start');
 	$rootScope.hideUserNavTabs = false;
 	$rootScope.hideStaticTabs = true;
 	
+	$scope.quizData = dataSharing.get().quizData;
 	
+	$scope.submitQuizConfirmModal = function(){
+		
+		var shareData = new Array();
+		shareData["quizData"] = $scope.quizData;
+		dataSharing.set(shareData);
+		
+		var modalInstance = $modal.open({
+			 animation: $scope.animationsEnabled,
+		      templateUrl: 'submitQuizConfirm.html',
+		      controller: 'submitQuizConfirmController',
+		      size: "sm",
+		      resolve: {
+		        
+		      }
+		    });
+
+		  };
+		  
+});
+
+quizapp.controller('submitQuizConfirmController',
+		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope, $modalInstance) {
+	console.log('submitQuizConfirmController start');
+	$rootScope.hideUserNavTabs = false;
+	$rootScope.hideStaticTabs = true;
 	
+	 $scope.submitQuiz = function () {
+		$scope.quizData = dataSharing.get().quizData;
+	    console.info("quiz submit data "+$scope.quizData.quizName);
+	    $modalInstance.close();
+	    $location.url("/home");
+	  };
+
+	  $scope.cancelSubmit = function () {
+	    $modalInstance.dismiss('cancel');
+	  };
 });
 
 

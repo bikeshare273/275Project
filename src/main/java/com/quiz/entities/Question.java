@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Questions")
-public class Questions 
+public class Question 
 {
 
 	/*
@@ -27,14 +27,10 @@ public class Questions
 	/********************************************/
 	
 	private Integer questionpid;
-	private Integer quizid;
-	private String questionid;
-	
-	
+	private Quiz quizid;
+	private String questionstring;
 	
 	/*********************************************/
-
-	
 	
 	@Id
 	@Column(name = "questionpid", unique = true, nullable= false)
@@ -47,27 +43,24 @@ public class Questions
 		this.questionpid = questionpid;
 	}
 	
-	@ManyToOne(targetEntity = Quizzes.class, cascade = CascadeType.PERSIST)
+	@ManyToOne(targetEntity = Quiz.class, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "quizid", referencedColumnName = "quizid")
-	public Integer getQuizid() 
+	public Quiz getQuizid() 
 	{
 		return quizid;
 	}
-	public void setQuizid(Integer quizid) 
+	public void setQuizid(Quiz quizid) 
 	{
 		this.quizid = quizid;
 	}
 	
-	@Column(name = "questionid", unique = true, nullable= true)
-	public String getQuestionid()
-	{
-		return questionid;
+	@Column(name = "questionstring", unique = true, nullable= true)
+	public String getQuestionstring() {
+		return questionstring;
 	}
-	
-	public void setQuestionid(String questionid) {
-		this.questionid = questionid;
+	public void setQuestionstring(String questionstring) {
+		this.questionstring = questionstring;
 	}
-	
 	
 	/*****************************************************/
 	

@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Categories")
-public class Categories 
+public class Category
 {
 
 	/*
@@ -42,7 +42,7 @@ public class Categories
 		this.categoryid = categoryid;
 	}
 	
-	@Column(name = "categoryname", unique = true, nullable = true)
+	@Column(name = "categoryname", unique = true, nullable = false)
 	public String getCategoryname()
 	{
 		return categoryname;

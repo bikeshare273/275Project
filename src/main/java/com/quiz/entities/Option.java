@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Options")
-public class Options 
+public class Option 
 {
 
 	/*
@@ -31,9 +31,10 @@ public class Options
 	/*****************************************************/
 	
 	private Integer optionpid;
-	private Integer quizid;
-	private Integer questionid;
+	private Quiz quizid;
+	private Question questionid;
 	private String optionvalue;
+
 	/*****************************************************/
 	
 	
@@ -49,27 +50,27 @@ public class Options
 		this.optionpid = optionpid;
 	}
 	
-	@ManyToOne(targetEntity = Quizzes.class, cascade = CascadeType.PERSIST)
+	@ManyToOne(targetEntity = Quiz.class, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "quizid", referencedColumnName = "quizid")
-	public Integer getQuizid() 
+	public Quiz getQuizid() 
 	{
 		return quizid;
 	}
 	
-	public void setQuizid(Integer quizid)
+	public void setQuizid(Quiz quizid)
 	{
 		this.quizid = quizid;
 	}
 	
 	
-	@ManyToOne(targetEntity = Questions.class, cascade = CascadeType.PERSIST)
+	@ManyToOne(targetEntity = Question.class, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "questionid", referencedColumnName = "questionpid")
-	public Integer getQuestionid() 
+	public Question getQuestionid() 
 	{
 		return questionid;
 	}
 	
-	public void setQuestionid(Integer questionid)
+	public void setQuestionid(Question questionid)
 	{
 		this.questionid = questionid;
 	}

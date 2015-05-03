@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Quizzes")
-public class Quizzes {
+public class Quiz  {
 	
 	
 	/*
@@ -33,9 +33,9 @@ public class Quizzes {
 	private Integer quizid;
 	private String quizname;
 	private String quizdescription;
-	private Categories categoryid;
-	private User quizCreatorId;
-	private QuizLevels quizLevelId;
+	private Category categoryid;
+	private User quizcreator;
+	private QuizLevel quizlevel;
 	
 /***************************************************************/	
 	
@@ -64,33 +64,31 @@ public class Quizzes {
 		this.quizdescription = quizdescription;
 	}
 	
-	@ManyToOne(targetEntity = Categories.class, cascade = CascadeType.PERSIST)
+	@ManyToOne(targetEntity = Category.class, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "categoryid", referencedColumnName = "categoryid")
-	public Categories getCategoryid() {
+	public Category getCategoryid() {
 		return categoryid;
 	}
-	public void setCategoryid(Categories categoryid) {
+	public void setCategoryid(Category categoryid) {
 		this.categoryid = categoryid;
 	}
 	
 	@ManyToOne(targetEntity = User.class, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "quizCreatorId", referencedColumnName = "userid")
-	public User getQuizCreatorId() {
-		return quizCreatorId;
+	@JoinColumn(name = "quizcreator", referencedColumnName = "userid")
+	public User getQuizcreator() {
+		return quizcreator;
 	}
-	public void setQuizCreatorId(User quizCreatorId) {
-		this.quizCreatorId = quizCreatorId;
-	}
-	
-	@ManyToOne(targetEntity = QuizLevels.class, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "quizLevelId", referencedColumnName = "levelid")
-	public QuizLevels getQuizLevelId() {
-		return quizLevelId;
-	}
-	public void setQuizLevelId(QuizLevels quizLevelId) {
-		this.quizLevelId = quizLevelId;
+	public void setQuizcreator(User quizcreator) {
+		this.quizcreator = quizcreator;
 	}
 	
-	
+	@ManyToOne(targetEntity = QuizLevel.class, cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "quizlevel", referencedColumnName = "levelid")
+	public QuizLevel getQuizlevel() {
+		return quizlevel;
+	}
+	public void setQuizlevel(QuizLevel quizlevel) {
+		this.quizlevel = quizlevel;
+	}
 	
 }

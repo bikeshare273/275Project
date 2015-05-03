@@ -28,9 +28,10 @@ public class QuizAttemptTracking
 	
 	/************************************/
 	private Integer quizattemptpid;
-	private Integer userid;
-	private Integer quizid;
-	private Integer categoryid;
+	private User userid;
+	private Quiz quizid;
+	private Category categoryid;
+	private Integer score;
 	
 	/************************************/
 	
@@ -46,38 +47,37 @@ public class QuizAttemptTracking
 	
 	@ManyToOne(targetEntity = User.class, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "userid", referencedColumnName = "userid")
-	public Integer getUserid() {
+	public User getUserid() {
 		return userid;
 	}
-	public void setUserid(Integer userid) {
+	public void setUserid(User userid) {
 		this.userid = userid;
 	}
 	
-	@ManyToOne(targetEntity = Quizzes.class, cascade = CascadeType.PERSIST)
+	@ManyToOne(targetEntity = Quiz.class, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "quizid", referencedColumnName = "quizid")
-	public Integer getQuizid() {
+	public Quiz getQuizid() {
 		return quizid;
 	}
-	public void setQuizid(Integer quizid) {
+	public void setQuizid(Quiz quizid) {
 		this.quizid = quizid;
 	}
-	
-	
-	@ManyToOne(targetEntity = Categories.class, cascade = CascadeType.PERSIST)
+		
+	@ManyToOne(targetEntity = Category.class, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "categoryid", referencedColumnName = "categoryid")
-	public Integer getCategoryid() {
+	public Category getCategoryid() {
 		return categoryid;
 	}
-	public void setCategoryid(Integer categoryid) {
+	public void setCategoryid(Category categoryid) {
 		this.categoryid = categoryid;
 	}
 	
-	@Column(name = "score", unique = true, nullable= true)
+	@Column(name = "score", unique = false, nullable= true)
 	public Integer getScore() {
 		return score;
 	}
 	public void setScore(Integer score) {
 		this.score = score;
 	}
-	private Integer score;
+	
 }

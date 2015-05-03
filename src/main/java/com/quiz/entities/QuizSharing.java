@@ -25,7 +25,7 @@ public class QuizSharing
 	/**********************************************************/
 	
 		private Integer quizsharingpid;
-		private Integer userid;
+		private User userid;
 		private Integer recommenderid;
 		private Boolean completedflag;
 	
@@ -45,10 +45,10 @@ public class QuizSharing
 		
 		@ManyToOne(targetEntity = User.class, cascade = CascadeType.PERSIST)
 		@JoinColumn(name = "userid", referencedColumnName = "userid")
-		public Integer getUserid() {
+		public User getUserid() {
 			return userid;
 		}
-		public void setUserid(Integer userid) {
+		public void setUserid(User userid) {
 			this.userid = userid;
 		}
 		

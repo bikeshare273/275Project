@@ -27,9 +27,10 @@ public class Comments
 	/**************************************************/
 
 	private Integer commentid;
-	private Integer quizid;
-	private Integer userid;
+	private Quiz quizid;
+	private User userid;
 	private String comment;
+	
 	/**************************************************/
 
 	
@@ -42,33 +43,30 @@ public class Comments
 		this.commentid = commentid;
 	}
 	
-	@ManyToOne(targetEntity = Quizzes.class, cascade = CascadeType.PERSIST)
+	@ManyToOne(targetEntity = Quiz.class, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "quizid", referencedColumnName = "quizid")
-	public Integer getQuizid() {
+	public Quiz getQuizid() {
 		return quizid;
 	}
-	public void setQuizid(Integer quizid) {
+	public void setQuizid(Quiz quizid) {
 		this.quizid = quizid;
 	}
 	
 	@ManyToOne(targetEntity = User.class, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "userid", referencedColumnName = "userid")
-	public Integer getUserid() {
+	public User getUserid() {
 		return userid;
 	}
-	public void setUserid(Integer userid) {
+	public void setUserid(User userid) {
 		this.userid = userid;
 	}
 	
-	@Column(name = "comment", unique = true, nullable= true)
+	@Column(name = "comment", unique = false, nullable= true)
 	public String getComment() {
 		return comment;
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
-	
-	
 	
 }

@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "QuizLevels")
-public class QuizLevels {
+public class QuizLevel {
 
 	/*
 			CREATE TABLE QuizLevels (
@@ -55,10 +55,5 @@ public class QuizLevels {
 	}
 
 /**************************************************************************************/
-
-
-
-
-
 
 }

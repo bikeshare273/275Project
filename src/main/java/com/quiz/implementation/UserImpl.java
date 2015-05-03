@@ -45,7 +45,7 @@ public class UserImpl {
 			
 			loginObject.setUserid(userid);
 			loginObject.setUsername(user.getEmail());
-			loginObject.setPassword(appUtils.passwordEncrypter(user.getPassword()));
+			loginObject.setPassword(appUtils.passwordEncrypter(user.getNewpassword()));
 		
 			usersDao.save(userObject);
 			loginDao.save(loginObject);
@@ -78,8 +78,20 @@ public UserDTO updateUser(UserDTO user, Integer userid)
 			
 {			
 		User userObject = usersDao.getUserById(userid);
+		Login loginObject = loginDao.getLoginByUserId(userid);
 		
+		String oldPassword = appUtils.passwordEncrypter(user.getOldpassword());
+						
 		if(userObject == null) {return null;}
+		if(loginObject == null) {return null;}
+		
+		if(oldPassword != loginObject.getPassword()){return null; }
+		
+		if(user.getNewpassword() != null || user.getNewpassword() != "")
+		{
+			loginObject.setPassword(appUtils.passwordEncrypter(user.getNewpassword()));
+			loginDao.update(loginObject);
+		}
 		
 		user.setUserid(userObject.getUserid());
 		user.setFieldofinterest(userObject.getFieldofinterest());
@@ -91,9 +103,9 @@ public UserDTO updateUser(UserDTO user, Integer userid)
 		try { BeanUtils.copyProperties(userObject, user);} 
 		catch (IllegalAccessException e) { e.printStackTrace(); } 
 		catch (InvocationTargetException e) { e.printStackTrace(); }
-					
+				
 		usersDao.update(userObject);
-		
+			
 		return user;
 }
 	

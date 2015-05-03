@@ -14,7 +14,8 @@ public class UserDTO {
 	private String country;
 	private String phonenumber;
 	
-	private String password;
+	private String oldpassword;
+	private String newpassword;
 	private Integer sessionId;
 	
 	private String fieldofinterest;
@@ -73,11 +74,18 @@ public class UserDTO {
 	public void setPhonenumber(String phonenumber) {
 		this.phonenumber = phonenumber;
 	}
-	public String getPassword() {
-		return password;
+	
+	public String getOldpassword() {
+		return oldpassword;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setOldpassword(String oldpassword) {
+		this.oldpassword = oldpassword;
+	}
+	public String getNewpassword() {
+		return newpassword;
+	}
+	public void setNewpassword(String newpassword) {
+		this.newpassword = newpassword;
 	}
 	public Integer getSessionId() {
 		return sessionId;

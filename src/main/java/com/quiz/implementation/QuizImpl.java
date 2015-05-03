@@ -7,6 +7,7 @@ import com.quiz.dao.interfaces.IDaoInterfaceForOption;
 import com.quiz.dao.interfaces.IDaoInterfaceForQuestion;
 import com.quiz.dao.interfaces.IDaoInterfaceForQuiz;
 import com.quiz.dao.interfaces.IDaoInterfaceForUser;
+import com.quiz.dto.QuizDTO;
 import com.quiz.utils.QuizMeUtils;
 
 public class QuizImpl {
@@ -29,6 +30,19 @@ public class QuizImpl {
 		
 		@Autowired
 		IDaoInterfaceForOption optionDao;
+		
+		
+		public QuizDTO createQuiz(QuizDTO quizDTO){
+			
+			
+			
+			
+			return null;
+			
+		}
+		
+		
+		
 		
 		
 		

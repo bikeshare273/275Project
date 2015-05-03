@@ -18,7 +18,7 @@
 				<!-- Email is non editable. Read only! -->
 				<div style="padding-bottom: 10px; padding-top: 10px;">
 					<input type="email" class="form-control" placeholder="Email"
-						name="profileform_email" size="50" ng-model="profileform_email"
+						name="profileform_email" size="50" ng-model=""
 						readonly>
 
 					<div class="error-container"
@@ -126,17 +126,14 @@
 					</span>
 				</div>
 
-				<!--  -->
-				<div class="input-group"
-					style="padding-bottom: 5px; padding-top: 5px; text-align: center;">
-					<div class="errorbox"
-						style="position: relative; padding-top: 1%; padding-left: 47%;">
-						<ul>
-							<li ng-repeat="err in error">{{ err }}</li>
-						</ul>
+				<!-- error and success message -->
+		       	<div>
+					<div class="errorbox" style="position:relative;padding-top:10px;; padding-left:80px;">
+						{{ error }}
 					</div>
-					<div class="successbox"
-						style="position: relative; padding-top: 1%; padding-left: 47%;">{{profileform_success}}</div>
+					<div class="successbox" style="position:relative;padding-top:10px;  padding-left:80px;">
+						{{success}}
+					</div>
 				</div>
 
 			</form>

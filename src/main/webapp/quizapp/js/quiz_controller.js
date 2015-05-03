@@ -430,26 +430,52 @@ quizapp.controller('profileController',
 	$rootScope.hideUserNavTabs = false;
 	$rootScope.hideStaticTabs = true;
 
+	//fetch data to display on profile page
+	var response = $http.get("../../quizme/fetchuser");
+	response.success(function(dataFromServer, status,
+					headers, config) {
+			$scope.profileform_email = dataFromServer.email;
+			$scope.profileform_phone = dataFromServer.phonenumber;
+			$scope.profileform_country = dataFromServer.country;
+	});
+	response.error(function(data, status, headers, config) {
+		if (status == 400) {
+			$scope.error = data.errorMessage;
+			$location.url('/');
+			return $q.reject(response);
+		}else{
+			$scope.error = status+": "+data.errorMessage;
+			return $q.reject(response);
+		}
+	});
+	
 
 	$scope.profileform_edit = function(item, event) {
-		console.log("--> Editing form "
-				+ $scope.profileform_name + " "
-				+ $scope.profileform_email );
-		/*
-		 * enter old password
-		 */
-		console.log("--> Editing form "
-				+ $scope.profileform_oldpassword + " "
-				+ $scope.profileform_oldpassword );
-		console.log("--> Editing form "
-				+ $scope.profileform_phone + " "
-				+ $scope.profileform_address);
-		console.log("--> Editing form "
-				+ $scope.profileform_city + " "
-				+ $scope.profileform_state+" "
-				+ $scope.profileform_country);
-		console.log("--> Editing form ");
-
+		
+		//update user data
+		var data = {
+			email : $scope.profileform_email,
+			password : $scope.profileform_newpassword,
+			oldpassword : $scope.profileform_oldpassword,
+			phonenumber: $scope.profileform_phone,
+			country: $scope.profileform_country
+		};
+		var response = $http.put("../../quizme/updateuser", data);
+		response.success(function(dataFromServer, status,
+						headers, config) {
+			$scope.success = "User Updated Successfully";
+		});
+		response.error(function(data, status, headers, config) {
+			if (status == 400) {
+				$scope.error = data.errorMessage;
+				$location.url('/');
+				return $q.reject(response);
+			}else{
+				$scope.error = status+": "+data.errorMessage;
+				return $q.reject(response);
+			}
+		});
+			
 	};
 	console.log('profileController end');
 });

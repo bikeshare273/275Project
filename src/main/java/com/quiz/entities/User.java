@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "users")
+@Table(name = "Users")
 public class User {
 
 	/*
@@ -17,6 +17,7 @@ public class User {
 				email				VARCHAR(100),
 				name				VARCHAR(100),
 				phonenumber			VARCHAR(20),
+				address				VARCHAR(100),
 				country				VARCHAR(20),
 				fieldofinterest		VARCHAR(100),
 				credits				INTEGER(5),
@@ -34,13 +35,16 @@ public class User {
 	
 	private Integer userid;
 	private String email;
+	
 	private String name;
 	private String phonenumber;
 	private String country;
+	private String address;
+	private String state;
+	private Integer age;
+	
 	private String fieldofinterest;
 	private Integer credits;
-	private Integer age;
-	private String state;
 	private Integer totalScore;
 	private Integer totalQuizTaken;
 	private Integer totalquizCreated;
@@ -64,7 +68,7 @@ public class User {
 		this.email = email;
 	}
 	
-	@Column(name = "name", unique = true, nullable = false)
+	@Column(name = "name", unique = false, nullable = true)
 	public String getName() {
 		return name;
 	}
@@ -72,7 +76,15 @@ public class User {
 		this.name = name;
 	}
 	
-	@Column(name = "phonenumber", unique = true, nullable = false)
+	@Column(name = "address", unique = false, nullable = true)
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	@Column(name = "phonenumber", unique = false, nullable = true)
 	public String getPhonenumber() {
 		return phonenumber;
 	}
@@ -80,7 +92,7 @@ public class User {
 		this.phonenumber = phonenumber;
 	}
 	
-	@Column(name = "country", unique = true, nullable = false)
+	@Column(name = "country", unique = false, nullable = true)
 	public String getCountry() {
 		return country;
 	}
@@ -88,7 +100,7 @@ public class User {
 		this.country = country;
 	}
 	
-	@Column(name = "fieldofinterest", unique = true, nullable = false)
+	@Column(name = "fieldofinterest", unique = false, nullable = true)
 	public String getFieldofinterest() {
 		return fieldofinterest;
 	}
@@ -96,7 +108,7 @@ public class User {
 		this.fieldofinterest = fieldofinterest;
 	}
 	
-	@Column(name = "credits", unique = true, nullable = false)
+	@Column(name = "credits", unique = false, nullable = true)
 	public Integer getCredits() {
 		return credits;
 	}
@@ -104,7 +116,7 @@ public class User {
 		this.credits = credits;
 	}
 	
-	@Column(name = "age", unique = true, nullable = false)
+	@Column(name = "age", unique = false, nullable = true)
 	public Integer getAge() {
 		return age;
 	}
@@ -112,7 +124,7 @@ public class User {
 		this.age = age;
 	}
 	
-	@Column(name = "state", unique = true, nullable = false)
+	@Column(name = "state", unique = false, nullable = true)
 	public String getState() {
 		return state;
 	}
@@ -121,7 +133,7 @@ public class User {
 		this.state = state;
 	}
 	
-	@Column(name = "totalScore", unique = true, nullable = false)
+	@Column(name = "totalScore", unique = false, nullable = true)
 	public Integer getTotalScore() {
 		return totalScore;
 	}
@@ -129,7 +141,7 @@ public class User {
 		this.totalScore = totalScore;
 	}
 	
-	@Column(name = "totalQuizTaken", unique = true, nullable = false)
+	@Column(name = "totalQuizTaken", unique = false, nullable = true)
 	public Integer getTotalQuizTaken() {
 		return totalQuizTaken;
 	}
@@ -137,7 +149,7 @@ public class User {
 		this.totalQuizTaken = totalQuizTaken;
 	}
 	
-	@Column(name = "totalquizCreated", unique = true, nullable = false)
+	@Column(name = "totalquizCreated", unique = false, nullable = true)
 	public Integer getTotalquizCreated() {
 		return totalquizCreated;
 	}

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.quiz.entities.Login;
 
-
 public interface IDaoInterfaceForLogin {
 	
 	public Login save(Login login);
@@ -13,7 +12,8 @@ public interface IDaoInterfaceForLogin {
 	public List<Login> getAllLogins();
 	public Login getLoginByUserId(Integer userid);
 	public Login getLoginByUserName(String username);
+	public String getUserNameByUserId(Integer userid);
 	public Login getLoginByUserNameAndPassword(String username, String password);
 	public Login getLoginByUserNameAndSessionId(String username, Integer sessionid);
-
+	
 }

@@ -17,7 +17,7 @@ public class Login {
 	 	CREATE TABLE login(
 		
 		userid					INT(10),
-		email					VARCHAR(20),
+		username				VARCHAR(20),
 		password				VARCHAR(20),
 		sessionid				INT(10),
 
@@ -29,7 +29,7 @@ public class Login {
 /***************************************************/
 	
 	private Integer userid;
-	private String email;
+	private String  username;
 	private String password;
 	private Integer sessionid;
 	
@@ -44,18 +44,19 @@ public class Login {
 		this.userid = userid;
 	}
 	
-	@Column(name = "email", unique = true, nullable = false)
-	public String getEmail() {
-		return email;
+	@Column(name = "username", unique = true, nullable = false)
+	public String getUsername() {
+		return username;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	@Column(name = "password", unique = false, nullable = false)
 	public String getPassword() {
 		return password;
 	}
+	
 	public void setPassword(String password) {
 		this.password = password;
 	}

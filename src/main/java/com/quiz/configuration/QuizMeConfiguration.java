@@ -11,14 +11,19 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
+
 import com.quiz.dao.LoginDao;
 import com.quiz.dao.TestDao;
+import com.quiz.dao.UserDao;
 import com.quiz.dao.interfaces.IDaoInterfaceForLogin;
+import com.quiz.dao.interfaces.IDaoInterfaceForUser;
 import com.quiz.dao.interfaces.ITestDao;
 import com.quiz.implementation.AuthImplementation;
+import com.quiz.implementation.UserImpl;
 import com.quiz.implementation.interfaces.IAuthInterfaceForLogin;
 import com.quiz.interceptor.SessionValidatorInterceptor;
 import com.quiz.utils.QuizMeUtils;
+
 import javax.sql.DataSource;
 
 @Configuration
@@ -31,6 +36,11 @@ public class QuizMeConfiguration {
 	
 /********************************************************************************************************************/
 
+	@Bean
+	public UserImpl getUserImpl(){
+		return new UserImpl();
+	}
+	
 /********************************************************************************************************************/
 
 											   /* DAO Beans */
@@ -38,14 +48,21 @@ public class QuizMeConfiguration {
 /********************************************************************************************************************/
 
 	@Bean
+	public IDaoInterfaceForUser getUserDao(){
+		return new UserDao();
+	}
+	
+	@Bean
 	public IDaoInterfaceForLogin getLoginDao() {
 		return new LoginDao();
 	}
+	
 
 	@Bean
 	public ITestDao getTestDao() {
 		return new TestDao();
 	}
+		
 
 /********************************************************************************************************************/
 
@@ -78,11 +95,7 @@ public class QuizMeConfiguration {
 	public DataSource dataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName(com.mysql.jdbc.Driver.class.getName());
-		/*
-		 * dataSource.setUrl("jdbc:mysql://localhost:3306/movieapp");
-		 * dataSource.setUsername("root"); dataSource.setPassword("");
-		 */
-		dataSource.setUrl("jdbc:mysql://cmpe.cjatiw41rqvf.us-west-1.rds.amazonaws.com:3306/cmpe");
+		dataSource.setUrl("jdbc:mysql://cmpe.cjatiw41rqvf.us-west-1.rds.amazonaws.com:3306/quizme");
 		dataSource.setUsername("cmpeadmin");
 		dataSource.setPassword("cmpeadmin");
 		dataSource.setInitialSize(2);
@@ -109,12 +122,10 @@ public class QuizMeConfiguration {
 	 */
 	@Bean
 	public SessionFactory sessionFactory() {
-		LocalSessionFactoryBuilder builder = new LocalSessionFactoryBuilder(
-				dataSource());
+		LocalSessionFactoryBuilder builder = new LocalSessionFactoryBuilder(dataSource());
 		builder.scanPackages("com.quiz.*");
 		Properties hibernateProperties = new Properties();
-		hibernateProperties.put("hibernate.dialect",
-				"org.hibernate.dialect.MySQL5Dialect");
+		hibernateProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 		builder.addProperties(hibernateProperties);
 		return builder.buildSessionFactory();
 	}

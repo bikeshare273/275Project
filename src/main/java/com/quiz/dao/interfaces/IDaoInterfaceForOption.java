@@ -3,8 +3,6 @@ package com.quiz.dao.interfaces;
 import java.util.List;
 
 import com.quiz.entities.Option;
-import com.quiz.entities.Question;
-import com.quiz.entities.Quiz;
 
 public interface IDaoInterfaceForOption {
 
@@ -19,7 +17,7 @@ public interface IDaoInterfaceForOption {
 	public void update(Option option);
 	public void delete(Option option);
 	
-	public Option getOptionById(Integer optionpid);
+	public Option getOptionById(Integer optionid);
 	public List<Option> getAllOptionsForQuiz(Integer quizid);
 	public List<Option> getAllOptionsForQuestion(Integer questionid);
 	

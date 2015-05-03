@@ -57,7 +57,7 @@ public class QuestionConrrectAnswerRef
 	}
 	
 	@OneToOne(targetEntity = Option.class, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "optionid", referencedColumnName = "optionpid")
+	@JoinColumn(name = "optionid", referencedColumnName = "optionid")
 	public Option getOptionid() 
 	{
 		return optionid;

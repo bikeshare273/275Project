@@ -17,30 +17,30 @@ public class Question
 	 * 
 	 * CREATE TABLE Questions(
 
-		questionpid		INTEGER(10),
+		questionid		INTEGER(10),
 		quizid			INTEGER(10),			
-		questionid		VARCHAR(200),
+		questionstring	VARCHAR(200),
 
 		PRIMARY KEY(questionpid));
 	 */
 	
 	/********************************************/
 	
-	private Integer questionpid;
+	private Integer questionid;
 	private Quiz quizid;
 	private String questionstring;
 	
 	/*********************************************/
 	
 	@Id
-	@Column(name = "questionpid", unique = true, nullable= false)
+	@Column(name = "questionid", unique = true, nullable= false)
 	public Integer getQuestionpid() 
 	{
-		return questionpid;
+		return questionid;
 	}
 	public void setQuestionpid(Integer questionpid) 
 	{
-		this.questionpid = questionpid;
+		this.questionid = questionpid;
 	}
 	
 	@ManyToOne(targetEntity = Quiz.class, cascade = CascadeType.PERSIST)

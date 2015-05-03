@@ -30,7 +30,7 @@ public class Option
 	
 	/*****************************************************/
 	
-	private Integer optionpid;
+	private Integer optionid;
 	private Quiz quizid;
 	private Question questionid;
 	private String optionvalue;
@@ -39,15 +39,15 @@ public class Option
 	
 	
 	@Id
-	@Column(name = "optionpid", unique = true, nullable= false)
+	@Column(name = "optionid", unique = true, nullable= false)
 	public Integer getOptionpid() 
 	{
-		return optionpid;
+		return optionid;
 	}
 	
 	public void setOptionpid(Integer optionpid)
 	{
-		this.optionpid = optionpid;
+		this.optionid = optionpid;
 	}
 	
 	@ManyToOne(targetEntity = Quiz.class, cascade = CascadeType.PERSIST)
@@ -64,7 +64,7 @@ public class Option
 	
 	
 	@ManyToOne(targetEntity = Question.class, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "questionid", referencedColumnName = "questionpid")
+	@JoinColumn(name = "questionid", referencedColumnName = "questionid")
 	public Question getQuestionid() 
 	{
 		return questionid;

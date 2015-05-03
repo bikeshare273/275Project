@@ -3,12 +3,11 @@ package com.quiz.dao.interfaces;
 import java.util.List;
 
 import com.quiz.entities.Question;
-import com.quiz.entities.Quiz;
 
 public interface IDaoInterfaceForQuestion {
 
 	/*
-	 		private Integer questionpid;
+	 		private Integer questionid;
 			private Quiz quizid;
 			private String questionstring;
 	  	
@@ -19,7 +18,7 @@ public interface IDaoInterfaceForQuestion {
 	public void update(Question question);
 	public void delete(Question question);
 	
-	public Question getQuestionById(Integer questionpid);
+	public Question getQuestionById(Integer questionid);
 	public List<Question> getAllQuestionsForQuiz(Integer quizid);
 		
 }

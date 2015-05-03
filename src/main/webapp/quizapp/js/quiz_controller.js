@@ -92,7 +92,16 @@ quizapp.config(function($routeProvider) {
 		templateUrl : 'comment.html',
 		controller : 'mycomment'
 	})
-
+	
+	.when('/recommendToFriend', {
+		templateUrl : 'recommendation.html',
+		controller : 'recommendToFriendController'
+	})
+	
+	.when('/quizStats', {
+		templateUrl : 'quizstats.html',
+		controller : 'quizStatsController'
+	})
 
 	.otherwise({
 		redirectTo : '/'
@@ -150,16 +159,27 @@ quizapp.controller('quizhomeController',
 	$rootScope.hideUserNavTabs = false;
 	$rootScope.hideStaticTabs = true;
 
-	//get user created quiz data
+	//getUserCreatedQuiz
+	var dataForGetUserCreatedQuiz = {
+			"scoreForUser":{
+				"email":"swap@localhost.com",
+			},
+			"scoreForQuiz":{
+				"quizId":"100",
+				"quizName":"Tech Quiz",
+				"quizCategory":"Computer"
+			},
+			"score":100000,
+			"rankForQuiz":{
+				"rank":"10000",
+				"category":"quizwise",
+				"score":"99"
+			}
+	};
+	
 	var dataFormServer = new Array();
 	for(var i=0; i<20; i++){
-		dataFormServer[i] = {
-				"quizname":"quiz"+i,
-				"quizcreator":"swap",
-				"quizcategory":"science",
-				"quizmaxscore":"100",
-				"quiztopper":"swap"
-		};
+		dataFormServer[i] = dataForGetUserCreatedQuiz;
 	}
 
 	$scope.queue = {
@@ -177,6 +197,27 @@ quizapp.controller('quizhomeController',
 	$scope.openQuizSolution = function(item, event) {
 		console.log("take quiz");
 		$location.url("/quizsolution");
+	};
+	
+	$scope.showQuizStats = function(quizid) {
+		console.log("showQuizStats");
+		//get data for quiz and pass to next page
+		var quizStatsData = {
+				"quiz": {
+					"quizName":"science quiz",
+					"quizDescription":"this is my first quiz",
+					"quizDiffficulty":"Hard",
+					"quizCategory":"science"
+				},
+				"lowestScore":0,
+				"highestScore":80,
+				"averageScore":50.76,
+				"totalQuizTakers":200
+		};
+		var shareData = new Array();
+		shareData["quizStatsData"] = quizStatsData;
+		dataSharing.set(shareData);
+		$location.url("/quizStats");
 	};
 	
 	console.log('quizhomeController end');
@@ -462,5 +503,41 @@ quizapp.controller('mycomment',
 	
 	$scope.parseInt = parseInt;
 	
+	$scope.recommendToFriend = function(){
+		console.log("recommendToFriend");	
+		$location.url('/recommendToFriend');
+		var dataTransfer = new Array();
+		dataTransfer["quizData"] = $scope.quizData;
+		dataSharing.set(dataTransfer);
+	}
+	
 });
+
+
+quizapp.controller('recommendToFriendController',
+		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
+	console.log('recommendToFriendController start');
+	$rootScope.hideUserNavTabs = false;
+	$rootScope.hideStaticTabs = true;
+	
+	$scope.quizData = dataSharing.get().quizData;
+	
+	$scope.sendRecommendation = function(){
+		console.log("sendRecommendation");	
+		$scope.recommendationform_success = "Recommendation sent to your friend !!!!";
+	}
+	
+});
+
+quizapp.controller('quizStatsController',
+		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
+	console.log('quizStatsController start');
+	$rootScope.hideUserNavTabs = false;
+	$rootScope.hideStaticTabs = true;
+	
+	$scope.quizStatsData = dataSharing.get().quizStatsData;
+	
+});
+
+
 

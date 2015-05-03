@@ -23,7 +23,7 @@ public class AuthImplementation implements IAuthInterfaceForLogin{
 	@Override
 	public LoginDTO login(LoginDTO loginDTO) {
 
-		String username = loginDTO.getUsername();
+		String username = loginDTO.getEmail();
 		String password = loginDTO.getPassword();
 		System.out.println("password-> "+password);
 		password = quizMeUtils.passwordEncrypter(password);
@@ -43,7 +43,7 @@ public class AuthImplementation implements IAuthInterfaceForLogin{
 			{
 				/* Generate New SessionId */
 				
-				Integer sessionid = quizMeUtils.generateIdValue(0);
+				Integer sessionid = quizMeUtils.generateIdValue(100);
 				
 				login.setSessionid(sessionid);
 				

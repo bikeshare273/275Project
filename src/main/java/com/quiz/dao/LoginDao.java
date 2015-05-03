@@ -71,10 +71,9 @@ public class LoginDao implements IDaoInterfaceForLogin {
 	@Override
 	public Login getLoginByUserName(String username) {
 
-		String query = "from Login l where l.username = ?";
+		String query = "from Login l where lower(l.username) Like lower(?)";
 		@SuppressWarnings("unchecked")
-		List<Login> logins = (List<Login>) hibernateTemplate.find(query,
-				username);
+		List<Login> logins = (List<Login>) hibernateTemplate.find(query,username);
 
 		if (logins.isEmpty()) {
 			return null;
@@ -113,5 +112,26 @@ public class LoginDao implements IDaoInterfaceForLogin {
 		}
 
 	}
+
+	
+	@Override
+	public String getUserNameByUserId(Integer userid) {
+
+		String query = "from Login l where l.userid = ? ";
+		
+		@SuppressWarnings("unchecked")
+		List<Login> logins = (List<Login>) hibernateTemplate.find(query, userid);
+
+		if (logins.isEmpty()) {
+			return null;
+		} else {
+		
+			String username = logins.get(0).getUsername();
+			
+			return username;
+		}
+
+	}
+	
 
 }

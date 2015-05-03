@@ -71,11 +71,11 @@
 						id="signupform_country" class="form-control" data-role="listview"
 						ng-model="signupform_country" required>
 						<option value="">Select Country</option>
-						<option value="1">India</option>
-						<option value="2">United States</option>
-						<option value="3">China</option>
-						<option value="4">Japan</option>
-						<option value="5">South Africa</option>
+						<option value="India">India</option>
+						<option value="United States">United States</option>
+						<option value="China">China</option>
+						<option value="Japan">Japan</option>
+						<option value="South Africa">South Africa</option>
 					</select>
 					
 					<div class="error-container"
@@ -91,13 +91,14 @@
 					</span>
 				</div>
 				
-				<div class="input-group" style="padding-bottom: 5px; padding-top: 5px; text-align:center;">
-					<div class="errorbox" style="position:relative;padding-top:1%;padding-left:47%;">
-					<ul>
-						<li ng-repeat="err in error">{{ err }}</li>
-					</ul>
+				<!-- error and success message -->
+		       	<div>
+					<div class="errorbox" style="position:relative;padding-top:10px;; padding-left:80px;">
+						{{ error }}
 					</div>
-					<div class="successbox" style="position:relative;padding-top:1%;padding-left:47%;">{{signupform_success}}</div>
+					<div class="successbox" style="position:relative;padding-top:10px;  padding-left:80px;">
+						{{success}}
+					</div>
 				</div>
 				
 			</form>

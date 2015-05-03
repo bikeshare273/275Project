@@ -133,7 +133,6 @@ quizapp.controller('homeController', function($scope, $http, $location, $q,
 			email : $scope.loginform_email,
 			password : $scope.loginform_password
 		};
-		
 
 		var response = $http.post("../../quizme/login", data,
 				{});
@@ -143,12 +142,11 @@ quizapp.controller('homeController', function($scope, $http, $location, $q,
 					$location.url('/home');
 				});
 		response.error(function(data, status, headers, config) {
-			console.log(data);
+			console.log(data.errorMessage);
 			console.log(status);
-			console.log(headers);
-			console.log(config);
-			$scope.error = "Invalid email/password";
-			$location.url('/');
+			if(status === 400){
+				$scope.error = data.errorMessage;
+			}
 			return $q.reject(response);
 		});
 	};
@@ -178,6 +176,29 @@ quizapp.controller('registerController',
 				+ $scope.signupform_state+" "
 				+ $scope.signupform_country);
 		console.log("--> Submitting form ");
+		
+		var data = {
+				email : $scope.signupform_email,
+				password : $scope.signupform_password,
+				phonenumber: $scope.signupform_phone,
+				country: $scope.signupform_country
+			};
+		
+		var response = $http.post("../../quizme/createuser", data,
+				{});
+		response
+				.success(function(dataFromServer, status,
+						headers, config) {
+					$scope.success = "User Added Successfully";
+				});
+		response.error(function(data, status, headers, config) {
+			console.log(data.errorMessage);
+			console.log(status);
+			if(status === 400){
+				$scope.error = data.errorMessage;
+			}
+			return $q.reject(response);
+		});	
 
 	};
 	console.log('registerController end');
@@ -263,7 +284,12 @@ quizapp.controller('createquizController',
 
 	//structure to generate quiz
 	var questionCounter = 0;
-	
+	$scope.questionData = {
+			"no":questionCounter+1,
+			"question":" ",
+			"options":[" "],
+			"correct_option_id":" "
+	}
 
 	//add more options
 	$scope.addOption = function(item, event) {

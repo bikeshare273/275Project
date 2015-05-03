@@ -38,14 +38,13 @@
        	</div>
        	
        	<!-- error and success message -->
-       	<div class="row">
-			<div class="col-md-4"></div>
-			<div class="errorbox" style="position:relative;padding-top:1%;padding-left:47%;">
-				<ul>
-					<li ng-repeat="err in error">{{ err }}</li>
-				</ul>
+       	<div>
+			<div class="errorbox" style="position:relative;padding-top:1%; padding-left:40px;">
+				{{ error }}
 			</div>
-			<div class="successbox" style="position:relative;padding-top:1%;padding-left:47%;">{{success}}</div>
+			<div class="successbox" style="position:relative;padding-top:1%;  padding-left:40px;">
+				{{success}}
+			</div>
 		</div>
       </form>
 

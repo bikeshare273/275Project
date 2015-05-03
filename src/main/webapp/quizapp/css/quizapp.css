@@ -80,13 +80,11 @@ body {
 .errorbox {
 	color: red;
 	font-style: italic;
-	right: 50%;
 }
 .successbox {
 	color: lawngreen;
 	font-style: normal;
 	font: 18px arial;
-	right: 23%;
 }
 
 

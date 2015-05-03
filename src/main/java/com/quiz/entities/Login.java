@@ -8,7 +8,7 @@ import javax.persistence.Id;
 
 @Entity
 @Table(name = "Logins")
-public class Logins {
+public class Login {
 
 
 /***************************************************/

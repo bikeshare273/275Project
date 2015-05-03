@@ -7,8 +7,8 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 
 @Entity
-@Table(name = "login")
-public class Login {
+@Table(name = "Logins")
+public class Logins {
 
 
 /***************************************************/
@@ -17,7 +17,7 @@ public class Login {
 	 	CREATE TABLE login(
 		
 		userid					INT(10),
-		username				VARCHAR(20),
+		email					VARCHAR(20),
 		password				VARCHAR(20),
 		sessionid				INT(10),
 
@@ -25,10 +25,11 @@ public class Login {
 	 	 
 	 */
 	
+	
 /***************************************************/
 	
 	private Integer userid;
-	private String username;
+	private String email;
 	private String password;
 	private Integer sessionid;
 	
@@ -43,12 +44,12 @@ public class Login {
 		this.userid = userid;
 	}
 	
-	@Column(name = "username", unique = true, nullable = false)
-	public String getUsername() {
-		return username;
+	@Column(name = "email", unique = true, nullable = false)
+	public String getEmail() {
+		return email;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	@Column(name = "password", unique = false, nullable = false)

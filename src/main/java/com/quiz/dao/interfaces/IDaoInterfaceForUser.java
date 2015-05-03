@@ -14,5 +14,6 @@ public interface IDaoInterfaceForUser {
 	public User getUserByName(String name);
 	public User getUserByIdAndUserName(Integer userid, String username);
 	public List<User> getAllUsers();
+	public List<User> getGlobalRanks();
 
 }

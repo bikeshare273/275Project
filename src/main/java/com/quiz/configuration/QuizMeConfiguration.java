@@ -83,8 +83,8 @@ public class QuizMeConfiguration {
 		 * dataSource.setUsername("root"); dataSource.setPassword("");
 		 */
 		dataSource.setUrl("jdbc:mysql://cmpe.cjatiw41rqvf.us-west-1.rds.amazonaws.com:3306/cmpe");
-		dataSource.setUsername("quizmeadmin");
-		dataSource.setPassword("quizmeadmin");
+		dataSource.setUsername("cmpeadmin");
+		dataSource.setPassword("cmpeadmin");
 		dataSource.setInitialSize(2);
 		dataSource.setMaxTotal(5);
 		return dataSource;

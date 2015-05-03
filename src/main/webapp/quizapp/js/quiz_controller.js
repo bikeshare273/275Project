@@ -92,7 +92,11 @@ quizapp.config(function($routeProvider) {
 		templateUrl : 'comment.html',
 		controller : 'mycomment'
 	})
-
+	
+	.when('/recommendToFriend', {
+		templateUrl : 'recommendation.html',
+		controller : 'recommendToFriendController'
+	})
 
 	.otherwise({
 		redirectTo : '/'
@@ -462,5 +466,30 @@ quizapp.controller('mycomment',
 	
 	$scope.parseInt = parseInt;
 	
+	$scope.recommendToFriend = function(){
+		console.log("recommendToFriend");	
+		$location.url('/recommendToFriend');
+		var dataTransfer = new Array();
+		dataTransfer["quizData"] = $scope.quizData;
+		dataSharing.set(dataTransfer);
+	}
+	
 });
+
+
+quizapp.controller('recommendToFriendController',
+		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
+	console.log('recommendToFriendController start');
+	$rootScope.hideUserNavTabs = false;
+	$rootScope.hideStaticTabs = true;
+	
+	$scope.quizData = dataSharing.get().quizData;
+	
+	$scope.sendRecommendation = function(){
+		console.log("sendRecommendation");	
+	}
+	
+});
+
+
 

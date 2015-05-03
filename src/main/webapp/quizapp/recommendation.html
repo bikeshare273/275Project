@@ -1,0 +1,72 @@
+<div ng-controller="recommendToFriendController">
+	<div class="col-md-12" style="padding-top:80px; padding-bottom:100px;">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			
+			<div class="col-md-12" style="padding-top:10px;">
+				<div class="col-md-2" style="font-weight: bold; font-size: 15px;">
+					Quiz Name : 
+				</div>
+				<div class="col-md-10">
+					{{quizData.quizName}}
+				</div>
+			</div>
+			<div class="col-md-12" style="padding-top:10px;">
+				<div class="col-md-2" style="font-weight: bold; font-size: 15px;">
+					Quiz Description :
+				</div>
+				<div class="col-md-10">
+					{{quizData.quizDescription}}
+				</div>
+			</div>
+			<div class="col-md-12" style="padding-top:10px;">
+				<div class="col-md-2" style="font-weight: bold; font-size: 15px;">
+					Quiz Category :
+				</div>
+				<div class="col-md-10">
+					{{quizData.quizCategory}}
+				</div>
+			</div>
+			<div class="col-md-12" style="padding-top:10px;">
+				<div class="col-md-2" style="font-weight: bold; font-size: 15px;">
+					Quiz Difficulty: 
+				</div>
+				<div class="col-md-10">
+					{{quizData.quizDiffficulty}}
+				</div>
+			</div>
+			
+			<div class="col-md-12" style="padding-top:20px; font-weight: bold; font-size: 18px;">
+				<form name="recommendationform">
+					<div class="col-md-12" style="padding-top:10px;">
+						Recommend Quiz To Friend 
+					</div>
+					<div class="col-md-12" style="padding-top:10px;">
+						<div class="col-md-7">
+							<div class="col-md-12">
+								<input type="text" class="form-control" placeholder="Recommend to your friend !!!!" name="recommendationform_recemail" 
+									size="50" ng-model="recommendationform_recemail" required/>
+								<div class="error-container"
+									ng-show="recommendationform.recommendationform_recemail.$dirty && recommendationform.recommendationform_recemail.$invalid">
+										<small class="errorbox"
+										ng-show="recommendationform.recommendationform_recemail.$error.required">Friend's Email is required</small> 
+								</div>
+							</div>
+							<div class="col-md-12" style="padding-top: 10px;">
+								<button class="btn btn-default btn-block" type="button" ng-click="sendRecommendation()">Recommend Quiz</button>
+							</div>
+							<div class="col-md-12" style="padding-top: 10px;">
+								<div class="successbox">{{movieupdateform_success}}</div>
+							</div>
+						</div>
+						<div class="col-md-5"></div>
+					</div>
+				</form>
+			</div>
+			
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+</div>
+
+<div style="padding-top: 50px;" ng-include src="'footer.html'"></div>

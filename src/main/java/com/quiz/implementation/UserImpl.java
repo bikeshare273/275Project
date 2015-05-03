@@ -5,10 +5,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.apache.commons.beanutils.BeanUtils;
 
 import com.quiz.dao.interfaces.IDaoInterfaceForLogin;
 import com.quiz.dao.interfaces.IDaoInterfaceForUser;
+import com.quiz.dto.QuizAppException;
 import com.quiz.dto.UserDTO;
 import com.quiz.entities.Login;
 import com.quiz.entities.User;
@@ -28,30 +31,44 @@ public class UserImpl {
 	
 /***********************************************************************************/
 	
-	public UserDTO createUser(UserDTO user)
+	public ResponseEntity createUser(UserDTO user)
 	
 	{
 		
 		User userObject = new User();
 		Login loginObject = new Login();
-
-		try { BeanUtils.copyProperties(userObject, user);} 
-		catch (IllegalAccessException e) { e.printStackTrace(); } 
-		catch (InvocationTargetException e) { e.printStackTrace(); }
+		try{
+			
+			BeanUtils.copyProperties(userObject, user);
+			Integer userid = appUtils.generateIdValue(0);
+			userObject.setUserid(userid);
+			
+			loginObject.setUserid(userid);
+			loginObject.setUsername(user.getEmail());
+			loginObject.setPassword(appUtils.passwordEncrypter(user.getPassword()));
 		
-		Integer userid = appUtils.generateIdValue(0);
-		userObject.setUserid(userid);
+			usersDao.save(userObject);
+			loginDao.save(loginObject);
+			
+			user.setUserid(userid);
+			
+		}catch (IllegalAccessException e) {
+			e.printStackTrace(); 
+			return new ResponseEntity<QuizAppException>(new QuizAppException(500, "Unexpected Error Encountered"), HttpStatus.INTERNAL_SERVER_ERROR);
+		} 
+		catch (InvocationTargetException e) {
+			e.printStackTrace(); 
+			return new ResponseEntity<QuizAppException>(new QuizAppException(500, "Unexpected Error Encountered"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		catch (Exception e) { 
+			e.printStackTrace();
+			if(e instanceof QuizAppException)
+				return new ResponseEntity<QuizAppException>((QuizAppException)e, HttpStatus.BAD_REQUEST);
+			else
+				return new ResponseEntity<QuizAppException>(new QuizAppException(500, "Unexpected Error Encountered"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		
-		loginObject.setUserid(userid);
-		loginObject.setUsername(user.getEmail());
-		loginObject.setPassword(appUtils.passwordEncrypter(user.getPassword()));
-	
-		usersDao.save(userObject);
-		loginDao.save(loginObject);
-		
-		user.setUserid(userid);
-		
-		return user;
+		return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
 		
 	}
 	

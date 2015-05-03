@@ -3,9 +3,12 @@ package com.quiz.implementation;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.quiz.dao.interfaces.IDaoInterfaceForLogin;
 import com.quiz.dto.LoginDTO;
+import com.quiz.dto.QuizAppException;
 import com.quiz.entities.Login;
 import com.quiz.implementation.interfaces.IAuthInterfaceForLogin;
 import com.quiz.utils.QuizMeUtils;
@@ -21,7 +24,7 @@ public class AuthImplementation implements IAuthInterfaceForLogin{
 	
 
 	@Override
-	public LoginDTO login(LoginDTO loginDTO) {
+	public ResponseEntity login(LoginDTO loginDTO) {
 
 		String username = loginDTO.getEmail();
 		String password = loginDTO.getPassword();
@@ -36,6 +39,7 @@ public class AuthImplementation implements IAuthInterfaceForLogin{
 
 			loginDTO.setMessage("Invalid Username/Password");
 			loginDTO.setLoginValidationStatus(false);
+			throw new QuizAppException(404, "Invalid Username/Password");
 			}
 	
 			else
@@ -57,8 +61,12 @@ public class AuthImplementation implements IAuthInterfaceForLogin{
 			}
 	}catch(Exception e){
 		e.printStackTrace();
+		if(e instanceof QuizAppException)
+			return new ResponseEntity<QuizAppException>((QuizAppException)e, HttpStatus.BAD_REQUEST);
+		else
+			return new ResponseEntity<QuizAppException>(new QuizAppException(500, "Unexpected Error Encountered"), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	return loginDTO;
+	return new ResponseEntity<LoginDTO>(loginDTO, HttpStatus.OK);
 	}
 }
 

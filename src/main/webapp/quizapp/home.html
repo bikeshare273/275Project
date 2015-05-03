@@ -36,6 +36,17 @@
         <div style="text-align:center; ">
         	<a ng-click="clickRegister()" style='color: black'>Dont have account? Register Now!!</a>
        	</div>
+       	
+       	<!-- error and success message -->
+       	<div class="row">
+			<div class="col-md-4"></div>
+			<div class="errorbox" style="position:relative;padding-top:1%;padding-left:47%;">
+				<ul>
+					<li ng-repeat="err in error">{{ err }}</li>
+				</ul>
+			</div>
+			<div class="successbox" style="position:relative;padding-top:1%;padding-left:47%;">{{success}}</div>
+		</div>
       </form>
 
     </div> <!-- /container -->

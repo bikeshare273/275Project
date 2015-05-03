@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,11 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-
-
-
-
-
 import com.quiz.configuration.QuizMeConfiguration;
 import com.quiz.dao.interfaces.ITestDao;
 import com.quiz.dto.LoginDTO;
@@ -39,6 +35,8 @@ import com.quiz.entities.User;
 import com.quiz.implementation.UserImpl;
 import com.quiz.implementation.interfaces.IAuthInterfaceForLogin;
 import com.quiz.interceptor.SessionValidatorInterceptor;
+
+
 
 @RestController
 @EnableAutoConfiguration
@@ -82,18 +80,16 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	return true;
 	}
 
-
 	@RequestMapping("/login")
 	@ResponseBody
-	private LoginDTO login(@Valid @RequestBody LoginDTO loginDTO, HttpServletResponse response) {
-		loginDTO = authInterfaceForLogin.login(loginDTO);
-		
-		if(loginDTO.isLoginValidationStatus() == false) { return loginDTO; }
-		
-		response.addCookie(new Cookie("sessionid", Integer.toString(loginDTO.getSessionId())));
-		response.addCookie(new Cookie("username", loginDTO.getEmail()));
-		response.addCookie(new Cookie("userid", Integer.toString(loginDTO.getUserid())));
-		return loginDTO;
+	private ResponseEntity login(@Valid @RequestBody LoginDTO loginDTO, HttpServletResponse response) {
+		ResponseEntity responseEntity = authInterfaceForLogin.login(loginDTO);
+		if(responseEntity.getStatusCode() == HttpStatus.OK){
+			response.addCookie(new Cookie("sessionid", Integer.toString(loginDTO.getSessionId())));
+			response.addCookie(new Cookie("username", loginDTO.getEmail()));
+			response.addCookie(new Cookie("userid", Integer.toString(loginDTO.getUserid())));
+		}
+		return responseEntity;
 	}
 
 	
@@ -128,7 +124,7 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	@ResponseStatus(HttpStatus.CREATED)
 	@RequestMapping(value = "/createuser", method = RequestMethod.POST)
 	@ResponseBody
-	public UserDTO createUser(@Valid @RequestBody UserDTO user) {
+	public ResponseEntity createUser(@Valid @RequestBody UserDTO user) {
 		
 		return userImpl.createUser(user);
 	}
@@ -228,16 +224,6 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 /***********************************************************************************************/	
 	
 									/* Test API */ 
@@ -261,5 +247,5 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	}
 	
 /***********************************************************************************************/
-
+	
 }

@@ -125,11 +125,32 @@ quizapp.controller('homeController', function($scope, $http, $location, $q,
 	$rootScope.hideStaticTabs = false;
 
 	$scope.loginform_login = function(item, event) {
-		console.log("--> Submitting form " + $scope.loginform_email + " "
+		console.log("--> Submitting form "
+				+ $scope.loginform_email + " "
 				+ $scope.loginform_password);
 		console.log("--> Submitting form ");
+		var data = {
+			email : $scope.loginform_email,
+			password : $scope.loginform_password
+		};
+		
 
-		$location.url('/home');
+		var response = $http.post("../../quizme/login", data,
+				{});
+		response
+				.success(function(dataFromServer, status,
+						headers, config) {
+					$location.url('/home');
+				});
+		response.error(function(data, status, headers, config) {
+			console.log(data);
+			console.log(status);
+			console.log(headers);
+			console.log(config);
+			$scope.error = "Invalid email/password";
+			$location.url('/');
+			return $q.reject(response);
+		});
 	};
 
 	$scope.clickRegister = function() {

@@ -97,6 +97,11 @@ quizapp.config(function($routeProvider) {
 		templateUrl : 'recommendation.html',
 		controller : 'recommendToFriendController'
 	})
+	
+	.when('/quizStats', {
+		templateUrl : 'quizstats.html',
+		controller : 'quizStatsController'
+	})
 
 	.otherwise({
 		redirectTo : '/'
@@ -194,8 +199,24 @@ quizapp.controller('quizhomeController',
 		$location.url("/quizsolution");
 	};
 	
-	$scope.showQuizStats = function(item, event) {
+	$scope.showQuizStats = function(quizid) {
 		console.log("showQuizStats");
+		//get data for quiz and pass to next page
+		var quizStatsData = {
+				"quiz": {
+					"quizName":"science quiz",
+					"quizDescription":"this is my first quiz",
+					"quizDiffficulty":"Hard",
+					"quizCategory":"science"
+				},
+				"lowestScore":0,
+				"highestScore":80,
+				"averageScore":50.76,
+				"totalQuizTakers":200
+		};
+		var shareData = new Array();
+		shareData["quizStatsData"] = quizStatsData;
+		dataSharing.set(shareData);
 		$location.url("/quizStats");
 	};
 	
@@ -505,6 +526,16 @@ quizapp.controller('recommendToFriendController',
 		console.log("sendRecommendation");	
 		$scope.recommendationform_success = "Recommendation sent to your friend !!!!";
 	}
+	
+});
+
+quizapp.controller('quizStatsController',
+		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
+	console.log('quizStatsController start');
+	$rootScope.hideUserNavTabs = false;
+	$rootScope.hideStaticTabs = true;
+	
+	$scope.quizStatsData = dataSharing.get().quizStatsData;
 	
 });
 

@@ -1,0 +1,87 @@
+<div ng-controller="quizStatsController">
+
+	<div class="col-md-12"  style="font-weight: bold; font-size: 20px; text-align: center; padding-top:70px;">Quiz Statistics</div>
+	
+	<div class="col-md-12" style="padding-top:30px;">
+		
+		<div class="col-md-6">
+		
+			<div class="col-md-1"></div>
+			<div class="col-md-10" style="padding-top:20%; text-align:center; ">
+				<div class="col-md-12" style="padding-top:5px;">
+					<div class="col-md-6" style="font-weight: bold;">
+						Quiz Name :
+					</div>
+					<div class="col-md-6">
+						{{quizStatsData.quiz.quizName}}
+					</div>
+				</div>
+				<div class="col-md-12" style="padding-top:5px;">
+					<div class="col-md-6" style="font-weight: bold;">
+						Quiz Description :
+					</div>
+					<div class="col-md-6">
+						{{quizStatsData.quiz.quizDescription}}
+					</div>
+				</div>
+				<div class="col-md-12" style="padding-top:5px;">
+					<div class="col-md-6" style="font-weight: bold;">
+						Quiz Category :
+					</div>
+					<div class="col-md-6">
+						{{quizStatsData.quiz.quizCategory}}
+					</div>
+				</div>
+				<div class="col-md-12" style="padding-top:5px;">
+					<div class="col-md-6" style="font-weight: bold;">
+						Quiz Difficulty :
+					</div>
+					<div class="col-md-6">
+						{{quizStatsData.quiz.quizDiffficulty}}
+					</div>
+				</div>
+			</div>
+			<div class="col-md-1"></div>
+			
+		</div>
+		
+		<div class="col-md-6">
+		
+			<div class="col-md-1"></div>
+			<div class="col-md-10" style="padding-top:15%;">
+				<table class="table table-striped" style="border: 1px solid black; text-align: center;">
+					<thead>
+					<tr >
+						<th style="width:50%; text-align: center;">Name</th>
+						<th style="width:50%; text-align: center;">Statistics</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td >Total Quiz Takers </td>
+							<td >{{quizStatsData.totalQuizTakers}}</td>
+						</tr>
+						<tr>
+							<td >Average Quiz Score </td>
+							<td >{{quizStatsData.averageScore}}</td>
+						</tr>
+						<tr>
+							<td >Quiz Lowest Score </td>
+							<td >{{quizStatsData.lowestScore}}</td>
+						</tr>
+						<tr>
+							<td >Quiz Highest Score </td>
+							<td >{{quizStatsData.highestScore}}</td>
+						</tr>
+					</tbody>
+				</table>				
+			</div>
+			<div class="col-md-1"></div>
+		
+		</div>
+		
+	</div>	
+
+</div>
+
+<div style="padding-top: 50px;" ng-include src="'footer.html'"></div>

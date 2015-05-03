@@ -102,7 +102,17 @@ quizapp.config(function($routeProvider) {
 		templateUrl : 'quizstats.html',
 		controller : 'quizStatsController'
 	})
-
+	
+	.when('/quizsearch', {
+		templateUrl : 'quizsearch.html',
+		controller : 'quizSearchController'
+	})
+	
+	.when('/startquiz', {
+		templateUrl : 'startquiz.html',
+		controller : 'startQuizController'
+	})
+	
 	.otherwise({
 		redirectTo : '/'
 	});
@@ -196,7 +206,8 @@ quizapp.controller('quizhomeController',
 
 	$scope.openQuizSolution = function(item, event) {
 		console.log("take quiz");
-		$location.url("/quizsolution");
+		$location.url("/quizsearch");
+		//$location.url("/quizsolution");
 	};
 	
 	$scope.showQuizStats = function(quizid) {
@@ -539,5 +550,69 @@ quizapp.controller('quizStatsController',
 	
 });
 
+quizapp.controller('quizSearchController',
+		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
+	console.log('quizSearchController start');
+	$rootScope.hideUserNavTabs = false;
+	$rootScope.hideStaticTabs = true;
+	$scope.hideSearch = true;
+	
+	$scope.searchQuiz = function(){
+		$scope.hideSearch = false;
+		var data ={
+				"serachString":$scope.searchCategory,
+				"searchCategory":$scope.searchText
+			};
+			
+			//get quiz based on search 
+			var dataForQuizBasedOnSearch = {
+					"scoreForUser":{
+						"email":"swapp@localhost.com",
+					},
+					"scoreForQuiz":{
+						"quizId":"100",
+						"quizName":"Tech Quiz",
+						"quizCategory":"Software",
+						"quizCreator":{
+							"email":"viresh@localhost.net"
+						}
+					},
+					"score":100000,
+					"rankForQuiz":{
+						"rank":"10000",
+						"category":"quizwise",
+						"score":"99"
+					}
+			};
+			
+			var dataFormServer = new Array();
+			for(var i=0; i<20; i++){
+				dataFormServer[i] = dataForQuizBasedOnSearch;
+			}
+
+			$scope.queue = {
+					transactions: []
+			};
+			for(var i=0; i<20; i++){
+				$scope.queue.transactions.push(dataFormServer[i]);
+			}
+	}
+
+	$scope.startQuiz = function(quizid) {
+		console.log("start quiz");
+		$location.url("/startquiz");
+	};
+	
+});
+
+quizapp.controller('startQuizController',
+		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
+	console.log('startQuizController start');
+	$rootScope.hideUserNavTabs = false;
+	$rootScope.hideStaticTabs = true;
+	
+	
+	
+});
 
 

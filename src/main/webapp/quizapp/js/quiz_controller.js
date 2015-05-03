@@ -487,6 +487,7 @@ quizapp.controller('recommendToFriendController',
 	
 	$scope.sendRecommendation = function(){
 		console.log("sendRecommendation");	
+		$scope.recommendationform_success = "Recommendation sent to your friend !!!!";
 	}
 	
 });

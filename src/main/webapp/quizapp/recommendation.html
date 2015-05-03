@@ -44,8 +44,8 @@
 					<div class="col-md-12" style="padding-top:10px;">
 						<div class="col-md-7">
 							<div class="col-md-12">
-								<input type="text" class="form-control" placeholder="Recommend to your friend !!!!" name="recommendationform_recemail" 
-									size="50" ng-model="recommendationform_recemail" required/>
+								<input type="email" class="form-control" placeholder="Recommend to your friend !!!!" name="recommendationform_recemail" 
+									ng-model="recommendationform_recemail" required/>
 								<div class="error-container"
 									ng-show="recommendationform.recommendationform_recemail.$dirty && recommendationform.recommendationform_recemail.$invalid">
 										<small class="errorbox"
@@ -53,10 +53,11 @@
 								</div>
 							</div>
 							<div class="col-md-12" style="padding-top: 10px;">
-								<button class="btn btn-default btn-block" type="button" ng-click="sendRecommendation()">Recommend Quiz</button>
+								<button class="btn btn-default btn-block" type="button" ng-show="recommendationform.recommendationform_recemail.$error.required" ng-click="sendRecommendation()" disabled>Recommend Quiz</button>
+								<button class="btn btn-default btn-block" type="button" ng-hide="recommendationform.recommendationform_recemail.$error.required" ng-click="sendRecommendation()">Recommend Quiz</button>
 							</div>
 							<div class="col-md-12" style="padding-top: 10px;">
-								<div class="successbox">{{movieupdateform_success}}</div>
+								<div class="successbox">{{recommendationform_success}}</div>
 							</div>
 						</div>
 						<div class="col-md-5"></div>

@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Comments")
-public class Comments 
+public class Comment 
 {
 	
 	/*CREATE TABLE Comments(

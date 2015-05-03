@@ -8,7 +8,8 @@ public interface IDaoInterfaceForLogin {
 	
 	public Login save(Login login);
 	public Login update(Login login);
-	public void   delete(Login login);
+	public void  delete(Login login);
+	
 	public List<Login> getAllLogins();
 	public Login getLoginByUserId(Integer userid);
 	public Login getLoginByUserName(String username);

@@ -1,0 +1,132 @@
+<div ng-controller="mycomment">
+	<div class="col-md-12" style="padding-top:70px; padding-bottom:100px;">
+	
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			
+			<div class="col-md-12" style="padding-top:10px;">
+				<div class="col-md-2" style="font-weight: bold; font-size: 15px;">
+					Quiz Name : 
+				</div>
+				<div class="col-md-10">
+					{{quizData.quizName}}
+				</div>
+			</div>
+			<div class="col-md-12" style="padding-top:10px;">
+				<div class="col-md-2" style="font-weight: bold; font-size: 15px;">
+					Quiz Description :
+				</div>
+				<div class="col-md-10">
+					{{quizData.quizDescription}}
+				</div>
+			</div>
+			<div class="col-md-12" style="padding-top:10px;">
+				<div class="col-md-2" style="font-weight: bold; font-size: 15px;">
+					Quiz Category :
+				</div>
+				<div class="col-md-10">
+					{{quizData.quizCategory}}
+				</div>
+			</div>
+			<div class="col-md-12" style="padding-top:10px;">
+				<div class="col-md-2" style="font-weight: bold; font-size: 15px;">
+					Quiz Difficulty: 
+				</div>
+				<div class="col-md-10">
+					{{quizData.quizDiffficulty}}
+				</div>
+			</div>
+			
+			<div class="col-md-12" style="padding-top:40px;">
+				<div ng-repeat="question in quizData.quizQuestionDTOs track by $index" >
+					<div class="col-md-10" style="padding-bottom:20px;">
+						<div style="padding-top:10px; padding-bottom:5px; font-weight: bold; font-size: 15px;">
+							{{($index+1)+") "+question.question }}
+						</div>
+						<div>
+							<span ng-repeat="option in question.options track by $index" style="padding-top:2px; padding-left:5px;padding-bottom:2px;">
+								<div ng-show="parseInt($index+1) ==  parseInt(question.userAnswerId,10)" >
+									<input type="radio" name="" value="" checked>
+										<span style="color: green; font-weight: bold;" ng-show="parseInt($index+1) ==  parseInt(question.correctOptionId,10)" >
+											{{" "+question.options[$index]}}
+										</span>
+										<span ng-show="parseInt($index+1) !=  parseInt(question.correctOptionId,10)" >
+											{{" "+question.options[$index]}}
+										</span>
+									</input></br>
+								</div>
+								<div ng-show="parseInt($index+1) !=  parseInt(question.userAnswerId,10)" >
+									<input type="radio" name="" value="" >
+										<span style="color: green; font-weight: bold;" ng-show="parseInt($index+1) ==  parseInt(question.correctOptionId,10)" >
+											{{" "+question.options[$index]}}
+										</span>
+										<span ng-show="parseInt($index+1) !=  parseInt(question.correctOptionId,10)" >
+											{{" "+question.options[$index]}}
+										</span>
+									</input></br>
+								</div>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-12" style="padding-top:10px;">
+				<div class="col-md-1"></div>
+				<div class="col-md-4">
+					<button class="btn btn-default btn-block" type="button" ng-click="recommendToFriend()">Recommended to Friend</button>
+				</div>
+				<div class="col-md-5"></div>
+			</div>
+			
+			<div class="col-md-12" style="padding-top:10px;">
+				<div class="col-md-6">
+					<div class="col-md-12">
+						<form name="commentform">
+							<textarea name="commentform_comment" id="commentform_comment" class="form-control" rows="4" placeholder="Enter your thoughts !!!!" ng-model="commentform_comment" required>
+							</textarea>
+							<div class="error-container"
+								ng-show="commentform_comment.$dirty && commentform_comment.$invalid">
+									<small class="errorbox"
+									ng-show="commentform_comment.$error.required">Comment is required</small> 
+							</div>
+						</form>
+					</div>
+					<div class="col-md-12" style="padding-top:10px;">
+						<div class="col-md-4"></div>
+						<div class="col-md-4">
+							<button class="btn btn-default btn-block" type="button" ng-click="commentform_postComment()">Post</button>
+						</div>
+						<div class="col-md-4"></div>
+					</div>
+				</div>
+				<div class="col-md-6"></div>
+			</div>
+			
+			<div class="col-md-12" style="padding-top:10px;">
+				<div class="col-md-8">
+					<table st-safe-src="queue.transactions" st-table="emptyArray" class="table table-striped" >
+						<tbody ng-hide="isLoading">
+							<tr ng-repeat="row in emptyArray track by $index">
+								<td >{{$index+1}}</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="5" class="text-center">
+									<div st-pagination="" st-items-by-page="itemsByPage" ></div>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div class="col-md-4"></div>
+			</div>
+			
+		</div>
+		<div class="col-md-1"></div>
+		
+	</div>
+</div>
+
+<div style="padding-top: 50px;" ng-include src="'footer.html'"></div>

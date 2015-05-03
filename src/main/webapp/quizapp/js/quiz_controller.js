@@ -87,6 +87,11 @@ quizapp.config(function($routeProvider) {
 		templateUrl : 'createQuiz.html',
 		controller : 'createquizController'
 	})
+	
+	.when('/quizsolution', {
+		templateUrl : 'comment.html',
+		controller : 'mycomment'
+	})
 
 
 	.otherwise({
@@ -169,6 +174,11 @@ quizapp.controller('quizhomeController',
 		$location.url("/createquiz");
 	};
 
+	$scope.openQuizSolution = function(item, event) {
+		console.log("take quiz");
+		$location.url("/quizsolution");
+	};
+	
 	console.log('quizhomeController end');
 });
 
@@ -180,12 +190,7 @@ quizapp.controller('createquizController',
 
 	//structure to generate quiz
 	var questionCounter = 0;
-	$scope.questionData = {
-			"no":questionCounter+1,
-			"question":" ",
-			"options":[" "],
-			"correct_option_id":" "
-	}
+	
 
 	//add more options
 	$scope.addOption = function(item, event) {
@@ -323,8 +328,8 @@ quizapp.controller('homeUserController',
 quizapp.controller('profileController',
 		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
 	console.log('profileController start');
-	$rootScope.hideUserNavTabs = true;
-	$rootScope.hideStaticTabs = false;
+	$rootScope.hideUserNavTabs = false;
+	$rootScope.hideStaticTabs = true;
 
 
 	$scope.profileform_edit = function(item, event) {
@@ -415,5 +420,47 @@ quizapp.controller('globalDashboardController',
 	console.log('globalDashboardController end');
 });
 
-
+quizapp.controller('mycomment',
+		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
+	console.log('mycomment start');
+	$rootScope.hideUserNavTabs = false;
+	$rootScope.hideStaticTabs = true;
+	
+	$scope.quizData = {
+			"quizName":"science quiz",
+			"quizDescription":"this is my first quiz",
+			"quizDiffficulty":"Hard",
+			"quizCategory":"science",
+			"quizQuestionDTOs":[
+				                    {"question":"first question",
+				                    "options":["option 1","option 2", "option 3","option 4"],
+				                    "correctOptionId":"1",
+				                    "userAnswerId":"3"},
+				                    
+				                    {"question":"first question",
+				                    "options":["option 1","option 2", "option 3","option 4"],
+				                    "correctOptionId":"2",
+				                    "userAnswerId":"1"},
+				                    
+				                    {"question":"first question",
+				                    "options":["option 1","option 2", "option 3","option 4"],
+				                    "correctOptionId":"2",
+				                    "userAnswerId":"1"},
+				                    
+				                    {"question":"first question",
+				                    "options":["option 1","option 2", "option 3","option 4"],
+				                    "correctOptionId":"3",
+				                    "userAnswerId":"3"},
+				                    
+				                    {"question":"first question",
+				                    "options":["option 1","option 2", "option 3","option 4"],
+				                    "correctOptionId":"2",
+				                    "userAnswerId":"1"},
+			                    ],
+			"quizCreator":"amol"
+	};
+	
+	$scope.parseInt = parseInt;
+	
+});
 

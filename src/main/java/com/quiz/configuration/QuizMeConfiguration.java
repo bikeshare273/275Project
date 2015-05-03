@@ -12,12 +12,29 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 
+import com.quiz.dao.CategoryDao;
+import com.quiz.dao.CommentDao;
 import com.quiz.dao.LoginDao;
+import com.quiz.dao.OptionDao;
+import com.quiz.dao.QuestionCorrectAnswerDao;
+import com.quiz.dao.QuestionDao;
+import com.quiz.dao.QuizAttemptTrackingDao;
+import com.quiz.dao.QuizDao;
+import com.quiz.dao.QuizSharingDao;
 import com.quiz.dao.TestDao;
 import com.quiz.dao.UserDao;
+import com.quiz.dao.interfaces.IDaoInterfaceForCategory;
+import com.quiz.dao.interfaces.IDaoInterfaceForComment;
 import com.quiz.dao.interfaces.IDaoInterfaceForLogin;
+import com.quiz.dao.interfaces.IDaoInterfaceForOption;
+import com.quiz.dao.interfaces.IDaoInterfaceForQuestion;
+import com.quiz.dao.interfaces.IDaoInterfaceForQuestionCorrectAnswer;
+import com.quiz.dao.interfaces.IDaoInterfaceForQuiz;
+import com.quiz.dao.interfaces.IDaoInterfaceForQuizAttemptTracking;
+import com.quiz.dao.interfaces.IDaoInterfaceForQuizSharing;
 import com.quiz.dao.interfaces.IDaoInterfaceForUser;
 import com.quiz.dao.interfaces.ITestDao;
+import com.quiz.entities.QuizAttemptTracking;
 import com.quiz.implementation.AuthImplementation;
 import com.quiz.implementation.UserImpl;
 import com.quiz.implementation.interfaces.IAuthInterfaceForLogin;
@@ -57,13 +74,48 @@ public class QuizMeConfiguration {
 		return new LoginDao();
 	}
 	
-
 	@Bean
 	public ITestDao getTestDao() {
 		return new TestDao();
 	}
-		
-
+	
+	@Bean
+	public IDaoInterfaceForCategory getCategoryDao(){
+		return new CategoryDao();
+	}
+	
+	@Bean
+	public IDaoInterfaceForComment getCommentsDao(){
+		return new CommentDao();
+	}
+	
+	@Bean
+	public IDaoInterfaceForOption getOptionsDao(){
+		return new OptionDao();
+	}
+	
+	@Bean
+	public IDaoInterfaceForQuestion getQuestionsDao(){
+		return new QuestionDao();
+	}
+	
+	@Bean
+	public IDaoInterfaceForQuestionCorrectAnswer getQuestionCorrectAnswerDao(){
+		return new QuestionCorrectAnswerDao();
+	}
+	
+	public IDaoInterfaceForQuiz getQuizDao(){
+		return new QuizDao();
+	}
+	
+	public IDaoInterfaceForQuizAttemptTracking getQuizAttemptTrackingDao(){
+		return new QuizAttemptTrackingDao();
+	}
+	
+	public IDaoInterfaceForQuizSharing getQuizSharingDao(){
+		return new QuizSharingDao();
+	}
+	
 /********************************************************************************************************************/
 
 										/* Intercepter and Util Beans */

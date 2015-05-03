@@ -2,7 +2,10 @@
 
 	<div class="col-md-12"  style="padding-top:100px; padding-bottom:100px">
 		<div class="col-md-8">
-			<div class="col-md-12" >
+			<div class="col-md-12" style="font-weight: bold; font-size: 16px;">
+				User Created Quiz :
+			</div>
+			<div class="col-md-12" style="padding-top:20px;">
 				
 				<table st-safe-src="queue.transactions" st-table="emptyArray" class="table table-striped" >
 					<thead>
@@ -19,14 +22,14 @@
 					<tbody ng-hide="isLoading">
 						<tr ng-repeat="row in emptyArray track by $index">
 							<td >{{$index+1}}</td>
-							<td >{{row.quizname}}</td>
+							<td >{{row.scoreForQuiz.quizName}}</td>
 							<td >{{row.quizcreator}}</td>
-							<td >{{row.quizcategory}}</td>
-							<td >{{row.quizmaxscore}}</td>
-							<td >{{row.quiztopper}}</td>
+							<td >{{row.scoreForQuiz.quizCategory}}</td>
+							<td >{{row.rankForQuiz.score}}</td>
+							<td >{{row.scoreForUser.email}}</td>
 							<td >
 							<div style="padding-top:1px;padding-bottom:1px">
-								<button class="btn btn-default" ng-click="deleteMovie(row.movieid)"><span >Stats</span></button>
+								<button class="btn btn-default" ng-click="showQuizStats(row.scoreForQuiz.quizId)"><span >Stats</span></button>
 							</div style="padding-top:1px;padding-bottom:1px">
 							</td>
 						</tr>

@@ -154,16 +154,27 @@ quizapp.controller('quizhomeController',
 	$rootScope.hideUserNavTabs = false;
 	$rootScope.hideStaticTabs = true;
 
-	//get user created quiz data
+	//getUserCreatedQuiz
+	var dataForGetUserCreatedQuiz = {
+			"scoreForUser":{
+				"email":"swap@localhost.com",
+			},
+			"scoreForQuiz":{
+				"quizId":"100",
+				"quizName":"Tech Quiz",
+				"quizCategory":"Computer"
+			},
+			"score":100000,
+			"rankForQuiz":{
+				"rank":"10000",
+				"category":"quizwise",
+				"score":"99"
+			}
+	};
+	
 	var dataFormServer = new Array();
 	for(var i=0; i<20; i++){
-		dataFormServer[i] = {
-				"quizname":"quiz"+i,
-				"quizcreator":"swap",
-				"quizcategory":"science",
-				"quizmaxscore":"100",
-				"quiztopper":"swap"
-		};
+		dataFormServer[i] = dataForGetUserCreatedQuiz;
 	}
 
 	$scope.queue = {
@@ -181,6 +192,11 @@ quizapp.controller('quizhomeController',
 	$scope.openQuizSolution = function(item, event) {
 		console.log("take quiz");
 		$location.url("/quizsolution");
+	};
+	
+	$scope.showQuizStats = function(item, event) {
+		console.log("showQuizStats");
+		$location.url("/quizStats");
 	};
 	
 	console.log('quizhomeController end');

@@ -82,7 +82,7 @@ public class QuizMeConfiguration {
 		 * dataSource.setUrl("jdbc:mysql://localhost:3306/movieapp");
 		 * dataSource.setUsername("root"); dataSource.setPassword("");
 		 */
-		dataSource.setUrl("jdbc:mysql://db4free.net:3306/quizme");
+		dataSource.setUrl("jdbc:mysql://cmpe.cjatiw41rqvf.us-west-1.rds.amazonaws.com:3306/cmpe");
 		dataSource.setUsername("quizmeadmin");
 		dataSource.setPassword("quizmeadmin");
 		dataSource.setInitialSize(2);

@@ -34,13 +34,13 @@ public class Question
 	
 	@Id
 	@Column(name = "questionid", unique = true, nullable= false)
-	public Integer getQuestionpid() 
+	public Integer getQuestionid() 
 	{
 		return questionid;
 	}
-	public void setQuestionpid(Integer questionpid) 
+	public void setQuestionid(Integer questionid) 
 	{
-		this.questionid = questionpid;
+		this.questionid = questionid;
 	}
 	
 	@ManyToOne(targetEntity = Quiz.class, cascade = CascadeType.PERSIST)

@@ -10,7 +10,8 @@ public class QuizDTO {
 	private Integer quizid;
 	private String quizname;
 	private String quizdescription;
-	private Category categoryid;
+	private Integer categoryid;
+	private Category categoryObject;
 	private User quizcreator;
 	private String quizlevel;
 	private Integer popularitycount;
@@ -34,10 +35,10 @@ public class QuizDTO {
 	public void setQuizdescription(String quizdescription) {
 		this.quizdescription = quizdescription;
 	}
-	public Category getCategoryid() {
+	public Integer getCategoryid() {
 		return categoryid;
 	}
-	public void setCategoryid(Category categoryid) {
+	public void setCategoryid(Integer categoryid) {
 		this.categoryid = categoryid;
 	}
 	public User getQuizcreator() {
@@ -63,5 +64,11 @@ public class QuizDTO {
 	}
 	public void setQuestions(List<QuestionDTO> questions) {
 		this.questions = questions;
+	}
+	public Category getCategoryObject() {
+		return categoryObject;
+	}
+	public void setCategoryObject(Category categoryObject) {
+		this.categoryObject = categoryObject;
 	}
 }

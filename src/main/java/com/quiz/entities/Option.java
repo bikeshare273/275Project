@@ -40,14 +40,14 @@ public class Option
 	
 	@Id
 	@Column(name = "optionid", unique = true, nullable= false)
-	public Integer getOptionpid() 
+	public Integer getOptionid() 
 	{
 		return optionid;
 	}
 	
-	public void setOptionpid(Integer optionpid)
+	public void setOptionid(Integer optionid)
 	{
-		this.optionid = optionpid;
+		this.optionid = optionid;
 	}
 	
 	@ManyToOne(targetEntity = Quiz.class, cascade = CascadeType.PERSIST)

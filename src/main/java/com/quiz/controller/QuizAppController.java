@@ -193,7 +193,7 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/searchQuiz", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity searchQuiz(@CookieValue("userid") int userid, @RequestBody SearchDTO searchDTO) {
+	public ResponseEntity searchQuiz(@RequestBody SearchDTO searchDTO) {
 		return searchImpl.searchQuiz(searchDTO);		
 	}
 	
@@ -219,7 +219,7 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	@ResponseBody
 	public QuizDTO getQuiz(@RequestBody SearchDTO searchDTO) {
 				
-		Integer quizid = searchDTO.getSearchId();
+		Integer quizid = Integer.parseInt(searchDTO.getSearchId());
 		
 		return quizImpl.getQuiz(quizid);
 	}

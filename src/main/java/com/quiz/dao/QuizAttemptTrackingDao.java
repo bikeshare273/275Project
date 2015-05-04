@@ -141,12 +141,11 @@ public class QuizAttemptTrackingDao implements IDaoInterfaceForQuizAttemptTracki
 	@Override
 	public List<QuizAttemptTracking> getAllQuizAttemptsByScoreDescForQuizWithLimit(Integer quizid, Integer limit) {
 
-		String query = "from QuizAttemptTracking q where q.quizid = ? order by score desc LIMIT ?";
+		String query = "from QuizAttemptTracking q where q.quizid.quizid = ? order by score desc";
 		@SuppressWarnings("unchecked")
-		List<QuizAttemptTracking> quizattempts = (List<QuizAttemptTracking>) hibernateTemplate.find(query, quizid, limit);
-
+		List<QuizAttemptTracking> quizattempts = (List<QuizAttemptTracking>) hibernateTemplate.find(query, quizid);
 		if (quizattempts.isEmpty()) { return null; } 
-		else { return quizattempts;}
+		else { return quizattempts.subList(0, limit) ;}
 	}
 	
 	@Override

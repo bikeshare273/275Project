@@ -141,30 +141,7 @@ public class QuizImpl {
 /************************************************************************************************************/	
 	
 	public QuizDTO getQuiz(Integer quizid){
-		/*
-			private Integer quizid;
-			private String quizname;
-			private String quizdescription;
-			private Integer categoryid;
-			private Category categoryObject;
-			private User quizcreator;
-			private String quizlevel;
-			private Integer popularitycount;
-			private List<QuestionDTO> questions;
-		
-		*/
-		
-		/*
-		 	private Integer quizid;
-			private String quizname;
-			private String quizdescription;
-			private Category categoryid;
-			private User quizcreator;
-			private String quizlevel;
-			private Integer popularitycount;
-		 */
-		
-		
+			
 		
 		Quiz quiz = quizDao.getQuizById(quizid);
 		QuizDTO quizDTO = new QuizDTO();

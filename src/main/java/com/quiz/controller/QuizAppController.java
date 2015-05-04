@@ -29,12 +29,13 @@ import com.quiz.configuration.QuizMeConfiguration;
 import com.quiz.dao.interfaces.ITestDao;
 import com.quiz.dto.LoginDTO;
 import com.quiz.dto.QuizDTO;
+import com.quiz.dto.QuizSubmitDTO;
 import com.quiz.dto.SearchDTO;
-import com.quiz.dto.SearchResultDTO;
 import com.quiz.dto.UserDTO;
 import com.quiz.entities.Test;
 import com.quiz.entities.User;
 import com.quiz.implementation.QuizImpl;
+import com.quiz.implementation.QuizResultsImpl;
 import com.quiz.implementation.SearchImpl;
 import com.quiz.implementation.UserImpl;
 import com.quiz.implementation.interfaces.IAuthInterfaceForLogin;
@@ -69,6 +70,9 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	
 	@Autowired
 	QuizImpl quizImpl;
+	
+	@Autowired
+	QuizResultsImpl quizResultsImpl;
 		
 	@Autowired
 	ITestDao testDao;
@@ -225,7 +229,13 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	}
 	
 	
-	
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/submitQuiz", method = RequestMethod.POST)
+	@ResponseBody
+	public QuizSubmitDTO getQuiz(@CookieValue("userid") int userid, @RequestBody QuizSubmitDTO questionanswers) {
+				
+		return quizResultsImpl.evaluatteQuiz(userid, questionanswers);
+	}
 	
 	
 	

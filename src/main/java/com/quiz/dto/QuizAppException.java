@@ -1,7 +1,5 @@
 package com.quiz.dto;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class QuizAppException extends Exception {
 

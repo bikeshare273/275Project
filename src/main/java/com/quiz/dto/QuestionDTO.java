@@ -3,7 +3,6 @@ package com.quiz.dto;
 import java.util.List;
 
 import com.quiz.entities.Option;
-import com.quiz.entities.Quiz;
 
 public class QuestionDTO {
 	

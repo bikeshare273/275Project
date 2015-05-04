@@ -2,8 +2,6 @@ package com.quiz.dto;
 
 import java.util.List;
 
-import com.quiz.entities.User;
-
 public class QuizDTO {
 
 	private Integer quizid;

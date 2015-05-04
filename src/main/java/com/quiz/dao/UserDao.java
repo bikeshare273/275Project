@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 
 import com.quiz.dao.interfaces.IDaoInterfaceForUser;
-import com.quiz.entities.QuizAttemptTracking;
 import com.quiz.entities.User;
 
 

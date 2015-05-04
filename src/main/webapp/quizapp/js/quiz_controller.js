@@ -179,7 +179,7 @@ quizapp.controller('registerController',
 		
 		var data = {
 				email : $scope.signupform_email,
-				password : $scope.signupform_password,
+				newpassword : $scope.signupform_password,
 				phonenumber: $scope.signupform_phone,
 				country: $scope.signupform_country
 			};
@@ -311,7 +311,7 @@ quizapp.controller('createquizController',
 	$scope.quizData = {
 			"quizname":" ",
 			"quizdescription":" ",
-			"categoryid":" ",
+			"category":" ",
 			"quizlevel":" ",
 			"questions":[]
 	}

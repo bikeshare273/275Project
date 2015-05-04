@@ -212,34 +212,29 @@ quizapp.controller('quizhomeController',
 	$rootScope.hideStaticTabs = true;
 
 	//getUserCreatedQuiz
-	var dataForGetUserCreatedQuiz = {
-			"scoreForUser":{
-				"email":"swap@localhost.com",
-			},
-			"scoreForQuiz":{
-				"quizId":"100",
-				"quizName":"Tech Quiz",
-				"quizCategory":"Computer"
-			},
-			"score":100000,
-			"rankForQuiz":{
-				"rank":"10000",
-				"category":"quizwise",
-				"score":"99"
-			}
-	};
-	
-	var dataFormServer = new Array();
-	for(var i=0; i<20; i++){
-		dataFormServer[i] = dataForGetUserCreatedQuiz;
-	}
-
 	$scope.queue = {
 			transactions: []
 	};
 	for(var i=0; i<20; i++){
-		$scope.queue.transactions.push(dataFormServer[i]);
+		var dataForGetUserCreatedQuiz = {
+				"scoreForUser":{
+					"email":"swap@localhost.com",
+				},
+				"scoreForQuiz":{
+					"quizId":"100",
+					"quizName":"Tech Quiz",
+					"quizCategory":"Computer"
+				},
+				"score":100000,
+				"rankForQuiz":{
+					"rank":"10000",
+					"category":"quizwise",
+					"score":"99"
+				}
+		};
+		$scope.queue.transactions.push(dataForGetUserCreatedQuiz);
 	}
+	
 
 	$scope.createQuiz = function(item, event) {
 		console.log("create quiz");
@@ -390,24 +385,33 @@ quizapp.controller('homeUserController',
 	$rootScope.hideStaticTabs = true;
 
 	//get quiz details of a user
-	var dataFormServer = new Array();
-	for(var i=0; i<20; i++){
-		dataFormServer[i] = {
-				//"quizname1":"quiz"+i,
-				"quizname1": "Java",
-				"quizcreator":"puneet",
-				"quizcategory":"programming",
-				"quizscore":"100",
-				"quizrank":"10000"
-		};
-	}
-
-	$scope.queue1 = {
-			transactions: []
-	};
-	for(var i=0; i<20; i++){
-		$scope.queue1.transactions.push(dataFormServer[i]);
-	}
+	var response = $http.get("../../quizme/getAttemptedQuizes");
+	response
+			.success(function(dataFromServer, status,
+					headers, config) {
+				
+				console.log("getAttemptedQuizes dataFormServer "+dataFromServer);
+				if(dataFromServer.length > 0){
+					$scope.queue1 = {
+							transactions: []
+					};
+					for(var i=0; i<dataFromServer.length; i++){
+						$scope.queue1.transactions.push(dataFromServer[i]);
+					}
+				}else{
+					
+				}
+				
+			});
+	response.error(function(data, status, headers, config) {
+		console.log(data.errorMessage);
+		console.log(status);
+		if(status === 400){
+			$scope.error = data.errorMessage;
+		}
+		return $q.reject(response);
+	});	
+	
 
 	/*
 	 * Get category ranking
@@ -830,18 +834,22 @@ quizapp.controller('submitQuizConfirmController',
 		$scope.quizSubmitData = dataSharing.get().quizSubmitData;
 		//evaluate quiz
 		var response = $http.post("../../quizme/submitQuiz", $scope.quizSubmitData);
+		var shareData = new Array();
 		response.success(function(dataFromServer, status,
 						headers, config) {
 			console.log("evaluate result "+dataFromServer);
-			var shareData = new Array();
 			shareData["quizData"] = $scope.quizData;
 			shareData["quizSubmitData"] = $scope.quizSubmitData;
 			shareData["quizResult"] = dataFromServer;
 			dataSharing.set(shareData);
+			console.info("quiz submit data "+shareData);
+		    $modalInstance.close();
+		    $location.url("/quizsolution");
 		});
 		response.error(function(data, status, headers, config) {
 			if (status == 400) {
 				$scope.error = data.errorMessage;
+				$modalInstance.close();
 				$location.url('/');
 				return $q.reject(response);
 			}else{
@@ -850,9 +858,6 @@ quizapp.controller('submitQuizConfirmController',
 			}
 		});
 		
-	    console.info("quiz submit data "+$scope.quizData.quizName);
-	    $modalInstance.close();
-	    $location.url("/quizsolution");
 	  };
 
 	  $scope.cancelSubmit = function () {

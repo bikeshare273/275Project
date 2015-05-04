@@ -30,10 +30,12 @@ import com.quiz.dao.interfaces.ITestDao;
 import com.quiz.dto.LoginDTO;
 import com.quiz.dto.QuizDTO;
 import com.quiz.dto.QuizSubmitDTO;
+import com.quiz.dto.ResultDTO;
 import com.quiz.dto.SearchDTO;
 import com.quiz.dto.UserDTO;
 import com.quiz.entities.Test;
 import com.quiz.entities.User;
+import com.quiz.implementation.AttemptedQuizImpl;
 import com.quiz.implementation.QuizImpl;
 import com.quiz.implementation.QuizResultsImpl;
 import com.quiz.implementation.SearchImpl;
@@ -73,6 +75,9 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	
 	@Autowired
 	QuizResultsImpl quizResultsImpl;
+	
+	@Autowired
+	AttemptedQuizImpl attemptedQuizImpl;
 		
 	@Autowired
 	ITestDao testDao;
@@ -237,6 +242,13 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 		return quizResultsImpl.evaluatteQuiz(userid, questionanswers);
 	}
 	
+	
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/getAttemptedQuizes", method = RequestMethod.GET)
+	@ResponseBody
+	public List<ResultDTO> getAllQuizAttemptedByUser(@CookieValue("userid") int userid) {
+		return attemptedQuizImpl.getAllQuizAttemptsForUser(userid);		
+	}
 	
 	
 	

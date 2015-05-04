@@ -36,6 +36,7 @@ import com.quiz.dao.interfaces.IDaoInterfaceForUser;
 import com.quiz.dao.interfaces.ITestDao;
 import com.quiz.entities.QuizAttemptTracking;
 import com.quiz.implementation.AuthImplementation;
+import com.quiz.implementation.SearchImpl;
 import com.quiz.implementation.UserImpl;
 import com.quiz.implementation.interfaces.IAuthInterfaceForLogin;
 import com.quiz.interceptor.SessionValidatorInterceptor;
@@ -56,6 +57,11 @@ public class QuizMeConfiguration {
 	@Bean
 	public UserImpl getUserImpl(){
 		return new UserImpl();
+	}
+	
+	@Bean
+	public SearchImpl getSearchImpl(){
+		return new SearchImpl();
 	}
 	
 /********************************************************************************************************************/
@@ -104,17 +110,21 @@ public class QuizMeConfiguration {
 		return new QuestionCorrectAnswerDao();
 	}
 	
+	@Bean
 	public IDaoInterfaceForQuiz getQuizDao(){
 		return new QuizDao();
 	}
 	
+	@Bean
 	public IDaoInterfaceForQuizAttemptTracking getQuizAttemptTrackingDao(){
 		return new QuizAttemptTrackingDao();
 	}
 	
+	@Bean
 	public IDaoInterfaceForQuizSharing getQuizSharingDao(){
 		return new QuizSharingDao();
 	}
+	
 	
 /********************************************************************************************************************/
 

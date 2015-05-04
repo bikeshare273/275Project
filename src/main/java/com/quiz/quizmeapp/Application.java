@@ -10,6 +10,7 @@ import com.quiz.controller.QuizAppController;
 
 
 
+
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration

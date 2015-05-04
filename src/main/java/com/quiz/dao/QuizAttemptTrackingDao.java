@@ -2,12 +2,15 @@ package com.quiz.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.orm.hibernate4.HibernateTemplate;
 
 import com.quiz.dao.interfaces.IDaoInterfaceForQuizAttemptTracking;
 import com.quiz.entities.QuizAttemptTracking;
 
+@Transactional
 public class QuizAttemptTrackingDao implements IDaoInterfaceForQuizAttemptTracking{
 
 	@Autowired
@@ -130,6 +133,17 @@ public class QuizAttemptTrackingDao implements IDaoInterfaceForQuizAttemptTracki
 		String query = "from QuizAttemptTracking q where q.quizid.quizid = ? order by score desc";
 		@SuppressWarnings("unchecked")
 		List<QuizAttemptTracking> quizattempts = (List<QuizAttemptTracking>) hibernateTemplate.find(query, quizid);
+
+		if (quizattempts.isEmpty()) { return null; } 
+		else { return quizattempts;}
+	}
+	
+	@Override
+	public List<QuizAttemptTracking> getAllQuizAttemptsByScoreDescForQuizWithLimit(Integer quizid, Integer limit) {
+
+		String query = "from QuizAttemptTracking q where q.quizid.quizid = ? order by score desc LIMIT ?";
+		@SuppressWarnings("unchecked")
+		List<QuizAttemptTracking> quizattempts = (List<QuizAttemptTracking>) hibernateTemplate.find(query, quizid, limit);
 
 		if (quizattempts.isEmpty()) { return null; } 
 		else { return quizattempts;}

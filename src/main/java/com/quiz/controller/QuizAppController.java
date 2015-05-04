@@ -32,6 +32,7 @@ import com.quiz.dto.SearchDTO;
 import com.quiz.dto.UserDTO;
 import com.quiz.entities.Test;
 import com.quiz.entities.User;
+import com.quiz.implementation.SearchImpl;
 import com.quiz.implementation.UserImpl;
 import com.quiz.implementation.interfaces.IAuthInterfaceForLogin;
 import com.quiz.interceptor.SessionValidatorInterceptor;
@@ -59,6 +60,9 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	
 	@Autowired
 	UserImpl userImpl;
+	
+	@Autowired
+	SearchImpl searchImpl;
 		
 	@Autowired
 	ITestDao testDao;
@@ -177,6 +181,17 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 		userImpl.deleteUser(userid);
 	}
 
+	
+	//swapnil
+	
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/searchQuiz", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity searchQuiz(@CookieValue("userid") int userid, @RequestBody SearchDTO searchDTO) {
+		return searchImpl.searchQuiz(searchDTO);		
+	}
+	
+	//swapnil
 
 /***********************************************************************************************/
 

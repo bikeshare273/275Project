@@ -3,7 +3,7 @@ package com.quiz.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.orm.hibernate4.HibernateTemplate;
 
 import com.quiz.dao.interfaces.IDaoInterfaceForQuestionCorrectAnswer;
 import com.quiz.entities.QuestionConrrectAnswerRef;

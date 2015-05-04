@@ -2,12 +2,15 @@ package com.quiz.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.orm.hibernate4.HibernateTemplate;
 
 import com.quiz.dao.interfaces.IDaoInterfaceForQuizSharing;
 import com.quiz.entities.QuizSharing;
 
+@Transactional
 public class QuizSharingDao implements IDaoInterfaceForQuizSharing{
 
 	@Autowired

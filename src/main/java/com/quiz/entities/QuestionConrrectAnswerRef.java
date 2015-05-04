@@ -26,22 +26,22 @@ public class QuestionConrrectAnswerRef
 	 * 
 	 */
 	
-	private Integer questioncorrectanswerpid;
+	private Integer questioncorrectanswerid;
 	private Integer questionid;
 	private Integer optionid;
 	
 	/***********************************************/
 	
 	@Id
-	@Column(name = "questioncorrectanswerpid", unique = true, nullable= false)
-	public Integer getQuestioncorrectanswerpid() 
+	@Column(name = "questioncorrectanswerid", unique = true, nullable= false)
+	public Integer getQuestioncorrectanswerid() 
 	{
-		return questioncorrectanswerpid;
+		return questioncorrectanswerid;
 	}
 	
-	public void setQuestioncorrectanswerpid(Integer questioncorrectanswerpid) 
+	public void setQuestioncorrectanswerid(Integer questioncorrectanswerid) 
 	{
-		this.questioncorrectanswerpid = questioncorrectanswerpid;
+		this.questioncorrectanswerid = questioncorrectanswerid;
 	}
 	
 	@Column(name = "questionid", unique = false, nullable= false)

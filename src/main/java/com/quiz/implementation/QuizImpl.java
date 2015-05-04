@@ -127,10 +127,10 @@ public class QuizImpl {
 
 	{
 		
-		Integer questioncorrectanswerpid = appUtils.generateIdValue(400);
+		Integer questioncorrectanswerid = appUtils.generateIdValue(400);
 		QuestionConrrectAnswerRef object = new QuestionConrrectAnswerRef();
 
-		object.setQuestioncorrectanswerpid(questioncorrectanswerpid);
+		object.setQuestioncorrectanswerid(questioncorrectanswerid);
 		object.setQuestionid(questionid);
 		object.setOptionid(optionid);
 		

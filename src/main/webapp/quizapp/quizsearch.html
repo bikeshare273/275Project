@@ -1,6 +1,6 @@
-<div ng-controller="quizSearchController">
+<div ng-controller="quizSearchController" style="padding-top:70px; padding-bottom:100px;"">
 
-	<div class="col-md-12"  style="padding-top:70px; padding-bottom:10px; text-align:center; font-weight: bold; font-size: 18px;">
+	<div class="col-md-12"  style="padding-top:10px; padding-bottom:10px; text-align:center; font-weight: bold; font-size: 18px;">
 		Serach Quiz
 	</div>
 
@@ -16,8 +16,7 @@
 							id="searchCategory" name="searchCategory" class="form-control" data-role="listview"
 							ng-model="searchCategory" ng-change="" required>
 							<option value="">Select Search Category</option>
-							<option value="0">Technology</option>
-							<option value="1">Science</option>
+							<option value="0">By Quiz Category</option>
 						</select>
 						<div class="error-container"
 							ng-show="searchQuizForm.searchCategory.$dirty && searchQuizForm.searchCategory.$invalid">
@@ -73,14 +72,14 @@
 					<tbody ng-hide="isLoading">
 						<tr ng-repeat="row in emptyArray track by $index">
 							<td >{{$index+1}}</td>
-							<td >{{row.scoreForQuiz.quizName}}</td>
-							<td >{{row.scoreForQuiz.quizCreator.email}}</td>
-							<td >{{row.scoreForQuiz.quizCategory}}</td>
-							<td >{{row.rankForQuiz.score}}</td>
-							<td >{{row.scoreForUser.email}}</td>
+							<td >{{row.quizDTO.quizname}}</td>
+							<td >{{row.quizDTO.quizcreator.email}}</td>
+							<td >{{row.quizDTO.categoryid}}</td>
+							<td >{{row.score}}</td>
+							<td >{{row.userDTO.email}}</td>
 							<td >
 							<div style="padding-top:1px;padding-bottom:1px">
-								<button class="btn btn-default" ng-click="startQuiz(row.scoreForQuiz.quizId)"><span >Start</span></button>
+								<button class="btn btn-default" ng-click="startQuiz(row.quizDTO.quizid)"><span >Start</span></button>
 							</div style="padding-top:1px;padding-bottom:1px">
 							</td>
 						</tr>
@@ -98,3 +97,5 @@
 	</div>
 	
 </div>
+
+<div style="padding-top: 50px;" ng-include src="'footer.html'"></div>

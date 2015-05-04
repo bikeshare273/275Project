@@ -656,12 +656,12 @@ quizapp.controller('quizSearchController',
 	$scope.searchQuiz = function(){
 		$scope.hideSearch = false;
 		var data ={
-				"serachString":$scope.searchCategory,
-				"searchCategory":$scope.searchText
+				"searchId":$scope.searchCategory,
+				"serachString":$scope.searchText
 			};
 			
 			//get quiz based on search 
-			var dataForQuizBasedOnSearch = {
+			/*var dataForQuizBasedOnSearch = {
 					"scoreForUser":{
 						"email":"swapp@localhost.com",
 					},
@@ -679,23 +679,33 @@ quizapp.controller('quizSearchController',
 						"category":"quizwise",
 						"score":"99"
 					}
-			};
+			};*/
+			var response = $http.post("../../quizme/searchQuiz", data);
+			response.success(function(dataFromServer, status,
+							headers, config) {
+				console.log("dataFromServer "+dataFromServer);
+				$scope.queue = {
+						transactions: []
+				};
+				for(var i=0; i<dataFromServer.length; i++){
+					$scope.queue.transactions.push(dataFromServer[i]);
+				}
+			});
+			response.error(function(data, status, headers, config) {
+				if (status == 400) {
+					$scope.error = data.errorMessage;
+					$location.url('/');
+					return $q.reject(response);
+				}else{
+					$scope.error = status+": "+data.errorMessage;
+					return $q.reject(response);
+				}
+			});
 			
-			var dataFormServer = new Array();
-			for(var i=0; i<20; i++){
-				dataFormServer[i] = dataForQuizBasedOnSearch;
-			}
-
-			$scope.queue = {
-					transactions: []
-			};
-			for(var i=0; i<20; i++){
-				$scope.queue.transactions.push(dataFormServer[i]);
-			}
 	}
 
 	$scope.startQuiz = function(quizid) {
-		console.log("start quiz");
+		console.log("start quiz "+quizid);
 		//get quiz by quizid
 		$scope.quizData = {
 				"quizName":"science quiz",

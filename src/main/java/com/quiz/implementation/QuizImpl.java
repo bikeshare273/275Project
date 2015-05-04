@@ -78,7 +78,10 @@ public class QuizImpl {
 
 		createQuestions(questionDTOs, quizObject); // Fetch and create questions.
 
-		return null;
+		quizDTO.setQuizid(quizid);
+		
+		return quizDTO;
+		
 
 	}
 

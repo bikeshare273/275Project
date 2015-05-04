@@ -28,10 +28,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import com.quiz.configuration.QuizMeConfiguration;
 import com.quiz.dao.interfaces.ITestDao;
 import com.quiz.dto.LoginDTO;
+import com.quiz.dto.QuizDTO;
 import com.quiz.dto.SearchDTO;
+import com.quiz.dto.SearchResultDTO;
 import com.quiz.dto.UserDTO;
 import com.quiz.entities.Test;
 import com.quiz.entities.User;
+import com.quiz.implementation.QuizImpl;
 import com.quiz.implementation.SearchImpl;
 import com.quiz.implementation.UserImpl;
 import com.quiz.implementation.interfaces.IAuthInterfaceForLogin;
@@ -63,6 +66,9 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	
 	@Autowired
 	SearchImpl searchImpl;
+	
+	@Autowired
+	QuizImpl quizImpl;
 		
 	@Autowired
 	ITestDao testDao;
@@ -200,7 +206,13 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 /***********************************************************************************************/
 	
 	
-	
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/createQuiz", method = RequestMethod.POST)
+	@ResponseBody
+	public QuizDTO createQuiz(@CookieValue("userid") int userid, @RequestBody QuizDTO quizDTO) {
+						
+		return quizImpl.createQuiz(quizDTO, userid);
+	}
 	
 	
 	

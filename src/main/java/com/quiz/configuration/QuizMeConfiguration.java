@@ -36,6 +36,7 @@ import com.quiz.dao.interfaces.IDaoInterfaceForUser;
 import com.quiz.dao.interfaces.ITestDao;
 import com.quiz.entities.QuizAttemptTracking;
 import com.quiz.implementation.AuthImplementation;
+import com.quiz.implementation.QuizImpl;
 import com.quiz.implementation.SearchImpl;
 import com.quiz.implementation.UserImpl;
 import com.quiz.implementation.interfaces.IAuthInterfaceForLogin;
@@ -63,6 +64,12 @@ public class QuizMeConfiguration {
 	public SearchImpl getSearchImpl(){
 		return new SearchImpl();
 	}
+	
+	@Bean
+	public QuizImpl getQuizImpl(){
+		return new QuizImpl();
+	}
+	
 	
 /********************************************************************************************************************/
 

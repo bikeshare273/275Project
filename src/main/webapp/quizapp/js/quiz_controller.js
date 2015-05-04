@@ -653,33 +653,34 @@ quizapp.controller('quizSearchController',
 	$rootScope.hideStaticTabs = true;
 	$scope.hideSearch = true;
 	
+	$scope.hideSearchTextBox = false;
+	$scope.hideSearchCategoryDropDown = true;
+	
+	$scope.changedQuizSearch = function(){
+		if($scope.searchCategory == "0"){
+			$scope.hideSearchTextBox = true;
+			$scope.hideSearchCategoryDropDown = false;
+		}else{
+			$scope.hideSearchTextBox = false;
+			$scope.hideSearchCategoryDropDown = true;
+		}
+	}
+	
 	$scope.searchQuiz = function(){
 		$scope.hideSearch = false;
+		var searchString = $scope.searchText;
+		if($scope.searchCategory == "0"){
+			console.log("0");
+			searchString = $scope.searchTextForCategory;
+		}else{
+			console.log("1");
+			searchString = $scope.searchText;
+		}
 		var data ={
 				"searchId":$scope.searchCategory,
-				"serachString":$scope.searchText
+				"serachString":searchString
 			};
 			
-			//get quiz based on search 
-			/*var dataForQuizBasedOnSearch = {
-					"scoreForUser":{
-						"email":"swapp@localhost.com",
-					},
-					"scoreForQuiz":{
-						"quizId":"100",
-						"quizName":"Tech Quiz",
-						"quizCategory":"Software",
-						"quizCreator":{
-							"email":"viresh@localhost.net"
-						}
-					},
-					"score":100000,
-					"rankForQuiz":{
-						"rank":"10000",
-						"category":"quizwise",
-						"score":"99"
-					}
-			};*/
 			var response = $http.post("../../quizme/searchQuiz", data);
 			response.success(function(dataFromServer, status,
 							headers, config) {
@@ -707,7 +708,32 @@ quizapp.controller('quizSearchController',
 	$scope.startQuiz = function(quizid) {
 		console.log("start quiz "+quizid);
 		//get quiz by quizid
-		$scope.quizData = {
+		var data ={
+				"searchId":quizid,
+				"serachString":""
+			};
+			
+			var response = $http.post("../../quizme/getQuiz", data);
+			response.success(function(dataFromServer, status,
+							headers, config) {
+				console.log("dataFromServer "+dataFromServer);
+				var sharedData = new Array();
+				sharedData["quizData"] = dataFromServer;
+				dataSharing.set(sharedData);
+				$location.url("/startquiz");
+			});
+			response.error(function(data, status, headers, config) {
+				if (status == 400) {
+					$scope.error = data.errorMessage;
+					$location.url('/');
+					return $q.reject(response);
+				}else{
+					$scope.error = status+": "+data.errorMessage;
+					return $q.reject(response);
+				}
+			});
+		
+		/*$scope.quizData = {
 				"quizName":"science quiz",
 				"quizDescription":"this is my first quiz",
 				"quizDiffficulty":"Hard",
@@ -739,13 +765,8 @@ quizapp.controller('quizSearchController',
 					                    "userAnswerId":"1"},
 				                    ],
 				"quizCreator":"amol"
-		};
+		};*/
 		
-		var sharedData = new Array();
-		sharedData["quizData"] = $scope.quizData;
-		dataSharing.set(sharedData);
-		
-		$location.url("/startquiz");
 	};
 	
 });

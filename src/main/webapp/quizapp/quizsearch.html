@@ -14,7 +14,7 @@
 					<div class="col-md-4">
 						<select
 							id="searchCategory" name="searchCategory" class="form-control" data-role="listview"
-							ng-model="searchCategory" ng-change="" required>
+							ng-model="searchCategory" ng-change="changedQuizSearch()" required>
 							<option value="">Select Search Category</option>
 							<option value="0">By Quiz Category</option>
 						</select>
@@ -27,7 +27,7 @@
 					<div class="col-md-2" style="font-style: italic; font-size: 15px; text-align: center;">
 						Search For
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-4" ng-hide="hideSearchTextBox" > 
 						<input type="text" class="form-control" placeholder="" name="searchText" 
 							size="50" ng-model="searchText" required/>
 						<div class="error-container"
@@ -36,6 +36,23 @@
 								ng-show="searchQuizForm.searchText.$error.required">Search Criteria is required</small> 
 						</div>
 					</div>
+					<div class="col-md-4" ng-hide="hideSearchCategoryDropDown" > 
+						<select id="searchTextForCategory" name="searchTextForCategory" class="form-control" data-role="listview"
+							ng-model="searchTextForCategory" required>
+							<option value="">Select Category</option>
+							<option value="1">Technology</option>
+							<option value="2">Science</option>
+							<option value="3">History</option>
+							<option value="4">Geography</option>
+							<option value="5">Language</option>
+						</select>
+						<div class="error-container"
+							ng-show="searchQuizForm.searchTextForCategory.$dirty && searchQuizForm.searchTextForCategory.$invalid">
+								<small class="errorbox"
+								ng-show="searchQuizForm.searchTextForCategory.$error.required">Search Criteria is required</small> 
+						</div>
+					</div>
+					
 					<div class="col-md-1"></div>
 				</div>
 				

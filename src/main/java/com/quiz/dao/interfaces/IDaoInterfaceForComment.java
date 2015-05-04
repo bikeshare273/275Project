@@ -19,6 +19,8 @@ public interface IDaoInterfaceForComment {
 	public void delete(Comment comment);
 	
 	public Comment getCommentById(Integer commentid);
+	
+	//we require this
 	public List<Comment> getAllCommentsForQuiz(Integer quizid);
 	public List<Comment> getAllCommentsByUser(Integer userid);
 	

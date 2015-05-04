@@ -81,12 +81,9 @@ public class SearchImpl {
 			throw new QuizAppException(400, "Search Category is missing");
 		}
 		//get id for category
-		Category category = categoryDao.getCategoryByName(searchDTO.getSerachString());
-		if(category == null){
-			throw new QuizAppException(400, "Search Category not found");
-		}
+		
 		//get list of quiz for category id
-		List<Quiz> quizes = quizDao.getAllQuizzesByCategory(category.getCategoryid());
+		List<Quiz> quizes = quizDao.getAllQuizzesByCategory(searchDTO.getSerachString());
 		if(quizes == null && quizes.size()==0){
 			throw new QuizAppException(400, "No Quizes Found for this Criteria");
 		}

@@ -128,7 +128,7 @@ public class QuizImpl {
 
 			optionDao.save(option);
 
-			if (option.getOptionvalue() == correctionOptionString) 
+			if (correctionOptionString.equalsIgnoreCase(option.getOptionvalue())) 
 			{
 				createCorrectAnswerReference(question, option); // Fetch and create CorrectAnswerReference
 			}
@@ -140,6 +140,7 @@ public class QuizImpl {
 	public void createCorrectAnswerReference(Question question, Option option)
 
 	{
+		
 		Integer questioncorrectanswerpid = appUtils.generateIdValue(400);
 		QuestionConrrectAnswerRef object = new QuestionConrrectAnswerRef();
 

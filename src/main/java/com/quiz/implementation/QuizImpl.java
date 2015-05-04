@@ -198,6 +198,9 @@ public class QuizImpl {
 		
 		quizDTO.setQuestions(questions);
 		
+		quizDTO.setQuizcreator(null);
+		quizDTO.setCategoryObject(null);
+		
 		return quizDTO;
 		
 	}
@@ -213,7 +216,14 @@ public class QuizImpl {
 			Integer questionid = question.getQuestionid();
 			
 			List<Option> options = optionDao.getAllOptionsForQuestion(questionid);
-
+			
+			for(Option option : options)
+			{
+				option.setQuizid(null);
+				option.setQuestionid(null);
+			}
+			
+			
 			QuestionConrrectAnswerRef correctansweroption = correctAnswerReferenceDao.getCorrectOptionForQuestion(questionid); 
 			
 			Option option = correctansweroption.getOptionid();

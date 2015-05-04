@@ -478,7 +478,7 @@ quizapp.controller('profileController',
 		//update user data
 		var data = {
 			email : $scope.profileform_email,
-			password : $scope.profileform_newpassword,
+			newpassword : $scope.profileform_newpassword,
 			oldpassword : $scope.profileform_oldpassword,
 			phonenumber: $scope.profileform_phone,
 			country: $scope.profileform_country
@@ -574,7 +574,12 @@ quizapp.controller('mycomment',
 	$rootScope.hideUserNavTabs = false;
 	$rootScope.hideStaticTabs = true;
 	
-	$scope.quizData = {
+	$scope.quizData = dataSharing.get().quizData;
+	$scope.quizSubmitData = dataSharing.get().quizSubmitData;
+	$scope.quizResult = dataSharing.get().quizResult;
+	$scope.questionNo = 0;
+	
+	/*$scope.quizData = {
 			"quizName":"science quiz",
 			"quizDescription":"this is my first quiz",
 			"quizDiffficulty":"Hard",
@@ -606,7 +611,7 @@ quizapp.controller('mycomment',
 				                    "userAnswerId":"1"},
 			                    ],
 			"quizCreator":"amol"
-	};
+	};*/
 	
 	$scope.parseInt = parseInt;
 	
@@ -716,7 +721,6 @@ quizapp.controller('quizSearchController',
 			var response = $http.post("../../quizme/getQuiz", data);
 			response.success(function(dataFromServer, status,
 							headers, config) {
-				console.log("dataFromServer "+dataFromServer);
 				var sharedData = new Array();
 				sharedData["quizData"] = dataFromServer;
 				dataSharing.set(sharedData);
@@ -778,11 +782,27 @@ quizapp.controller('startQuizController',
 	$rootScope.hideStaticTabs = true;
 	
 	$scope.quizData = dataSharing.get().quizData;
+	$scope.questionumber = 0;
+	//question and answer
+	$scope.quizAnswers = new Array();
+	for(var i=0; i<$scope.quizData.questions.length; i++){
+		var questionAndAns = new Object();
+		questionAndAns["questionid"] = $scope.quizData.questions[i].questionid;
+		questionAndAns["userselectedoptionoid"] = 0;
+		$scope.quizAnswers[i] = questionAndAns;
+	}
+	console.log("quizAnswers "+$scope.quizAnswers.length);
+	
+	$scope.quizSubmitData = {
+		"quizid": $scope.quizData.quizid,
+		"setOfQuestionAndAnswers":$scope.quizAnswers
+	};
 	
 	$scope.submitQuizConfirmModal = function(){
 		
 		var shareData = new Array();
 		shareData["quizData"] = $scope.quizData;
+		shareData["quizSubmitData"] = $scope.quizSubmitData;
 		dataSharing.set(shareData);
 		
 		var modalInstance = $modal.open({
@@ -807,9 +827,32 @@ quizapp.controller('submitQuizConfirmController',
 	
 	 $scope.submitQuiz = function () {
 		$scope.quizData = dataSharing.get().quizData;
+		$scope.quizSubmitData = dataSharing.get().quizSubmitData;
+		//evaluate quiz
+		var response = $http.post("../../quizme/submitQuiz", $scope.quizSubmitData);
+		response.success(function(dataFromServer, status,
+						headers, config) {
+			console.log("evaluate result "+dataFromServer);
+			var shareData = new Array();
+			shareData["quizData"] = $scope.quizData;
+			shareData["quizSubmitData"] = $scope.quizSubmitData;
+			shareData["quizResult"] = dataFromServer;
+			dataSharing.set(shareData);
+		});
+		response.error(function(data, status, headers, config) {
+			if (status == 400) {
+				$scope.error = data.errorMessage;
+				$location.url('/');
+				return $q.reject(response);
+			}else{
+				$scope.error = status+": "+data.errorMessage;
+				return $q.reject(response);
+			}
+		});
+		
 	    console.info("quiz submit data "+$scope.quizData.quizName);
 	    $modalInstance.close();
-	    $location.url("/home");
+	    $location.url("/quizsolution");
 	  };
 
 	  $scope.cancelSubmit = function () {

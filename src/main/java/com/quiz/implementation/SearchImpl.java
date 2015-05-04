@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.quiz.dao.interfaces.IDaoInterfaceForQuiz;
 import com.quiz.dao.interfaces.IDaoInterfaceForQuizAttemptTracking;
+import com.quiz.dao.interfaces.IDaoInterfaceForUser;
 import com.quiz.dto.QuizAppException;
 import com.quiz.dto.QuizDTO;
 import com.quiz.dto.SearchDTO;
@@ -17,11 +18,15 @@ import com.quiz.dto.SearchResultDTO;
 import com.quiz.dto.UserDTO;
 import com.quiz.entities.Quiz;
 import com.quiz.entities.QuizAttemptTracking;
+import com.quiz.entities.User;
 
 public class SearchImpl {
 
 	@Autowired
 	IDaoInterfaceForQuiz quizDao;
+	
+	@Autowired
+	IDaoInterfaceForUser userDao;
 		
 	@Autowired
 	IDaoInterfaceForQuizAttemptTracking quizAttemptTrackingDao;
@@ -47,6 +52,10 @@ public class SearchImpl {
 				QuizDTO quizDTO = new QuizDTO();
 				BeanUtils.copyProperties(quizDTO, quiz);
 				SearchResultDTO searchResultDTO = new SearchResultDTO();
+				//fetch user based on userid
+				UserDTO userDTOForQuizCreator = new UserDTO();
+				BeanUtils.copyProperties(userDTOForQuizCreator, userDao.getUserById(quiz.getQuizcreator()));
+				quizDTO.setQuizcreatoruser(userDTOForQuizCreator);
 				searchResultDTO.setQuizDTO(quizDTO);
 				//find max scorer
 				List<QuizAttemptTracking> topAttemptTrackings = quizAttemptTrackingDao.getAllQuizAttemptsByScoreDescForQuizWithLimit(quizDTO.getQuizid(), 1);

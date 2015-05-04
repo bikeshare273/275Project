@@ -10,6 +10,7 @@ public class QuizDTO {
 	private String category;
 	private String quizlevel;
 	private Integer quizcreator;
+	private UserDTO quizcreatoruser;
 	private Integer popularitycount;
 	private List<QuestionDTO> questions;
 	
@@ -60,5 +61,11 @@ public class QuizDTO {
 	}
 	public void setCategory(String category) {
 		this.category = category;
+	}
+	public UserDTO getQuizcreatoruser() {
+		return quizcreatoruser;
+	}
+	public void setQuizcreatoruser(UserDTO quizcreatoruser) {
+		this.quizcreatoruser = quizcreatoruser;
 	}
 }

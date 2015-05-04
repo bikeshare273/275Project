@@ -9,7 +9,7 @@
 					Quiz Name : 
 				</div>
 				<div class="col-md-10">
-					{{quizData.quizName}}
+					{{quizData.quizname}}
 				</div>
 			</div>
 			<div class="col-md-12" style="padding-top:10px;">
@@ -17,7 +17,7 @@
 					Quiz Description :
 				</div>
 				<div class="col-md-10">
-					{{quizData.quizDescription}}
+					{{quizData.quizdescription}}
 				</div>
 			</div>
 			<div class="col-md-12" style="padding-top:10px;">
@@ -25,7 +25,7 @@
 					Quiz Category :
 				</div>
 				<div class="col-md-10">
-					{{quizData.quizCategory}}
+					{{quizData.category}}
 				</div>
 			</div>
 			<div class="col-md-12" style="padding-top:10px;">
@@ -33,35 +33,51 @@
 					Quiz Difficulty: 
 				</div>
 				<div class="col-md-10">
-					{{quizData.quizDiffficulty}}
+					{{quizData.quizlevel}}
+				</div>
+			</div>
+			
+			<div class="col-md-12" style="padding-top:20px;">
+				<div class="col-md-6" style="height: 100px; padding: 10px 10px 10px 10px; border: 1px solid black; text-align: center;">
+					<div class="col-md-3" style="font-weight: bold; font-size: 15px; ">
+						Quiz Score: 
+					</div>
+					<div class="col-md-3">
+						{{quizResult.totalScoreForquiz}}
+					</div>
+				</div>
+				<div class="col-md-6">
 				</div>
 			</div>
 			
 			<div class="col-md-12" style="padding-top:40px;">
-				<div ng-repeat="question in quizData.quizQuestionDTOs track by $index" >
+				<div ng-repeat="question in quizData.questions track by $index" >
+					<div ng-hide="true">
+					{{questionNo = $index}}
+					</div>
 					<div class="col-md-10" style="padding-bottom:20px;">
 						<div style="padding-top:10px; padding-bottom:5px; font-weight: bold; font-size: 15px;">
-							{{($index+1)+") "+question.question }}
+							{{($index+1)+") "+question.questionstring }}
 						</div>
 						<div>
 							<span ng-repeat="option in question.options track by $index" style="padding-top:2px; padding-left:5px;padding-bottom:2px;">
-								<div ng-show="parseInt($index+1) ==  parseInt(question.userAnswerId,10)" >
+								<div ng-show="question.options[$index].optionid ==  quizSubmitData.setOfQuestionAndAnswers[questionNo].userselectedoptionoid" >
 									<input type="radio" name="" value="" checked>
-										<span style="color: green; font-weight: bold;" ng-show="parseInt($index+1) ==  parseInt(question.correctOptionId,10)" >
-											{{" "+question.options[$index]}}
+										<span style="color: green; font-weight: bold;" ng-show="question.options[$index].optionvalue ==  question.correctionoptionstring" >
+											{{" "+question.options[$index].optionvalue}}
 										</span>
-										<span ng-show="parseInt($index+1) !=  parseInt(question.correctOptionId,10)" >
-											{{" "+question.options[$index]}}
+										<span ng-show="question.options[$index].optionvalue !=  question.correctionoptionstring" >
+											{{" "+question.options[$index].optionvalue}}
 										</span>
 									</input></br>
 								</div>
-								<div ng-show="parseInt($index+1) !=  parseInt(question.userAnswerId,10)" >
+								<div ng-show="question.options[$index].optionid !=  quizSubmitData.setOfQuestionAndAnswers[questionNo].userselectedoptionoid" >
 									<input type="radio" name="" value="" >
-										<span style="color: green; font-weight: bold;" ng-show="parseInt($index+1) ==  parseInt(question.correctOptionId,10)" >
-											{{" "+question.options[$index]}}
+										<span style="color: green; font-weight: bold;" ng-show="question.options[$index].optionvalue ==  question.correctionoptionstring" >
+											{{" "+question.options[$index].optionvalue}}
 										</span>
-										<span ng-show="parseInt($index+1) !=  parseInt(question.correctOptionId,10)" >
-											{{" "+question.options[$index]}}
+										<span ng-show="question.options[$index].optionvalue !=  question.correctionoptionstring" >
+											{{" "+question.options[$index].optionvalue}}
 										</span>
 									</input></br>
 								</div>

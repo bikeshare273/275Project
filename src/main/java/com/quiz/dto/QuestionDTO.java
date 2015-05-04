@@ -13,6 +13,7 @@ public class QuestionDTO {
 	private List<String> optionStringFromUI;
 	private List<Option> options;
 	private String correctionoptionstring;
+	private Integer correctionoptionid;
 	private Integer useransweredoptionid;
 	
 	public Integer getQuestionid() {
@@ -56,5 +57,11 @@ public class QuestionDTO {
 	}
 	public void setUseransweredoptionid(Integer useransweredoptionid) {
 		this.useransweredoptionid = useransweredoptionid;
+	}
+	public Integer getCorrectionoptionid() {
+		return correctionoptionid;
+	}
+	public void setCorrectionoptionid(Integer correctionoptionid) {
+		this.correctionoptionid = correctionoptionid;
 	}
 }

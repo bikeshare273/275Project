@@ -1,8 +1,10 @@
 package com.quiz.implementation;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.quiz.dao.interfaces.IDaoInterfaceForCategory;
@@ -67,7 +69,10 @@ public class QuizImpl {
 		quizObject.setPopularitycount(InitialPopularityCount);
 
 		User userObject = usersDao.getUserById(userid);
-		Category categoryObject = categoryDao.getCategoryById(quizDTO.getCategoryid());
+		
+		Integer categoryid = Integer.parseInt(quizDTO.getCategoryid());
+		
+		Category categoryObject = categoryDao.getCategoryById(categoryid);
 
 		quizObject.setQuizcreator(userObject);
 		quizObject.setCategoryid(categoryObject);
@@ -145,5 +150,83 @@ public class QuizImpl {
 
 /************************************************************************************************************/	
 	
+	public QuizDTO getQuiz(Integer quizid){
+		/*
+			private Integer quizid;
+			private String quizname;
+			private String quizdescription;
+			private Integer categoryid;
+			private Category categoryObject;
+			private User quizcreator;
+			private String quizlevel;
+			private Integer popularitycount;
+			private List<QuestionDTO> questions;
+		
+		*/
+		
+		/*
+		 	private Integer quizid;
+			private String quizname;
+			private String quizdescription;
+			private Category categoryid;
+			private User quizcreator;
+			private String quizlevel;
+			private Integer popularitycount;
+		 */
+		
+		
+		
+		Quiz quiz = quizDao.getQuizById(quizid);
+		QuizDTO quizDTO = new QuizDTO();
+				
+		try {
+			BeanUtils.copyProperties(quizDTO, quiz);
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		List<QuestionDTO> questions = fetchQuestionsAndOptions(quizid);
+		
+		quizDTO.setQuestions(questions);
+		
+		return null;
+		
+	}
 	
+	public List<QuestionDTO> fetchQuestionsAndOptions(Integer quizid){
+		
+		List<Question> questions = questionDao.getAllQuestionsForQuiz(quizid);
+		List<QuestionDTO> questionDTOs = new ArrayList<QuestionDTO>();
+		
+		
+		for(Question question : questions)
+		{
+			Integer questionid = question.getQuestionid();
+			
+			List<Option> options = optionDao.getAllOptionsForQuestion(questionid);
+
+			QuestionConrrectAnswerRef correctansweroption = correctAnswerReferenceDao.getCorrectOptionForQuestion(questionid); 
+			
+			Option option = correctansweroption.getOptionid();
+			
+			QuestionDTO questionDTO = new QuestionDTO();
+			
+			questionDTO.setQuestionid(questionid);
+			questionDTO.setQuestionstring(question.getQuestionstring());
+			questionDTO.setOptions(options);
+			questionDTO.setCorrectionoptionstring(option.getOptionvalue());
+			questionDTO.setCorrectionoptionid(option.getOptionid());
+			
+			questionDTOs.add(questionDTO);
+			
+		}
+		return questionDTOs;
+	}
+	
+	/************************************************************************************************************/
 }

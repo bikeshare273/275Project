@@ -214,7 +214,15 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 		return quizImpl.createQuiz(quizDTO, userid);
 	}
 	
-	
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/getQuiz", method = RequestMethod.POST)
+	@ResponseBody
+	public QuizDTO getQuiz(@RequestBody SearchDTO searchDTO) {
+				
+		Integer quizid = searchDTO.getSearchId();
+		
+		return quizImpl.getQuiz(quizid);
+	}
 	
 	
 	

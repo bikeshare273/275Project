@@ -10,7 +10,7 @@ public class QuizDTO {
 	private Integer quizid;
 	private String quizname;
 	private String quizdescription;
-	private Integer categoryid;
+	private String categoryid;
 	private Category categoryObject;
 	private User quizcreator;
 	private String quizlevel;
@@ -35,10 +35,10 @@ public class QuizDTO {
 	public void setQuizdescription(String quizdescription) {
 		this.quizdescription = quizdescription;
 	}
-	public Integer getCategoryid() {
+	public String getCategoryid() {
 		return categoryid;
 	}
-	public void setCategoryid(Integer categoryid) {
+	public void setCategoryid(String categoryid) {
 		this.categoryid = categoryid;
 	}
 	public User getQuizcreator() {

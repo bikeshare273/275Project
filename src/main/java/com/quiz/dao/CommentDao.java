@@ -50,7 +50,7 @@ public class CommentDao implements IDaoInterfaceForComment{
 	@Override
 	public List<Comment> getAllCommentsForQuiz(Integer quizid) {
 
-		String query = "from Comment c where c.quizid.quizid = ?";
+		String query = "from Comment c where c.quizid = ?";
 		
 		@SuppressWarnings("unchecked")
 		List<Comment> comments = (List<Comment>) hibernateTemplate.find(query, quizid);
@@ -65,7 +65,7 @@ public class CommentDao implements IDaoInterfaceForComment{
 	@Override
 	public List<Comment> getAllCommentsByUser(Integer userid) {
 
-		String query = "from Comment c where c.userid.userid = ?";
+		String query = "from Comment c where c.userid = ?";
 		
 		@SuppressWarnings("unchecked")
 		List<Comment> comments = (List<Comment>) hibernateTemplate.find(query, userid);

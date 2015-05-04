@@ -4,43 +4,35 @@ public class CommentDTO
 {
 	
 	/**********************************************/
-	private Integer commentId;
-	private QuizDTO quizDTO;
-	private UserDTO userDTO;
+	private Integer commentid;
+	private Integer quizid;
+	private Integer userid;
 	private String comment;
-	
-	
 	/**********************************************/
-	public Integer getCommentId() 
-	{
-		return commentId;
+	public Integer getCommentid() {
+		return commentid;
 	}
-	public void setCommentId(Integer commentId) 
-	{
-		this.commentId = commentId;
+	public void setCommentid(Integer commentid) {
+		this.commentid = commentid;
 	}
-	public QuizDTO getQuizDTO() 
-	{
-		return quizDTO;
+	public Integer getQuizid() {
+		return quizid;
 	}
-	public void setQuizDTO(QuizDTO quizDTO)
-	{
-		this.quizDTO = quizDTO;
+	public void setQuizid(Integer quizid) {
+		this.quizid = quizid;
 	}
-	public UserDTO getUserDTO() 
-	{
-		return userDTO;
+	public Integer getUserid() {
+		return userid;
 	}
-	public void setUserDTO(UserDTO userDTO) 
-	{
-		this.userDTO = userDTO;
+	public void setUserid(Integer userid) {
+		this.userid = userid;
 	}
-	public String getComment() 
-	{
+	public String getComment() {
 		return comment;
 	}
-	public void setComment(String comment)
-	{
+	public void setComment(String comment) {
 		this.comment = comment;
-	}	
+	}
+	
+
 }

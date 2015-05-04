@@ -51,8 +51,8 @@ public class CommentImpl
 		User userObject = userDao.getUserById(userId);
 		Quiz quizObject = quizDao.getQuizById(quizId);
 		
-		commentObject.setUserid(userObject);
-		commentObject.setQuizid(quizObject);
+		commentObject.setUserid(userObject.getUserid());
+		commentObject.setQuizid(quizObject.getQuizid());
 		
 		commentDao.save(commentObject);
 		

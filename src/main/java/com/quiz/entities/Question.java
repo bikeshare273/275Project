@@ -27,7 +27,7 @@ public class Question
 	/********************************************/
 	
 	private Integer questionid;
-	private Quiz quizid;
+	private Integer quizid;
 	private String questionstring;
 	
 	/*********************************************/
@@ -43,18 +43,17 @@ public class Question
 		this.questionid = questionid;
 	}
 	
-	@ManyToOne(targetEntity = Quiz.class, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "quizid", referencedColumnName = "quizid")
-	public Quiz getQuizid() 
+	@Column(name = "quizid", unique = false, nullable= false)
+	public Integer getQuizid() 
 	{
 		return quizid;
 	}
-	public void setQuizid(Quiz quizid) 
+	public void setQuizid(Integer quizid) 
 	{
 		this.quizid = quizid;
 	}
 	
-	@Column(name = "questionstring", unique = true, nullable= true)
+	@Column(name = "questionstring", unique = false, nullable= false)
 	public String getQuestionstring() {
 		return questionstring;
 	}

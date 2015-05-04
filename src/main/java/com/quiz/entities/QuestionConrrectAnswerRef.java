@@ -27,8 +27,8 @@ public class QuestionConrrectAnswerRef
 	 */
 	
 	private Integer questioncorrectanswerpid;
-	private Question questionid;
-	private Option optionid;
+	private Integer questionid;
+	private Integer optionid;
 	
 	/***********************************************/
 	
@@ -44,26 +44,24 @@ public class QuestionConrrectAnswerRef
 		this.questioncorrectanswerpid = questioncorrectanswerpid;
 	}
 	
-	@ManyToOne(targetEntity = Question.class, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "questionid", referencedColumnName = "questionid")
-	public Question getQuestionid() 
+	@Column(name = "questionid", unique = false, nullable= false)
+	public Integer getQuestionid() 
 	{
 		return questionid;
 	}
 	
-	public void setQuestionid(Question questionid) 
+	public void setQuestionid(Integer questionid) 
 	{
 		this.questionid = questionid;
 	}
 	
-	@OneToOne(targetEntity = Option.class, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "optionid", referencedColumnName = "optionid")
-	public Option getOptionid() 
+	@Column(name = "optionid", unique = false, nullable= false)
+	public Integer getOptionid() 
 	{
 		return optionid;
 	}
 	
-	public void setOptionid(Option optionid) 
+	public void setOptionid(Integer optionid) 
 	{
 		this.optionid = optionid;
 	}

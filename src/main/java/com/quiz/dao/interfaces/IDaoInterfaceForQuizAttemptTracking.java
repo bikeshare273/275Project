@@ -22,11 +22,11 @@ public interface IDaoInterfaceForQuizAttemptTracking {
 		public QuizAttemptTracking getQuizAttemptByUserIdAndQuizId(Integer userid, Integer quizid);
 		public List<QuizAttemptTracking> getAllQuizAttemptsForUser(Integer userid);
 		public List<QuizAttemptTracking> getAllQuizAttemptsByQuizId(Integer quizid);
-		public List<QuizAttemptTracking> getAllQuizAttemptsByCategory(Integer categoryid);
-		public List<QuizAttemptTracking> getAllQuizAttemptsForUserByCategory(Integer userid, Integer categoryid);
+		public List<QuizAttemptTracking> getAllQuizAttemptsByCategory(String category);
+		public List<QuizAttemptTracking> getAllQuizAttemptsForUserByCategory(Integer userid, String category);
 		public List<QuizAttemptTracking> getAllQuizAttemptsByScoreDesc();
 		public List<QuizAttemptTracking> getAllQuizAttemptsByScoreDescForQuiz(Integer quizid);
-		public List<QuizAttemptTracking> getAllQuizAttemptsByScoreDescForCategory(Integer categoryid);
+		public List<QuizAttemptTracking> getAllQuizAttemptsByScoreDescForCategory(String category);
 		public List<QuizAttemptTracking> getAllQuizAttemptsByScoreDescForQuizWithLimit(Integer quizid, Integer limit);
 	
 }

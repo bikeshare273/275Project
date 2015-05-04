@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.quiz.dao.interfaces.IDaoInterfaceForCategory;
 import com.quiz.dao.interfaces.IDaoInterfaceForOption;
 import com.quiz.dao.interfaces.IDaoInterfaceForQuestion;
 import com.quiz.dao.interfaces.IDaoInterfaceForQuestionCorrectAnswer;
@@ -15,12 +14,10 @@ import com.quiz.dao.interfaces.IDaoInterfaceForQuiz;
 import com.quiz.dao.interfaces.IDaoInterfaceForUser;
 import com.quiz.dto.QuestionDTO;
 import com.quiz.dto.QuizDTO;
-import com.quiz.entities.Category;
 import com.quiz.entities.Option;
 import com.quiz.entities.Question;
 import com.quiz.entities.QuestionConrrectAnswerRef;
 import com.quiz.entities.Quiz;
-import com.quiz.entities.User;
 import com.quiz.utils.QuizMeUtils;
 
 public class QuizImpl {
@@ -36,9 +33,6 @@ public class QuizImpl {
 
 	@Autowired
 	IDaoInterfaceForQuestion questionDao;
-
-	@Autowired
-	IDaoInterfaceForCategory categoryDao;
 
 	@Autowired
 	IDaoInterfaceForOption optionDao;
@@ -60,45 +54,37 @@ public class QuizImpl {
 		String quizname = quizDTO.getQuizname();
 		String quizdescription = quizDTO.getQuizdescription();
 		String quizlevel = quizDTO.getQuizlevel();
+		String category = quizDTO.getCategory();
 
 		quizObject.setQuizid(quizid);
 		quizObject.setQuizname(quizname);
 		quizObject.setQuizdescription(quizdescription);
+		quizObject.setQuizcreator(userid);
 		quizObject.setQuizlevel(quizlevel);
-
+		quizObject.setCategory(category);
 		quizObject.setPopularitycount(InitialPopularityCount);
-
-		User userObject = usersDao.getUserById(userid);
-		
-		Integer categoryid = Integer.parseInt(quizDTO.getCategoryid());
-		
-		Category categoryObject = categoryDao.getCategoryById(categoryid);
-
-		quizObject.setQuizcreator(userObject);
-		quizObject.setCategoryid(categoryObject);
-
+			
 		List<QuestionDTO> questionDTOs = quizDTO.getQuestions();
 
 		quizDao.save(quizObject);
 
-		createQuestions(questionDTOs, quizObject); // Fetch and create questions.
+		createQuestions(questionDTOs, quizid); // Fetch and create questions.
 
 		quizDTO.setQuizid(quizid);
 		
 		return quizDTO;
-		
-
 	}
 
-	public void createQuestions(List<QuestionDTO> questionDTOs, Quiz quiz) {
+	public void createQuestions(List<QuestionDTO> questionDTOs, Integer quizid) {
 
 		for (QuestionDTO questionDTO : questionDTOs) {
+			
 			Integer questionid = appUtils.generateIdValue(200);
 
 			Question question = new Question();
 
 			question.setQuestionid(questionid);
-			question.setQuizid(quiz);
+			question.setQuizid(quizid);
 			question.setQuestionstring(questionDTO.getQuestionstring());
 
 			questionDao.save(question);
@@ -107,14 +93,14 @@ public class QuizImpl {
 
 			List<String> optionStrings = questionDTO.getOptionStringFromUI();
 			
-			createOptions(optionStrings, question, correctionOptionString, quiz); // Fetch and create options
+			createOptions(optionStrings, questionid, correctionOptionString, quizid); // Fetch and create options
 
 		}
 
 	}
 
-	public void createOptions(List<String> optionsStrings, Question question,
-			String correctionOptionString, Quiz quiz) {
+	public void createOptions(List<String> optionsStrings, Integer questionid,
+			String correctionOptionString, Integer quizid) {
 
 		for (String optionString : optionsStrings) {
 			Integer optionid = appUtils.generateIdValue(300);
@@ -123,21 +109,21 @@ public class QuizImpl {
 
 			option.setOptionid(optionid);
 			option.setOptionvalue(optionString);
-			option.setQuestionid(question);
-			option.setQuizid(quiz);
+			option.setQuestionid(questionid);
+			option.setQuizid(quizid);
 
 			optionDao.save(option);
 
 			if (correctionOptionString.equalsIgnoreCase(option.getOptionvalue())) 
 			{
-				createCorrectAnswerReference(question, option); // Fetch and create CorrectAnswerReference
+				createCorrectAnswerReference(questionid, optionid); // Fetch and create CorrectAnswerReference
 			}
 
 		}
 
 	}
 
-	public void createCorrectAnswerReference(Question question, Option option)
+	public void createCorrectAnswerReference(Integer questionid, Integer optionid)
 
 	{
 		
@@ -145,8 +131,8 @@ public class QuizImpl {
 		QuestionConrrectAnswerRef object = new QuestionConrrectAnswerRef();
 
 		object.setQuestioncorrectanswerpid(questioncorrectanswerpid);
-		object.setQuestionid(question);
-		object.setOptionid(option);
+		object.setQuestionid(questionid);
+		object.setOptionid(optionid);
 		
 		correctAnswerReferenceDao.save(object);
 		
@@ -198,9 +184,6 @@ public class QuizImpl {
 		
 		quizDTO.setQuestions(questions);
 		
-		quizDTO.setQuizcreator(null);
-		quizDTO.setCategoryObject(null);
-		
 		return quizDTO;
 		
 	}
@@ -226,8 +209,10 @@ public class QuizImpl {
 			
 			QuestionConrrectAnswerRef correctansweroption = correctAnswerReferenceDao.getCorrectOptionForQuestion(questionid); 
 			
-			Option option = correctansweroption.getOptionid();
+			Integer optionid = correctansweroption.getOptionid();
 			
+			Option option = optionDao.getOptionById(optionid);
+				
 			QuestionDTO questionDTO = new QuestionDTO();
 			
 			questionDTO.setQuestionid(questionid);

@@ -9,7 +9,7 @@ public class QuestionDTO {
 	
 	private Integer no;
 	private Integer questionid;
-	private Quiz quizid;
+	private Integer quizid;
 	private String questionstring;
 	private List<String> optionStringFromUI;
 	private List<Option> options;
@@ -29,10 +29,10 @@ public class QuestionDTO {
 	public void setQuestionid(Integer questionid) {
 		this.questionid = questionid;
 	}
-	public Quiz getQuizid() {
+	public Integer getQuizid() {
 		return quizid;
 	}
-	public void setQuizid(Quiz quizid) {
+	public void setQuizid(Integer quizid) {
 		this.quizid = quizid;
 	}
 	public String getQuestionstring() {

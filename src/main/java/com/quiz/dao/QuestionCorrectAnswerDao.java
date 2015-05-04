@@ -50,7 +50,7 @@ public class QuestionCorrectAnswerDao implements IDaoInterfaceForQuestionCorrect
 	@Override
 	public QuestionConrrectAnswerRef getCorrectOptionForQuestion(Integer questionid) {
 
-		String query = "from QuestionConrrectAnswerRef q where q.questionid.questionid = ?";
+		String query = "from QuestionConrrectAnswerRef q where q.questionid = ?";
 		
 		@SuppressWarnings("unchecked")
 		List<QuestionConrrectAnswerRef> entries = (List<QuestionConrrectAnswerRef>) hibernateTemplate.find(query, questionid);

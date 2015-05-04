@@ -13,7 +13,6 @@ public class QuizLevel {
 	/*
 			CREATE TABLE QuizLevels (
 
-			levelid				INTEGER(10),
 			levelname			VARCHAR(100),
 			leveldescription	VARCHAR(200),
 
@@ -23,22 +22,13 @@ public class QuizLevel {
 
 /**************************************************************************************/	
 
-	private Integer levelid;
 	private String 	levelname;
 	private String 	leveldescription;	
 
 /**************************************************************************************/	
 	
 	@Id
-	@Column(name = "levelid", unique = true, nullable= false)
-	public Integer getLevelid() {
-		return levelid;
-	}
-	public void setLevelid(Integer levelid) {
-		this.levelid = levelid;
-	}
-	
-	@Column(name = "levelname", unique = false, nullable= true)
+	@Column(name = "levelname", unique = false, nullable= false)
 	public String getLevelname() {
 		return levelname;
 	}

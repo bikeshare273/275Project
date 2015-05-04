@@ -50,7 +50,7 @@ public class QuestionDao implements IDaoInterfaceForQuestion {
 	@Override
 	public List<Question> getAllQuestionsForQuiz(Integer quizid) {
 
-		String query = "from Question q where q.quizid.quizid = ?";
+		String query = "from Question q where q.quizid = ?";
 		
 		@SuppressWarnings("unchecked")
 		List<Question> questions = (List<Question>) hibernateTemplate.find(query, quizid);

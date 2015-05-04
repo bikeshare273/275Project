@@ -51,7 +51,7 @@ public class QuizAttemptTrackingDao implements IDaoInterfaceForQuizAttemptTracki
 	@Override
 	public QuizAttemptTracking getQuizAttemptByUserIdAndQuizId(Integer userid,	Integer quizid) {
 
-		String query = "from QuizAttemptTracking q where q.userid.userid = ? and q.quizid.quizid = ?";
+		String query = "from QuizAttemptTracking q where q.userid = ? and q.quizid = ?";
 		
 		@SuppressWarnings("unchecked")
 		List<QuizAttemptTracking> quizattempts = (List<QuizAttemptTracking>) hibernateTemplate.find(query, userid, quizid);
@@ -64,7 +64,7 @@ public class QuizAttemptTrackingDao implements IDaoInterfaceForQuizAttemptTracki
 	@Override
 	public List<QuizAttemptTracking> getAllQuizAttemptsForUser(Integer userid) {
 
-		String query = "from QuizAttemptTracking q where q.userid.userid = ?";
+		String query = "from QuizAttemptTracking q where q.userid = ?";
 		
 		@SuppressWarnings("unchecked")
 		List<QuizAttemptTracking> quizattempts = (List<QuizAttemptTracking>) hibernateTemplate.find(query, userid);
@@ -77,7 +77,7 @@ public class QuizAttemptTrackingDao implements IDaoInterfaceForQuizAttemptTracki
 	@Override
 	public List<QuizAttemptTracking> getAllQuizAttemptsByQuizId(Integer quizid) {
 
-		String query = "from QuizAttemptTracking q where q.quizid.quizid = ?";
+		String query = "from QuizAttemptTracking q where q.quizid = ?";
 		
 		@SuppressWarnings("unchecked")
 		List<QuizAttemptTracking> quizattempts = (List<QuizAttemptTracking>) hibernateTemplate.find(query, quizid);
@@ -90,12 +90,12 @@ public class QuizAttemptTrackingDao implements IDaoInterfaceForQuizAttemptTracki
 	}
 
 	@Override
-	public List<QuizAttemptTracking> getAllQuizAttemptsByCategory(Integer categoryid) {
+	public List<QuizAttemptTracking> getAllQuizAttemptsByCategory(String category) {
 		
-		String query = "from QuizAttemptTracking q where q.categoryid.categoryid = ?";
+		String query = "from QuizAttemptTracking q where lower(q.category) Like lower(?)";
 		
 		@SuppressWarnings("unchecked")
-		List<QuizAttemptTracking> quizattempts = (List<QuizAttemptTracking>) hibernateTemplate.find(query, categoryid);
+		List<QuizAttemptTracking> quizattempts = (List<QuizAttemptTracking>) hibernateTemplate.find(query, category);
 		
 		if(quizattempts.isEmpty()) { return null; }
 		
@@ -103,12 +103,12 @@ public class QuizAttemptTrackingDao implements IDaoInterfaceForQuizAttemptTracki
 	}
 
 	@Override
-	public List<QuizAttemptTracking> getAllQuizAttemptsForUserByCategory(Integer userid, Integer categoryid) {
+	public List<QuizAttemptTracking> getAllQuizAttemptsForUserByCategory(Integer userid, String category) {
 		
-		String query = "from QuizAttemptTracking q where q.userid.userid = ? and q.categoryid.categoryid = ?";
+		String query = "from QuizAttemptTracking q where q.userid = ? and Lower(q.category) Like lower(?)";
 		
 		@SuppressWarnings("unchecked")
-		List<QuizAttemptTracking> quizattempts = (List<QuizAttemptTracking>) hibernateTemplate.find(query, userid, categoryid);
+		List<QuizAttemptTracking> quizattempts = (List<QuizAttemptTracking>) hibernateTemplate.find(query, userid, category);
 		
 		if(quizattempts.isEmpty()) { return null; }
 		
@@ -130,7 +130,7 @@ public class QuizAttemptTrackingDao implements IDaoInterfaceForQuizAttemptTracki
 	@Override
 	public List<QuizAttemptTracking> getAllQuizAttemptsByScoreDescForQuiz(Integer quizid) {
 
-		String query = "from QuizAttemptTracking q where q.quizid.quizid = ? order by score desc";
+		String query = "from QuizAttemptTracking q where q.quizid = ? order by score desc";
 		@SuppressWarnings("unchecked")
 		List<QuizAttemptTracking> quizattempts = (List<QuizAttemptTracking>) hibernateTemplate.find(query, quizid);
 
@@ -141,7 +141,7 @@ public class QuizAttemptTrackingDao implements IDaoInterfaceForQuizAttemptTracki
 	@Override
 	public List<QuizAttemptTracking> getAllQuizAttemptsByScoreDescForQuizWithLimit(Integer quizid, Integer limit) {
 
-		String query = "from QuizAttemptTracking q where q.quizid.quizid = ? order by score desc LIMIT ?";
+		String query = "from QuizAttemptTracking q where q.quizid = ? order by score desc LIMIT ?";
 		@SuppressWarnings("unchecked")
 		List<QuizAttemptTracking> quizattempts = (List<QuizAttemptTracking>) hibernateTemplate.find(query, quizid, limit);
 
@@ -150,11 +150,11 @@ public class QuizAttemptTrackingDao implements IDaoInterfaceForQuizAttemptTracki
 	}
 	
 	@Override
-	public List<QuizAttemptTracking> getAllQuizAttemptsByScoreDescForCategory(Integer categoryid) {
+	public List<QuizAttemptTracking> getAllQuizAttemptsByScoreDescForCategory(String category) {
 
-		String query = "from QuizAttemptTracking q where q.categoryid.categoryid = ? order by score desc";
+		String query = "from QuizAttemptTracking q where lower(q.category) Like lower(?) order by score desc";
 		@SuppressWarnings("unchecked")
-		List<QuizAttemptTracking> quizattempts = (List<QuizAttemptTracking>) hibernateTemplate.find(query, categoryid);
+		List<QuizAttemptTracking> quizattempts = (List<QuizAttemptTracking>) hibernateTemplate.find(query, category);
 
 		if (quizattempts.isEmpty()) { return null; } 
 		else { return quizattempts;}

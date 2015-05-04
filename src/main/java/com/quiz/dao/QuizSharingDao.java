@@ -35,12 +35,12 @@ public class QuizSharingDao implements IDaoInterfaceForQuizSharing{
 	}
 
 	@Override
-	public QuizSharing getQuizSharingEntryById(Integer quizsharingpid) {
+	public QuizSharing getQuizSharingEntryById(Integer quizsharingid) {
 		
-		String query = "from QuizSharing q where q.quizsharingpid = ?";
+		String query = "from QuizSharing q where q.quizsharingid = ?";
 		
 		@SuppressWarnings("unchecked")
-		List<QuizSharing> quizsharingentries = (List<QuizSharing>) hibernateTemplate.find(query, quizsharingpid);
+		List<QuizSharing> quizsharingentries = (List<QuizSharing>) hibernateTemplate.find(query, quizsharingid);
 		
 		if(quizsharingentries.isEmpty()) { return null; }
 		
@@ -51,7 +51,7 @@ public class QuizSharingDao implements IDaoInterfaceForQuizSharing{
 	@Override
 	public List<QuizSharing> getAllQuizSharingEntriesForUser(Integer userid) {
 		
-		String query = "from QuizSharing q where q.userid.userid = ?";
+		String query = "from QuizSharing q where q.userid = ?";
 		
 		@SuppressWarnings("unchecked")
 		List<QuizSharing> quizsharingentries = (List<QuizSharing>) hibernateTemplate.find(query, userid);
@@ -64,7 +64,7 @@ public class QuizSharingDao implements IDaoInterfaceForQuizSharing{
 	@Override
 	public List<QuizSharing> getAllPendingQuizSharingEntriesForUser(Integer userid) {
 
-		String query = "from QuizSharing q where q.userid.userid = ? and q.completedflag is false ";
+		String query = "from QuizSharing q where q.userid = ? and q.completedflag is false ";
 		
 		@SuppressWarnings("unchecked")
 		List<QuizSharing> quizsharingentries = (List<QuizSharing>) hibernateTemplate.find(query, userid);

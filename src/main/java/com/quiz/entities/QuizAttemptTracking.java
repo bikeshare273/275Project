@@ -15,7 +15,7 @@ public class QuizAttemptTracking
 /*
  * CREATE TABLE QuizAttemptTracking(
 
-	quizattemptpid 	INTEGER(10),
+	quizattemptid 	INTEGER(10),
 	userid			INTEGER(10),
 	quizid			INTEGER(10),		
 	categoryid		INTEGER(10),
@@ -27,57 +27,58 @@ public class QuizAttemptTracking
 	
 	
 	/************************************/
-	private Integer quizattemptpid;
-	private User userid;
-	private Quiz quizid;
-	private Category categoryid;
+	private Integer quizattemptid;
+	private Integer userid;
+	private Integer quizid;
+	private String  category;
 	private Integer score;
+	
 	
 	/************************************/
 	
 	
 	@Id
-	@Column(name = "quizattemptpid", unique = true, nullable= false)
-	public Integer getQuizattemptpid() {
-		return quizattemptpid;
+	@Column(name = "quizattemptid", unique = true, nullable= false)
+	public Integer getQuizattemptid() {
+		return quizattemptid;
 	}
-	public void setQuizattemptpid(Integer quizattemptpid) {
-		this.quizattemptpid = quizattemptpid;
+	public void setQuizattemptid(Integer quizattemptid) {
+		this.quizattemptid = quizattemptid;
 	}
 	
-	@ManyToOne(targetEntity = User.class, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "userid", referencedColumnName = "userid")
-	public User getUserid() {
+	@Column(name = "userid", unique = true, nullable= false)
+	public Integer getUserid() {
 		return userid;
 	}
-	public void setUserid(User userid) {
+	public void setUserid(Integer userid) {
 		this.userid = userid;
 	}
-	
-	@ManyToOne(targetEntity = Quiz.class, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "quizid", referencedColumnName = "quizid")
-	public Quiz getQuizid() {
+
+	@Column(name = "quizid", unique = true, nullable= false)
+	public Integer getQuizid() {
 		return quizid;
 	}
-	public void setQuizid(Quiz quizid) {
+	public void setQuizid(Integer quizid) {
 		this.quizid = quizid;
 	}
-		
-	@ManyToOne(targetEntity = Category.class, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "categoryid", referencedColumnName = "categoryid")
-	public Category getCategoryid() {
-		return categoryid;
+	
+	@Column(name = "category", unique = true, nullable= false)
+	public String getCategory() {
+		return category;
 	}
-	public void setCategoryid(Category categoryid) {
-		this.categoryid = categoryid;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
-	@Column(name = "score", unique = false, nullable= true)
+	@Column(name = "score", unique = true, nullable= false)
 	public Integer getScore() {
 		return score;
 	}
 	public void setScore(Integer score) {
 		this.score = score;
 	}
+	
+	
+	
 	
 }

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.quiz.dao.interfaces.IDaoInterfaceForCategory;
 import com.quiz.dao.interfaces.IDaoInterfaceForQuiz;
 import com.quiz.dao.interfaces.IDaoInterfaceForQuizAttemptTracking;
 import com.quiz.dto.QuizAppException;
@@ -15,7 +14,6 @@ import com.quiz.dto.QuizDTO;
 import com.quiz.dto.SearchDTO;
 import com.quiz.dto.SearchResultDTO;
 import com.quiz.dto.UserDTO;
-import com.quiz.entities.Category;
 import com.quiz.entities.Quiz;
 import com.quiz.entities.QuizAttemptTracking;
 
@@ -23,10 +21,7 @@ public class SearchImpl {
 
 	@Autowired
 	IDaoInterfaceForQuiz quizDao;
-	
-	@Autowired
-	IDaoInterfaceForCategory categoryDao;
-	
+		
 	@Autowired
 	IDaoInterfaceForQuizAttemptTracking quizAttemptTrackingDao;
 	
@@ -80,17 +75,17 @@ public class SearchImpl {
 		if(searchDTO == null || searchDTO.getSerachString() == null || searchDTO.getSerachString().isEmpty()){
 			throw new QuizAppException(400, "Search Category is missing");
 		}
-		//get id for category
+		/*get id for category
 		Category category = categoryDao.getCategoryByName(searchDTO.getSerachString());
 		if(category == null){
 			throw new QuizAppException(400, "Search Category not found");
-		}
+		}*/
 		//get list of quiz for category id
-		List<Quiz> quizes = quizDao.getAllQuizzesByCategory(category.getCategoryid());
-		if(quizes == null && quizes.size()==0){
+		List<Quiz> quizzes = quizDao.getAllQuizzesByCategory(searchDTO.getSerachString());
+		if(quizzes == null){
 			throw new QuizAppException(400, "No Quizes Found for this Criteria");
 		}
-		return quizes;
+		return quizzes;
 	}
 	
 }

@@ -31,8 +31,8 @@ public class Option
 	/*****************************************************/
 	
 	private Integer optionid;
-	private Quiz quizid;
-	private Question questionid;
+	private Integer quizid;
+	private Integer questionid;
 	private String optionvalue;
 
 	/*****************************************************/
@@ -50,27 +50,24 @@ public class Option
 		this.optionid = optionid;
 	}
 	
-	@ManyToOne(targetEntity = Quiz.class, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "quizid", referencedColumnName = "quizid")
-	public Quiz getQuizid() 
+	@Column(name = "quizid", unique = false, nullable= false)
+	public Integer getQuizid() 
 	{
 		return quizid;
 	}
 	
-	public void setQuizid(Quiz quizid)
+	public void setQuizid(Integer quizid)
 	{
 		this.quizid = quizid;
 	}
 	
-	
-	@ManyToOne(targetEntity = Question.class, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "questionid", referencedColumnName = "questionid")
-	public Question getQuestionid() 
+	@Column(name = "questionid", unique = false, nullable= false)
+	public Integer getQuestionid() 
 	{
 		return questionid;
 	}
 	
-	public void setQuestionid(Question questionid)
+	public void setQuestionid(Integer questionid)
 	{
 		this.questionid = questionid;
 	}

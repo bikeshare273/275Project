@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 
-import com.quiz.dao.CategoryDao;
 import com.quiz.dao.CommentDao;
 import com.quiz.dao.LoginDao;
 import com.quiz.dao.OptionDao;
@@ -23,7 +22,6 @@ import com.quiz.dao.QuizDao;
 import com.quiz.dao.QuizSharingDao;
 import com.quiz.dao.TestDao;
 import com.quiz.dao.UserDao;
-import com.quiz.dao.interfaces.IDaoInterfaceForCategory;
 import com.quiz.dao.interfaces.IDaoInterfaceForComment;
 import com.quiz.dao.interfaces.IDaoInterfaceForLogin;
 import com.quiz.dao.interfaces.IDaoInterfaceForOption;
@@ -90,11 +88,6 @@ public class QuizMeConfiguration {
 	@Bean
 	public ITestDao getTestDao() {
 		return new TestDao();
-	}
-	
-	@Bean
-	public IDaoInterfaceForCategory getCategoryDao(){
-		return new CategoryDao();
 	}
 	
 	@Bean

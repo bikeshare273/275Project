@@ -2,7 +2,6 @@ package com.quiz.dto;
 
 import java.util.List;
 
-import com.quiz.entities.Category;
 import com.quiz.entities.User;
 
 public class QuizDTO {
@@ -10,10 +9,9 @@ public class QuizDTO {
 	private Integer quizid;
 	private String quizname;
 	private String quizdescription;
-	private String categoryid;
-	private Category categoryObject;
-	private User quizcreator;
+	private String category;
 	private String quizlevel;
+	private Integer quizcreator;
 	private Integer popularitycount;
 	private List<QuestionDTO> questions;
 	
@@ -35,16 +33,10 @@ public class QuizDTO {
 	public void setQuizdescription(String quizdescription) {
 		this.quizdescription = quizdescription;
 	}
-	public String getCategoryid() {
-		return categoryid;
-	}
-	public void setCategoryid(String categoryid) {
-		this.categoryid = categoryid;
-	}
-	public User getQuizcreator() {
+	public Integer getQuizcreator() {
 		return quizcreator;
 	}
-	public void setQuizcreator(User quizcreator) {
+	public void setQuizcreator(Integer quizcreator) {
 		this.quizcreator = quizcreator;
 	}
 	public String getQuizlevel() {
@@ -65,10 +57,10 @@ public class QuizDTO {
 	public void setQuestions(List<QuestionDTO> questions) {
 		this.questions = questions;
 	}
-	public Category getCategoryObject() {
-		return categoryObject;
+	public String getCategory() {
+		return category;
 	}
-	public void setCategoryObject(Category categoryObject) {
-		this.categoryObject = categoryObject;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 }

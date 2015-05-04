@@ -51,7 +51,7 @@ public class OptionDao implements IDaoInterfaceForOption {
 	@Override
 	public List<Option> getAllOptionsForQuiz(Integer quizid) {
 
-		String query = "from Option o where o.quizid.quizid = ?";
+		String query = "from Option o where o.quizid = ?";
 		
 		@SuppressWarnings("unchecked")
 		List<Option> options = (List<Option>) hibernateTemplate.find(query, quizid);
@@ -65,7 +65,7 @@ public class OptionDao implements IDaoInterfaceForOption {
 	@Override
 	public List<Option> getAllOptionsForQuestion(Integer questionid) {
 		
-		String query = "from Option o where o.questionid.questionid = ?";
+		String query = "from Option o where o.questionid = ?";
 		
 		@SuppressWarnings("unchecked")
 		List<Option> options = (List<Option>) hibernateTemplate.find(query, questionid);

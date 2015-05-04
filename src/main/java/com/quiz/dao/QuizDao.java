@@ -61,12 +61,12 @@ public class QuizDao implements IDaoInterfaceForQuiz {
 	}
 
 	@Override
-	public List<Quiz> getAllQuizzesByCategory(Integer categoryid) {
+	public List<Quiz> getAllQuizzesByCategory(String category) {
 
-		String query = "from Quiz q where q.categoryid.categoryid = ? ";
+		String query = "from Quiz q where lower(q.category) Like lower(?) ";
 		
 		@SuppressWarnings("unchecked")
-		List<Quiz> quizzes = (List<Quiz>) hibernateTemplate.find(query, categoryid);
+		List<Quiz> quizzes = (List<Quiz>) hibernateTemplate.find(query, category);
 		
 		if(quizzes.isEmpty()) { return null; }
 		
@@ -77,7 +77,7 @@ public class QuizDao implements IDaoInterfaceForQuiz {
 	@Override
 	public List<Quiz> getAllQuizzesByCreatorId(Integer creatorid) {
 
-		String query = "from Quiz q where q.quizcreator.creatorid = ? ";
+		String query = "from Quiz q where q.quizcreator = ? ";
 		
 		@SuppressWarnings("unchecked")
 		List<Quiz> quizzes = (List<Quiz>) hibernateTemplate.find(query, creatorid);
@@ -103,12 +103,12 @@ public class QuizDao implements IDaoInterfaceForQuiz {
 	}
 
 	@Override
-	public List<Quiz> getAllQuzzesByCategoryAndLevel(Integer categoryid, String quizlevel) {
+	public List<Quiz> getAllQuzzesByCategoryAndLevel(String category, String quizlevel) {
 
-	String query = "from Quiz q where q.categoryid.categoryid = ? and lower(q.quizlevel) Like lower(?)";
+	String query = "from Quiz q where lower(q.category) Like lower(?) and lower(q.quizlevel) Like lower(?)";
 	
 	@SuppressWarnings("unchecked")
-	List<Quiz> quizzes = (List<Quiz>) hibernateTemplate.find(query, categoryid, quizlevel);
+	List<Quiz> quizzes = (List<Quiz>) hibernateTemplate.find(query, category, quizlevel);
 	
 	if(quizzes.isEmpty()) { return null; }
 	

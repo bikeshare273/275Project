@@ -24,35 +24,32 @@ public class QuizSharing
 */
 	/**********************************************************/
 	
-		private Integer quizsharingpid;
-		private User userid;
+		private Integer quizsharingid;
+		private Integer userid;
 		private Integer recommenderid;
 		private Boolean completedflag;
-	
-	
 	
 	/**********************************************************/
 
 		@Id
-		@Column(name = "quizsharingpid", unique = true, nullable= false)
-		public Integer getQuizsharingpid() 
+		@Column(name = "quizsharingid", unique = true, nullable= false)
+		public Integer getQuizsharingid() 
 		{
-			return quizsharingpid;
+			return quizsharingid;
 		}
-		public void setQuizsharingpid(Integer quizsharingpid) {
-			this.quizsharingpid = quizsharingpid;
+		public void setQuizsharingid(Integer quizsharingid) {
+			this.quizsharingid = quizsharingid;
 		}
 		
-		@ManyToOne(targetEntity = User.class, cascade = CascadeType.PERSIST)
-		@JoinColumn(name = "userid", referencedColumnName = "userid")
-		public User getUserid() {
+		@Column(name = "userid", unique = false, nullable= false)
+		public Integer getUserid() {
 			return userid;
 		}
-		public void setUserid(User userid) {
+		public void setUserid(Integer userid) {
 			this.userid = userid;
 		}
 		
-		@Column(name = "recommenderid", unique = true, nullable= true)
+		@Column(name = "recommenderid", unique = false, nullable= false)
 		public Integer getRecommenderid() {
 			return recommenderid;
 		}
@@ -60,7 +57,7 @@ public class QuizSharing
 			this.recommenderid = recommenderid;
 		}
 		
-		@Column(name = "completedflag", unique = true, nullable= true)
+		@Column(name = "completedflag", unique = false, nullable= false)
 		public Boolean getCompletedflag() {
 			return completedflag;
 		}

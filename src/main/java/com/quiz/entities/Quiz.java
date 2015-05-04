@@ -33,8 +33,8 @@ public class Quiz  {
 	private Integer quizid;
 	private String quizname;
 	private String quizdescription;
-	private Category categoryid;
-	private User quizcreator;
+	private String category;
+	private Integer quizcreator;
 	private String quizlevel;
 	private Integer popularitycount;
 	
@@ -65,21 +65,19 @@ public class Quiz  {
 		this.quizdescription = quizdescription;
 	}
 	
-	@ManyToOne(targetEntity = Category.class, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "categoryid", referencedColumnName = "categoryid")
-	public Category getCategoryid() {
-		return categoryid;
+	@Column(name = "category", unique = false, nullable= false)
+	public String getCategory() {
+		return category;
 	}
-	public void setCategoryid(Category categoryid) {
-		this.categoryid = categoryid;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
-	@ManyToOne(targetEntity = User.class, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "quizcreator", referencedColumnName = "userid")
-	public User getQuizcreator() {
+	@Column(name = "quizcreator", unique = false, nullable= false )
+	public Integer getQuizcreator() {
 		return quizcreator;
 	}
-	public void setQuizcreator(User quizcreator) {
+	public void setQuizcreator(Integer quizcreator) {
 		this.quizcreator = quizcreator;
 	}
 	

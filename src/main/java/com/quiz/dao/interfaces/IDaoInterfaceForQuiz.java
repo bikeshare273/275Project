@@ -25,10 +25,10 @@ public interface IDaoInterfaceForQuiz {
 	
 	public Quiz getQuizById(Integer quizid);
 	public List<Quiz> getQuizByName(String quizname);
-	public List<Quiz> getAllQuizzesByCategory(Integer categoryid);
+	public List<Quiz> getAllQuizzesByCategory(String category);
 	public List<Quiz> getAllQuizzesByCreatorId(Integer creatorid);
 	public List<Quiz> getAllQuizzesByLevel(String quizlevel);
-	public List<Quiz> getAllQuzzesByCategoryAndLevel(Integer categoryid, String quizlevel);
+	public List<Quiz> getAllQuzzesByCategoryAndLevel(String category, String quizlevel);
 	public List<Quiz> getAllQuizzesByPopularityDesc();
 		
 }

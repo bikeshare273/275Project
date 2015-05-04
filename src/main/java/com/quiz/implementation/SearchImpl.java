@@ -1,5 +1,6 @@
 package com.quiz.implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -32,7 +33,7 @@ public class SearchImpl {
 	
 	public ResponseEntity searchQuiz(SearchDTO searchDTO){
 		ResponseEntity responseEntity = null;
-		SearchResultDTO searchResultDTO = new SearchResultDTO();
+		List<SearchResultDTO> searchResultDTOs = new ArrayList<SearchResultDTO>();
 		try{
 			//validate serach criteria
 			if(searchDTO == null || searchDTO.getSearchId() == null ){
@@ -40,7 +41,7 @@ public class SearchImpl {
 			}
 			//based on serach criteria fetch quizes
 			List<Quiz> quizes = null;
-			switch(searchDTO.getSearchId()){
+			switch(Integer.parseInt(searchDTO.getSearchId())){
 				case 0: quizes = searchQuizByCategory(searchDTO);
 			}
 			//get topper for each quiz
@@ -50,13 +51,16 @@ public class SearchImpl {
 			for(Quiz quiz : quizes){
 				QuizDTO quizDTO = new QuizDTO();
 				BeanUtils.copyProperties(quizDTO, quiz);
+				SearchResultDTO searchResultDTO = new SearchResultDTO();
 				searchResultDTO.setQuizDTO(quizDTO);
 				//find max scorer
-				System.out.println("quizAttemptTrackingDao quizid "+quizDTO.getQuizid());
 				List<QuizAttemptTracking> topAttemptTrackings = quizAttemptTrackingDao.getAllQuizAttemptsByScoreDescForQuizWithLimit(quizDTO.getQuizid(), 1);
 				if(topAttemptTrackings == null){
 					//quiz not attempted yet
+					UserDTO userDTO = new UserDTO();
+					userDTO.setEmail("Not Attempted");
 					searchResultDTO.setScore(0l);
+					searchResultDTO.setUserDTO(userDTO);
 				}else{
 					QuizAttemptTracking topAttempt = topAttemptTrackings.get(0);
 					searchResultDTO.setScore(Long.parseLong(topAttempt.getScore().toString()));
@@ -64,6 +68,7 @@ public class SearchImpl {
 					BeanUtils.copyProperties(userDTO, topAttempt.getUserid());
 					searchResultDTO.setUserDTO(userDTO);
 				}
+				searchResultDTOs.add(searchResultDTO);
 			}
 		}catch(Exception e){ 
 			e.printStackTrace();
@@ -72,7 +77,7 @@ public class SearchImpl {
 			else
 				return new ResponseEntity<QuizAppException>(new QuizAppException(500, "Unexpected Error Encountered"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<SearchResultDTO>(searchResultDTO, HttpStatus.OK);
+		return new ResponseEntity<List<SearchResultDTO>>(searchResultDTOs, HttpStatus.OK);
 	}
 	
 	

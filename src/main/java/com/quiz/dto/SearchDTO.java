@@ -3,13 +3,13 @@ package com.quiz.dto;
 public class SearchDTO {
 	
 	private String serachString;
-	private Integer searchId;
+	private String searchId;
 
-	public Integer getSearchId() {
+	public String getSearchId() {
 		return searchId;
 	}
 
-	public void setSearchId(Integer searchId) {
+	public void setSearchId(String searchId) {
 		this.searchId = searchId;
 	}
 

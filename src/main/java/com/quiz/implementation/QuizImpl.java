@@ -198,7 +198,7 @@ public class QuizImpl {
 		
 		quizDTO.setQuestions(questions);
 		
-		return null;
+		return quizDTO;
 		
 	}
 	

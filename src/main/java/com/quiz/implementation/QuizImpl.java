@@ -146,6 +146,9 @@ public class QuizImpl {
 		object.setQuestioncorrectanswerpid(questioncorrectanswerpid);
 		object.setQuestionid(question);
 		object.setOptionid(option);
+		
+		correctAnswerReferenceDao.save(object);
+		
 	}
 
 /************************************************************************************************************/	

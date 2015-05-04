@@ -13,7 +13,7 @@ public class RankingDTO
 	/**************************************************/
 
 	private Long rank;
-	private Long score;
+	private Integer score;
 	private String category;
 	
 	/**************************************************/
@@ -23,10 +23,10 @@ public class RankingDTO
 	public void setRank(Long rank) {
 		this.rank = rank;
 	}
-	public Long getScore() {
+	public Integer getScore() {
 		return score;
 	}
-	public void setScore(Long score) {
+	public void setScore(Integer score) {
 		this.score = score;
 	}
 	public String getCategory() {

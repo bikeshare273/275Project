@@ -11,16 +11,16 @@ package com.quiz.dto;
 public class ResultDTO 
 {
 	/**************************************************/
-	private long score;
+	private Integer score;
 	private UserDTO scoreForUser;
 	private QuizDTO scoreForQuiz;
 	private RankingDTO rankForQuiz;
 	
 	/**************************************************/
-	public long getScore() {
+	public Integer getScore() {
 		return score;
 	}
-	public void setScore(long score) 
+	public void setScore(Integer score) 
 	{
 		this.score = score;
 	}

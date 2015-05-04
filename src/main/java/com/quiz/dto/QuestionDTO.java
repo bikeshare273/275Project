@@ -7,6 +7,7 @@ import com.quiz.entities.Quiz;
 
 public class QuestionDTO {
 	
+	private Integer no;
 	private Integer questionid;
 	private Quiz quizid;
 	private String questionstring;
@@ -16,6 +17,12 @@ public class QuestionDTO {
 	private Integer correctionoptionid;
 	private Integer useransweredoptionid;
 	
+	public Integer getNo() {
+		return no;
+	}
+	public void setNo(Integer no) {
+		this.no = no;
+	}
 	public Integer getQuestionid() {
 		return questionid;
 	}

@@ -23,8 +23,9 @@ public class QuizSharing
 	
 		private Integer quizsharingid;
 		private Integer userid;
+		private Integer quizid;
+		private boolean completedflag;
 		private Integer recommenderid;
-		private Boolean completedflag;
 	
 	/**********************************************************/
 
@@ -54,11 +55,22 @@ public class QuizSharing
 			this.recommenderid = recommenderid;
 		}
 		
+		
 		@Column(name = "completedflag", unique = false, nullable= false)
-		public Boolean getCompletedflag() {
+		public boolean isCompletedflag() {
 			return completedflag;
 		}
-		public void setCompletedflag(Boolean completedflag) {
+		
+		public void setCompletedflag(boolean completedflag) {
 			this.completedflag = completedflag;
+		}
+		
+		
+		@Column(name = "quizid", unique = false, nullable= false)
+		public Integer getQuizid() {
+			return quizid;
+		}
+		public void setQuizid(Integer quizid) {
+			this.quizid = quizid;
 		}
 }

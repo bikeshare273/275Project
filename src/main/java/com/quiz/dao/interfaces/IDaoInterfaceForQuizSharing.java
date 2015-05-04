@@ -19,8 +19,11 @@ public interface IDaoInterfaceForQuizSharing {
 	public void update(QuizSharing quizSharingEntry);
 	public void delete(QuizSharing quizSharingEntry);
 	
-	public QuizSharing getQuizSharingEntryById(Integer quizsharingpid);
-	public List<QuizSharing> getAllQuizSharingEntriesForUser(Integer userid);
-	public List<QuizSharing> getAllPendingQuizSharingEntriesForUser(Integer userid);
+	public QuizSharing getQuizSharingById(Integer quizSharingid);
+	public List<QuizSharing> getQuizSharingByUserId(Integer userid);
+	public List<QuizSharing> getQuizSharingByQuizId(Integer quizid);
+	public QuizSharing getQuizSharingByUserIdAndQuizId(Integer userid, Integer quizid);
+	public List<QuizSharing> getQuizSharingByUserIdAndQuizIdAndRecommenderId(Integer userid, Integer quizid, Integer recommenderid);
+	public List<QuizSharing> getUnttemptedQuizSharings(Integer userid);
 	public List<QuizSharing> getAllQuizSharingEntriesByRecommender(Integer recommenderid);
 }

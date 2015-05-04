@@ -58,8 +58,6 @@ public class QuestionDao implements IDaoInterfaceForQuestion {
 		if(questions.isEmpty()) { return null; }
 		
 		return questions;
-		
-	}
-	
+	}	
 
 }

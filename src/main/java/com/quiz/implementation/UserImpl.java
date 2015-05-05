@@ -198,16 +198,18 @@ public Integer getUserIdByUsername(String username)
 public void updateUserQuizAndScoreProfile(int userid, int score, int flag)
 {
 
-	System.out.println("In user profile - userid => " + userid);
+/*	
+ 	System.out.println("In user profile - userid => " + userid);
 	System.out.println("In user profile - score => " + score);
 	System.out.println("In user profile - flag => " + flag);
+*/
 	User user = usersDao.getUserById(userid);
 
 	switch(flag)
 	{
 			case 0 : 	
 			
-				System.out.println("Case 0 - Create Quiz " + flag);
+			//	System.out.println("Case 0 - Create Quiz " + flag);
 				int totalQuizCreated = user.getTotalquizCreated();
 				totalQuizCreated = totalQuizCreated + 1;
 				user.setTotalquizCreated(totalQuizCreated);
@@ -215,7 +217,7 @@ public void updateUserQuizAndScoreProfile(int userid, int score, int flag)
 		
 			case 1 : 	
 		
-				System.out.println("Case 1 - Submit Quiz " + flag);
+			//	System.out.println("Case 1 - Submit Quiz " + flag);
 				int totalScore = user.getTotalScore();
 				totalScore = totalScore + score;
 				user.setTotalScore(totalScore);
@@ -243,20 +245,20 @@ public SearchDTO getGlobalRankingForUser(int userid)
 	for(User user : users)
 	{
 		counter++;
-		System.out.println(counter);
+	/*	System.out.println(counter);
 		System.out.println(user.getEmail());
 		System.out.println("user => " + user.getUserid());
 		System.out.println("cooikie => " + userid);
-		
+	*/	
 		if(user.getUserid().equals(userid))
 		{
 		
-			System.out.println("Size = > " + users.size());
+	/*		System.out.println("Size = > " + users.size());
 			System.out.println("Counter => " + counter);
-			
+	*/		
 			rank = counter;
 			
-			System.out.println("Rank => " + rank);
+	//		System.out.println("Rank => " + rank);
 			break;
 		}
 	}

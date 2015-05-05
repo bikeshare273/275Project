@@ -58,7 +58,11 @@ public class AttemptedQuizImpl
 	
 		List<QuizAttemptTracking> getAllQuizList = quizAttemptTrackingDao.getAllQuizAttemptsForUserDesc(userid);
 		
+		/*V*/if (getAllQuizList == null) { return new ResponseEntity<List<ResultDTO>>(HttpStatus.OK); }
+		
 		List<ResultDTO> resultDTOList = new ArrayList<ResultDTO>();
+		
+		
 		
 		try{
 			for(QuizAttemptTracking attemptTrack : getAllQuizList)

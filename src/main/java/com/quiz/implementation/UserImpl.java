@@ -2,6 +2,7 @@ package com.quiz.implementation;
 
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,15 @@ import org.springframework.http.ResponseEntity;
 import org.apache.commons.beanutils.BeanUtils;
 
 import com.quiz.dao.interfaces.IDaoInterfaceForLogin;
+import com.quiz.dao.interfaces.IDaoInterfaceForQuizAttemptTracking;
 import com.quiz.dao.interfaces.IDaoInterfaceForUser;
+import com.quiz.dto.CategoryScoreAndRankingDTO;
 import com.quiz.dto.QuizAppException;
+import com.quiz.dto.ResultDTO;
 import com.quiz.dto.SearchDTO;
 import com.quiz.dto.UserDTO;
 import com.quiz.entities.Login;
+import com.quiz.entities.QuizAttemptTracking;
 import com.quiz.entities.User;
 import com.quiz.utils.EmailNotification;
 import com.quiz.utils.QuizMeUtils;
@@ -32,6 +37,9 @@ public class UserImpl {
 	
 	@Autowired
 	EmailNotification emailNotification;
+	
+	@Autowired
+	IDaoInterfaceForQuizAttemptTracking quizAttemptTrackingDao;
 	
 /***********************************************************************************/
 	
@@ -270,7 +278,7 @@ public SearchDTO getGlobalRankingForUser(int userid)
 
 /************************************************************************************/
 
-public String getUsernameByUserId(Integer userid)
+public String getUsernameByUserId(int userid)
 {
 	Login login = loginDao.getLoginByUserId(userid);
 	
@@ -282,5 +290,101 @@ public String getUsernameByUserId(Integer userid)
 }
 
 /************************************************************************************/
+
+public List<CategoryScoreAndRankingDTO> getCategoryScoreAndRanking(int userid)
+{
+	List<String> categoriesUserAttempted = getAllCategoriesUserAttempted(userid);
+	
+	
+	if (categoriesUserAttempted == null) //{ return (List<CategoryScoreAndRankingDTO>) new ResponseEntity<List<CategoryScoreAndRankingDTO>>(HttpStatus.OK); }
+	{ 
+		return null ; 
+	}
+		
+	List<CategoryScoreAndRankingDTO> categoryScoreAndRanking = getUserScoreAndRankingForAllAttemptedCategories(userid,categoriesUserAttempted);
+	
+	return categoryScoreAndRanking;
+	
+}
+
+
+public List<String> getAllCategoriesUserAttempted(int userid)
+{
+	
+	List<QuizAttemptTracking> quizAttempts = quizAttemptTrackingDao.getAllQuizAttemptsForUser(userid);
+	 
+	if(quizAttempts==null) { return null;}
+	
+	List<String> listOfCategoriesUserAttempted = new ArrayList<String>();
+	
+	for(QuizAttemptTracking quizAttempt : quizAttempts)
+	{
+		if(! listOfCategoriesUserAttempted.contains(quizAttempt.getCategory()))
+		{
+			listOfCategoriesUserAttempted.add(quizAttempt.getCategory());
+		}		
+	}
+
+	return listOfCategoriesUserAttempted;
+}
+
+
+public List<CategoryScoreAndRankingDTO>getUserScoreAndRankingForAllAttemptedCategories(int userid, List<String> categoriesUserAttempted)
+{
+
+	/* Load all the CategoryScoreAndRankingDTO */
+	
+	List<CategoryScoreAndRankingDTO> listOfAllCategoryScoreAndRankingEntries = new ArrayList<CategoryScoreAndRankingDTO>();
+	
+	for(String category : categoriesUserAttempted)
+	{
+		CategoryScoreAndRankingDTO categoryScoreAndRankingEntry = getCategoryScoreAndRanking(userid, category);
+				
+		if(categoryScoreAndRankingEntry != null)
+		{
+			listOfAllCategoryScoreAndRankingEntries.add(categoryScoreAndRankingEntry);
+		}
+	}
+	
+	return listOfAllCategoryScoreAndRankingEntries;
+}
+
+
+	public CategoryScoreAndRankingDTO getCategoryScoreAndRanking(int userid, String category)
+	{
+		
+		List <QuizAttemptTracking> rankedQuizAttemptsByCategory = quizAttemptTrackingDao.getAllQuizAttemptsByScoreDescForCategory(category);
+		
+		
+		CategoryScoreAndRankingDTO categoryScoreAndRank = null;
+		
+		int rank = 0;
+		int counter = 0;
+		
+		for(QuizAttemptTracking quizAttemptTrackingEntry : rankedQuizAttemptsByCategory)
+		{
+			counter++;
+			
+			if(quizAttemptTrackingEntry.getUserid().equals(userid))
+			{
+			
+				rank = counter;
+				
+				categoryScoreAndRank = new CategoryScoreAndRankingDTO();
+				
+				categoryScoreAndRank.setCategory(category);
+				categoryScoreAndRank.setRank(rank);
+				categoryScoreAndRank.setScore(quizAttemptTrackingEntry.getScore());
+							
+				break;
+			}
+				
+		}
+		
+		return categoryScoreAndRank;
+		
+	}
+
+
 
 }

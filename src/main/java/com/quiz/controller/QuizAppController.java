@@ -27,6 +27,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.quiz.configuration.QuizMeConfiguration;
 import com.quiz.dao.interfaces.ITestDao;
+import com.quiz.dto.CategoryScoreAndRankingDTO;
 import com.quiz.dto.CommentDTO;
 import com.quiz.dto.LoginDTO;
 import com.quiz.dto.QuizDTO;
@@ -440,9 +441,15 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	
 /***********************************************************************************************/
 	
-		
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/getCategoryTopScoreAndRank", method = RequestMethod.GET)
+	@ResponseBody
+	public List<CategoryScoreAndRankingDTO> getCategoryScoreAndRanking(@CookieValue("userid") int userid)
+	{	
 	
+		return userImpl.getCategoryScoreAndRanking(userid);
 	
+	}
 	
 	
 	

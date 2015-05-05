@@ -18,12 +18,9 @@
 				<!-- Email is non editable. Read only! -->
 				<div style="padding-bottom: 10px; padding-top: 10px;">
 					<input type="email" class="form-control" placeholder="Email"
-						name="profileform_email" size="50" ng-model=""
+						name="profileform_email" size="50" ng-value="profileform_email"
 						readonly>
 
-					<div class="error-container"
-						ng-show="profileform.profileform_email.$dirty && profileform.profileform_email.$invalid">
-					</div>
 				</div>
 
 				<!-- Old password -->

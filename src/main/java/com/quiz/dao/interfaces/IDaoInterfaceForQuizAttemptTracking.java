@@ -28,5 +28,6 @@ public interface IDaoInterfaceForQuizAttemptTracking {
 		public List<QuizAttemptTracking> getAllQuizAttemptsByScoreDescForQuiz(Integer quizid);
 		public List<QuizAttemptTracking> getAllQuizAttemptsByScoreDescForCategory(String category);
 		public List<QuizAttemptTracking> getAllQuizAttemptsByScoreDescForQuizWithLimit(Integer quizid, Integer limit);
+		public List<QuizAttemptTracking> getAllQuizAttemptsForUserDesc(Integer userid); 
 	
 }

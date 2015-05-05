@@ -3,14 +3,20 @@ package com.quiz.implementation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.quiz.dao.interfaces.IDaoInterfaceForQuiz;
 import com.quiz.dao.interfaces.IDaoInterfaceForQuizAttemptTracking;
 import com.quiz.dao.interfaces.IDaoInterfaceForUser;
+import com.quiz.dto.QuizAppException;
 import com.quiz.dto.QuizDTO;
 import com.quiz.dto.RankingDTO;
 import com.quiz.dto.ResultDTO;
+import com.quiz.dto.SearchResultDTO;
+import com.quiz.dto.UserDTO;
 import com.quiz.entities.Quiz;
 import com.quiz.entities.QuizAttemptTracking;
 import com.quiz.entities.User;
@@ -47,46 +53,54 @@ public class AttemptedQuizImpl
 	 * Get all quiz attempted by user
 	 */
 	
-	public List<ResultDTO> getAllQuizAttemptsForUser(Integer userid)
+	public ResponseEntity getAllQuizAttemptsForUser(Integer userid)
 	{
 	
-		List<QuizAttemptTracking> getAllQuizList = quizAttemptTrackingDao.getAllQuizAttemptsForUser(userid);
+		List<QuizAttemptTracking> getAllQuizList = quizAttemptTrackingDao.getAllQuizAttemptsForUserDesc(userid);
 		
 		List<ResultDTO> resultDTOList = new ArrayList<ResultDTO>();
 		
-		for(QuizAttemptTracking attemptTrack : getAllQuizList)
-		{
-			Integer quizAttemptTrackingId = attemptTrack.getQuizattemptid();
-			Integer quizId = attemptTrack.getQuizid();
-			
-			
-			Quiz quiz = quizDao.getQuizById(quizId);
-			QuizDTO quizDTO = new QuizDTO();
-			
-			RankingDTO rankDTO = new RankingDTO();
-			ResultDTO resultDTO = new ResultDTO();
-			
-			Long rank = rankDTO.getRank();
-			rankDTO.setRank(rank);
-			
-			//Setting quiz name, quiz creator and quiz category from quizdto
-			quizDTO.setQuizname(quiz.getQuizname());
-			quizDTO.setQuizcreator(quiz.getQuizcreator());
-			quizDTO.setCategory(quiz.getCategory());
-			
-			
-			//setting quizdto object in resultdto
-			resultDTO.setScoreForQuiz(quizDTO);	
-			resultDTO.setScore(attemptTrack.getScore());
-			
-			//there might be a need to change the logic for setting the rank
-			resultDTO.setRankForQuiz(rankDTO);
-			
-			resultDTOList.add(resultDTO);
+		try{
+			for(QuizAttemptTracking attemptTrack : getAllQuizList)
+			{
+				Integer quizAttemptTrackingId = attemptTrack.getQuizattemptid();
+				Integer quizId = attemptTrack.getQuizid();
+				
+				
+				Quiz quiz = quizDao.getQuizById(quizId);
+				QuizDTO quizDTO = new QuizDTO();
+				
+				RankingDTO rankDTO = new RankingDTO();
+				ResultDTO resultDTO = new ResultDTO();
+				
+				Long rank = rankDTO.getRank();
+				rankDTO.setRank(rank);
+				
+				//Setting quiz name, quiz creator and quiz category from quizdto
+				BeanUtils.copyProperties(quizDTO, quiz);
+				
+				//setting quizdto object in resultdto
+				resultDTO.setScoreForQuiz(quizDTO);	
+				resultDTO.setScore(attemptTrack.getScore());
+				
+				//there might be a need to change the logic for setting the rank
+				resultDTO.setRankForQuiz(rankDTO);
+				
+				//user object
+				UserDTO userDTO = new UserDTO();
+				BeanUtils.copyProperties(userDTO, userDao.getUserById(quizDTO.getQuizcreator()));
+				quizDTO.setQuizcreatoruser(userDTO);
+				
+				resultDTOList.add(resultDTO);
+			}
+		}catch(Exception e){ 
+			e.printStackTrace();
+			if(e instanceof QuizAppException)
+				return new ResponseEntity<QuizAppException>((QuizAppException)e, HttpStatus.BAD_REQUEST);
+			else
+				return new ResponseEntity<QuizAppException>(new QuizAppException(500, "Unexpected Error Encountered"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		
-		return resultDTOList;
+		return new ResponseEntity<List<ResultDTO>>(resultDTOList, HttpStatus.OK);
 		
 	}
 }

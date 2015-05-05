@@ -384,8 +384,24 @@ quizapp.controller('homeUserController',
 	$rootScope.hideUserNavTabs = false;
 	$rootScope.hideStaticTabs = true;
 
+	//get global rank
+	var response = $http.get("../../quizme/getGlobalRank");
+	response
+		.success(function(dataFromServer, status,
+				headers, config) {
+			$scope.globalRank = dataFromServer.globalRank;
+		});
+	response.error(function(data, status, headers, config) {
+		console.log(data.errorMessage);
+		console.log(status);
+		if(status === 400){
+			$scope.error = data.errorMessage;
+		}
+		return $q.reject(response);
+	});
+	
 	//get quiz details of a user
-	var response = $http.get("../../quizme/getAttemptedQuizes");
+	response = $http.get("../../quizme/getAttemptedQuizes");
 	response
 			.success(function(dataFromServer, status,
 					headers, config) {

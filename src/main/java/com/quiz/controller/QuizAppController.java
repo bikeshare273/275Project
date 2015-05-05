@@ -291,9 +291,9 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
-	@RequestMapping(value = "/getGlobalRank", method = RequestMethod.POST)
+	@RequestMapping(value = "/getGlobalRank", method = RequestMethod.GET)
 	@ResponseBody
-	public SearchDTO getAllCommentsForQuiz(@CookieValue("userid") int userid) {
+	public SearchDTO getGlobalRankingForUser(@CookieValue("userid") int userid) {
 
 		return userImpl.getGlobalRankingForUser(userid);		
 	}

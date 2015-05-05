@@ -257,7 +257,7 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/getAttemptedQuizes", method = RequestMethod.GET)
 	@ResponseBody
-	public List<ResultDTO> getAllQuizAttemptedByUser(@CookieValue("userid") int userid) {
+	public ResponseEntity getAllQuizAttemptedByUser(@CookieValue("userid") int userid) {
 		return attemptedQuizImpl.getAllQuizAttemptsForUser(userid);		
 	}
 	

@@ -21,7 +21,7 @@
 						<tr ng-repeat="row in emptyArray track by $index">
 							<td>{{$index+1}}</td>
 							<td>{{row.scoreForQuiz.quizname}}</td>
-							<td>{{row.scoreForQuiz.quizcreator}}</td>
+							<td>{{row.scoreForQuiz.quizcreatoruser.email}}</td>
 							<td>{{row.scoreForQuiz.category}}</td>
 							<td>{{row.score}}</td>
 							<td>{{row.rankForQuiz.rank}}</td>
@@ -46,7 +46,7 @@
 			<div class="col-md-12" style="padding-top: 20px;">
 				<div class="col-md-1"></div>
 				<div class="col-md-10">
-					<table st-safe-src="queue2.transactions" st-table="emptyArray" class="table table-striped" >
+					<table st-safe-src="queue2.transactions" st-table="emptyArray1" class="table table-striped" >
 					<thead>
 					<tr >
 						<th style="width: 20%">Category</th>
@@ -55,7 +55,7 @@
 					</tr>
 					</thead>
 					<tbody ng-hide="isLoading">
-						<tr ng-repeat="row in emptyArray track by $index">
+						<tr ng-repeat="row in emptyArray1 track by $index">
 							<td>{{row.quizcategory1}}</td>
 							<td>{{row.quizrank1}}</td>
 							<td>{{row.quizscore1}}</td>

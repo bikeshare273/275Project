@@ -178,6 +178,7 @@ quizapp.controller('registerController',
 		console.log("--> Submitting form ");
 		
 		var data = {
+				name : $scope.signupform_name,
 				email : $scope.signupform_email,
 				newpassword : $scope.signupform_password,
 				phonenumber: $scope.signupform_phone,
@@ -487,6 +488,7 @@ quizapp.controller('profileController',
 	var response = $http.get("../../quizme/fetchuser");
 	response.success(function(dataFromServer, status,
 					headers, config) {
+			$scope.profileform_name = dataFromServer.name;
 			$scope.profileform_email = dataFromServer.email;
 			$scope.profileform_phone = dataFromServer.phonenumber;
 			$scope.profileform_country = dataFromServer.country;

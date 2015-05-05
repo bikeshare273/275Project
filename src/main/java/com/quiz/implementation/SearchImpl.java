@@ -24,78 +24,153 @@ public class SearchImpl {
 
 	@Autowired
 	IDaoInterfaceForQuiz quizDao;
-	
+
 	@Autowired
 	IDaoInterfaceForUser userDao;
-		
+
 	@Autowired
 	IDaoInterfaceForQuizAttemptTracking quizAttemptTrackingDao;
-	
-	public ResponseEntity searchQuiz(SearchDTO searchDTO){
+
+	public ResponseEntity searchQuiz(SearchDTO searchDTO) {
 		ResponseEntity responseEntity = null;
 		List<SearchResultDTO> searchResultDTOs = new ArrayList<SearchResultDTO>();
-		try{
-			//validate serach criteria
-			if(searchDTO == null || searchDTO.getSearchId() == null ){
+		try {
+			// validate serach criteria
+			if (searchDTO == null || searchDTO.getSearchId() == null) {
 				throw new QuizAppException(400, "Search Criteria is missing");
 			}
-			//based on serach criteria fetch quizes
+			// based on serach criteria fetch quizes
 			List<Quiz> quizes = null;
-			switch(Integer.parseInt(searchDTO.getSearchId())){
-				case 0: quizes = searchQuizByCategory(searchDTO);
+			switch (Integer.parseInt(searchDTO.getSearchId())) {
+			case 0:	quizes = searchQuizByCategory(searchDTO); // Search by Category
+			case 1:	quizes = searchQuizByDiffLevel(searchDTO); // Search by Level
+			case 2:	quizes = searchQuizByCreatedUser(searchDTO); // Search by User Name
 			}
-			//get topper for each quiz
-			if(quizes == null){
+			// get topper for each quiz
+			if (quizes == null) {
 				throw new QuizAppException(400, "Search Criteria is missing");
 			}
-			for(Quiz quiz : quizes){
+			for (Quiz quiz : quizes) {
 				QuizDTO quizDTO = new QuizDTO();
 				BeanUtils.copyProperties(quizDTO, quiz);
 				SearchResultDTO searchResultDTO = new SearchResultDTO();
-				//fetch user based on userid
+				// fetch user based on userid
 				UserDTO userDTOForQuizCreator = new UserDTO();
-				BeanUtils.copyProperties(userDTOForQuizCreator, userDao.getUserById(quiz.getQuizcreator()));
+				BeanUtils.copyProperties(userDTOForQuizCreator,
+						userDao.getUserById(quiz.getQuizcreator()));
 				quizDTO.setQuizcreatoruser(userDTOForQuizCreator);
 				searchResultDTO.setQuizDTO(quizDTO);
-				//find max scorer
-				List<QuizAttemptTracking> topAttemptTrackings = quizAttemptTrackingDao.getAllQuizAttemptsByScoreDescForQuizWithLimit(quizDTO.getQuizid(), 1);
-				if(topAttemptTrackings == null){
-					//quiz not attempted yet
+				// find max scorer
+				List<QuizAttemptTracking> topAttemptTrackings = quizAttemptTrackingDao
+						.getAllQuizAttemptsByScoreDescForQuizWithLimit(
+								quizDTO.getQuizid(), 1);
+				if (topAttemptTrackings == null) {
+					// quiz not attempted yet
 					UserDTO userDTO = new UserDTO();
 					userDTO.setEmail("Not Attempted");
 					searchResultDTO.setScore(0l);
 					searchResultDTO.setUserDTO(userDTO);
-				}else{
+				} else {
 					QuizAttemptTracking topAttempt = topAttemptTrackings.get(0);
-					searchResultDTO.setScore(Long.parseLong(topAttempt.getScore().toString()));
+					searchResultDTO.setScore(Long.parseLong(topAttempt
+							.getScore().toString()));
 					UserDTO userDTO = new UserDTO();
 					BeanUtils.copyProperties(userDTO, topAttempt.getUserid());
 					searchResultDTO.setUserDTO(userDTO);
 				}
 				searchResultDTOs.add(searchResultDTO);
 			}
-		}catch(Exception e){ 
+		} catch (Exception e) {
 			e.printStackTrace();
-			if(e instanceof QuizAppException)
-				return new ResponseEntity<QuizAppException>((QuizAppException)e, HttpStatus.BAD_REQUEST);
+			if (e instanceof QuizAppException)
+				return new ResponseEntity<QuizAppException>(
+						(QuizAppException) e, HttpStatus.BAD_REQUEST);
 			else
-				return new ResponseEntity<QuizAppException>(new QuizAppException(500, "Unexpected Error Encountered"), HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<QuizAppException>(
+						new QuizAppException(500,
+								"Unexpected Error Encountered"),
+						HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<List<SearchResultDTO>>(searchResultDTOs, HttpStatus.OK);
+		return new ResponseEntity<List<SearchResultDTO>>(searchResultDTOs,
+				HttpStatus.OK);
 	}
-	
-	
-	public List<Quiz> searchQuizByCategory(SearchDTO searchDTO) throws Exception{
-		if(searchDTO == null || searchDTO.getSerachString() == null || searchDTO.getSerachString().isEmpty()){
+
+	public List<Quiz> searchQuizByCategory(SearchDTO searchDTO)
+			throws Exception {
+		if (searchDTO == null || searchDTO.getSerachString() == null
+				|| searchDTO.getSerachString().isEmpty()) {
 			throw new QuizAppException(400, "Search Category is missing");
 		}
-		//get id for category
-		
-		//get list of quiz for category id
-		List<Quiz> quizes = quizDao.getAllQuizzesByCategory(searchDTO.getSerachString());
-		if(quizes == null && quizes.size()==0){
+		// get id for category
+
+		// get list of quiz for category id
+		List<Quiz> quizes = quizDao.getAllQuizzesByCategory(searchDTO
+				.getSerachString());
+		if (quizes == null && quizes.size() == 0) {
 			throw new QuizAppException(400, "No Quizes Found for this Criteria");
 		}
 		return quizes;
 	}
+
+	public List<Quiz> searchQuizByDiffLevel(SearchDTO searchDTO)
+			throws Exception {
+
+		if (searchDTO == null || searchDTO.getSerachString() == null
+				|| searchDTO.getSerachString().isEmpty()) {
+			throw new QuizAppException(400, "Search Category is missing");
+		}
+		// get id for category
+
+		// get list of quiz for category id
+		List<Quiz> quizes = quizDao.getAllQuizzesByLevel(searchDTO
+				.getSerachString());
+		if (quizes == null && quizes.size() == 0) {
+			throw new QuizAppException(400, "No Quizes Found for this Criteria");
+		}
+		return quizes;
+	}
+
+	public List<Quiz> searchQuizByCreatedUser(SearchDTO searchDTO)
+			throws Exception {
+
+		if (searchDTO == null || searchDTO.getSerachString() == null
+				|| searchDTO.getSerachString().isEmpty()) {
+			throw new QuizAppException(400, "Search Category is missing");
+		}
+
+		List<User> users = userDao.getUserByName(searchDTO.getSerachString());
+
+		if (users == null) {
+			throw new QuizAppException(400,
+					"No user present with entered name.");
+		}
+
+		List<Integer> listOfUserIds = new ArrayList<Integer>();
+
+		for (User user : users) {
+			Integer userid = user.getUserid();
+			if (!listOfUserIds.contains(userid)) {
+				listOfUserIds.add(userid);
+			}
+		}
+
+		List<Quiz> listOfQuizzes = new ArrayList<Quiz>();
+
+		for (Integer creatorid : listOfUserIds) {
+			List<Quiz> quizzes = quizDao.getAllQuizzesByCreatorId(creatorid);
+
+			if (quizzes != null) {
+				for (Quiz quiz : quizzes) {
+					listOfQuizzes.add(quiz);
+				}
+			}
+
+		}
+
+		if (listOfQuizzes == null || listOfQuizzes.size() == 0) {
+			throw new QuizAppException(400, "No Quizes Found for this Criteria");
+		}
+		return listOfQuizzes;
+	}
+
 }

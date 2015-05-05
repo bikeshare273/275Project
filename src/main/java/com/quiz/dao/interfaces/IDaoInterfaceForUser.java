@@ -11,7 +11,7 @@ public interface IDaoInterfaceForUser {
 	public void delete(User user);
 	
 	public User getUserById(Integer userid);
-	public User getUserByName(String name);
+	public List<User> getUserByName(String name);
 	public User getUserByIdAndUserName(Integer userid, String username);
 	public List<User> getAllUsers();
 	public List<User> getGlobalRanks();

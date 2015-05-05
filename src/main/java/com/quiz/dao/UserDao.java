@@ -52,7 +52,7 @@ public class UserDao implements IDaoInterfaceForUser {
 	}
 
 	@Override
-	public User getUserByName(String name)  {
+	public List<User> getUserByName(String name)  {
 
 		String query = "from User u where lower(u.name) Like lower(?)";
 		@SuppressWarnings("unchecked")
@@ -61,7 +61,7 @@ public class UserDao implements IDaoInterfaceForUser {
 		if (users.isEmpty()) {
 			return null;
 		} else {
-			return users.get(0);
+			return users;
 		}
 		
 	}

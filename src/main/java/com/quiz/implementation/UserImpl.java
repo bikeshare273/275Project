@@ -12,6 +12,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import com.quiz.dao.interfaces.IDaoInterfaceForLogin;
 import com.quiz.dao.interfaces.IDaoInterfaceForUser;
 import com.quiz.dto.QuizAppException;
+import com.quiz.dto.SearchDTO;
 import com.quiz.dto.UserDTO;
 import com.quiz.entities.Login;
 import com.quiz.entities.User;
@@ -191,31 +192,72 @@ public Integer getUserIdByUsername(String username)
 public void updateUserQuizAndScoreProfile(int userid, int score, int flag)
 {
 
+	System.out.println("In user profile - userid => " + userid);
+	System.out.println("In user profile - score => " + score);
+	System.out.println("In user profile - flag => " + flag);
 	User user = usersDao.getUserById(userid);
 
 	switch(flag)
 	{
-	case 0 : 	
+			case 0 : 	
+			
+				System.out.println("Case 0 - Create Quiz " + flag);
+				int totalQuizCreated = user.getTotalquizCreated();
+				totalQuizCreated = totalQuizCreated + 1;
+				user.setTotalquizCreated(totalQuizCreated);
+				break;
+		
+			case 1 : 	
+		
+				System.out.println("Case 1 - Submit Quiz " + flag);
+				int totalScore = user.getTotalScore();
+				totalScore = totalScore + score;
+				user.setTotalScore(totalScore);
+		
+				int totalQuizTaken = user.getTotalQuizTaken();
+				totalQuizTaken = totalQuizTaken + 1;
+				user.setTotalQuizTaken(totalQuizTaken);
+				break;
+	}
+	
+	usersDao.update(user);
+}
+
+/************************************************************************************/
+
+public SearchDTO getGlobalRankingForUser(int userid)
+{
+	SearchDTO globaRnak = new SearchDTO();
+	
+	List<User> users = usersDao.getGlobalRanks();
+	
+	int rank = 0;
+	int counter = 0;
+	
+	for(User user : users)
 	{
-		int totalQuizTaken = user.getTotalQuizTaken();
-		totalQuizTaken = totalQuizTaken + 1;
-		user.setTotalQuizTaken(totalQuizTaken);
+		counter++;
+		System.out.println(counter);
+		System.out.println(user.getEmail());
+		System.out.println("user => " + user.getUserid());
+		System.out.println("cooikie => " + userid);
+		
+		if(user.getUserid().equals(userid))
+		{
+		
+			System.out.println("Size = > " + users.size());
+			System.out.println("Counter => " + counter);
+			
+			rank = counter;
+			
+			System.out.println("Rank => " + rank);
+			break;
+		}
 	}
-	break;
+	
+	globaRnak.setGlobalRank(rank);
 
-	case 1 : 	
-
-	{
-		int totalScore = user.getTotalScore();
-		totalScore = totalScore + score;
-		user.setTotalScore(totalScore);
-
-		int totalQuizTaken = user.getTotalQuizTaken();
-		totalQuizTaken = totalQuizTaken + 1;
-		user.setTotalQuizTaken(totalQuizTaken);
-	}
-	break;
-	}
+	return globaRnak;
 }
 
 }

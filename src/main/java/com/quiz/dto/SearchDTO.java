@@ -4,6 +4,7 @@ public class SearchDTO {
 	
 	private String serachString;
 	private String searchId;
+	private Integer globalRank;
 
 	public String getSearchId() {
 		return searchId;
@@ -19,6 +20,14 @@ public class SearchDTO {
 
 	public void setSerachString(String serachString) {
 		this.serachString = serachString;
+	}
+
+	public int getGlobalRank() {
+		return globalRank;
+	}
+
+	public void setGlobalRank(int globalRank) {
+		this.globalRank = globalRank;
 	}
 
 }

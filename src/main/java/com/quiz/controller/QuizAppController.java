@@ -170,7 +170,7 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	@ResponseStatus(HttpStatus.CREATED)
 	@RequestMapping(value = "/updateuser", method = RequestMethod.PUT)
 	@ResponseBody
-	public UserDTO updateUser(@Valid @RequestBody UserDTO user, @CookieValue("userid") int userid) {
+	public ResponseEntity updateUser(@Valid @RequestBody UserDTO user, @CookieValue("userid") int userid) {
 
 		return userImpl.updateUser(user, userid);
 	}
@@ -179,7 +179,7 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/users/{userid}", method = RequestMethod.GET)
 	@ResponseBody
-	public UserDTO getUser(@PathVariable Integer userid) {
+	public ResponseEntity getUser(@PathVariable Integer userid) {
 
 		return userImpl.getUser(userid);		
 	}
@@ -188,7 +188,7 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/fetchuser", method = RequestMethod.GET)
 	@ResponseBody
-	public UserDTO fetchUser(@CookieValue("userid") int userid) {
+	public ResponseEntity fetchUser(@CookieValue("userid") int userid) {
 
 		return userImpl.getUser(userid);		
 
@@ -450,7 +450,6 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 		return userImpl.getCategoryScoreAndRanking(userid);
 	
 	}
-	
 	
 	
 /***********************************************************************************************/	

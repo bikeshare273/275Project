@@ -89,44 +89,58 @@ public class UserImpl {
 	
 /************************************************************************************/
 	
-public UserDTO updateUser(UserDTO user, Integer userid)
+public ResponseEntity updateUser(UserDTO user, Integer userid)
 			
 {			
 		User userObject = usersDao.getUserById(userid);
 		Login loginObject = loginDao.getLoginByUserId(userid);
 		
+		System.out.println("Old Passoword => " + user.getOldpassword());
+		System.out.println("New Password => " + user.getNewpassword());
+		
+		System.out.println("Test User Object : UserEmail => " + userObject.getEmail() );
+		System.out.println("Test Login Object : UserEmail => " + loginObject.getUsername());
+		
 		String oldPassword = appUtils.passwordEncrypter(user.getOldpassword());
 						
-		if(userObject == null) {return null;}
-		if(loginObject == null) {return null;}
+		if(userObject == null || loginObject == null) {return new ResponseEntity<UserDTO>(user, HttpStatus.NOT_FOUND);}
+				
+		if(! oldPassword.equalsIgnoreCase(loginObject.getPassword())){return null; }
 		
-		if(oldPassword != loginObject.getPassword()){return null; }
-		
-		if(user.getNewpassword() != null || user.getNewpassword() != "")
+				
+		if(user.getNewpassword() != null)
 		{
+			
+			System.out.println("Enetered here with NewPasswordValue => " + user.getNewpassword());
 			loginObject.setPassword(appUtils.passwordEncrypter(user.getNewpassword()));
 			loginDao.update(loginObject);
 		}
 		
 		user.setUserid(userObject.getUserid());
+		user.setEmail(userObject.getEmail());
 		user.setFieldofinterest(userObject.getFieldofinterest());
 		user.setTotalquizCreated(userObject.getTotalquizCreated());
 		user.setTotalQuizTaken(userObject.getTotalQuizTaken());
 		user.setTotalScore(userObject.getTotalScore());
 		user.setCredits(userObject.getCredits());
 		
-		try { BeanUtils.copyProperties(userObject, user);} 
+		/*Values from UI */
+		
+		userObject.setPhonenumber(user.getPhonenumber());
+		userObject.setCountry(user.getCountry());
+		
+	/*	try { BeanUtils.copyProperties(userObject, user);} 
 		catch (IllegalAccessException e) { e.printStackTrace(); } 
 		catch (InvocationTargetException e) { e.printStackTrace(); }
-				
+	*/			
 		usersDao.update(userObject);
 			
-		return user;
+		return new ResponseEntity<UserDTO>(user, HttpStatus.CREATED);
 }
 	
 /************************************************************************************/
 		
-public UserDTO getUser(Integer userid)
+public ResponseEntity getUser(Integer userid)
 
 {
 		UserDTO userDTO = new UserDTO();
@@ -139,7 +153,7 @@ public UserDTO getUser(Integer userid)
 		catch (IllegalAccessException e) { e.printStackTrace(); } 
 		catch (InvocationTargetException e) { e.printStackTrace(); }
 				
-		return userDTO;
+		return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
 }
 
 /************************************************************************************/

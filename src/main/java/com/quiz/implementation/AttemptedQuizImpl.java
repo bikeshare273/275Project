@@ -56,7 +56,7 @@ public class AttemptedQuizImpl
 	public ResponseEntity getAllQuizAttemptsForUser(Integer userid)
 	{
 	
-		List<QuizAttemptTracking> getAllQuizList = quizAttemptTrackingDao.getAllQuizAttemptsForUser(userid);
+		List<QuizAttemptTracking> getAllQuizList = quizAttemptTrackingDao.getAllQuizAttemptsForUserDesc(userid);
 		
 		List<ResultDTO> resultDTOList = new ArrayList<ResultDTO>();
 		

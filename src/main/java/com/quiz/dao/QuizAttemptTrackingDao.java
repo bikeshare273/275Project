@@ -73,6 +73,19 @@ public class QuizAttemptTrackingDao implements IDaoInterfaceForQuizAttemptTracki
 		
 		return quizattempts;
 	}
+	
+	@Override
+	public List<QuizAttemptTracking> getAllQuizAttemptsForUserDesc(Integer userid) {
+
+		String query = "from QuizAttemptTracking q where q.userid = ? order by score desc";
+		
+		@SuppressWarnings("unchecked")
+		List<QuizAttemptTracking> quizattempts = (List<QuizAttemptTracking>) hibernateTemplate.find(query, userid);
+		
+		if(quizattempts.isEmpty()) { return null; }
+		
+		return quizattempts;
+	}
 
 	@Override
 	public List<QuizAttemptTracking> getAllQuizAttemptsByQuizId(Integer quizid) {

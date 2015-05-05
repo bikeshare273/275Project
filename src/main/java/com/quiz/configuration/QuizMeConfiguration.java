@@ -103,6 +103,7 @@ public class QuizMeConfiguration {
 		return new EmailNotification();
 	}
 	
+	
 /********************************************************************************************************************/
 
 											   /* DAO Beans */

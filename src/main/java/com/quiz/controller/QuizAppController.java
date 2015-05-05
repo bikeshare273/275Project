@@ -36,6 +36,7 @@ import com.quiz.dto.QuizSubmitDTO;
 import com.quiz.dto.RankingDTO;
 import com.quiz.dto.ResultDTO;
 import com.quiz.dto.SearchDTO;
+import com.quiz.dto.TopperDTO;
 import com.quiz.dto.UserDTO;
 import com.quiz.entities.Comment;
 import com.quiz.entities.Quiz;
@@ -98,8 +99,8 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	@Autowired
 	QuizSharingImpl quizSharingImpl;
 
-	@Autowired
-	UserCreatedQuizImpl userCreatedQuizImpl;
+	//@Autowired
+	//UserCreatedQuizImpl userCreatedQuizImpl;
 
 	@Autowired
 	ITestDao testDao;
@@ -315,7 +316,7 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 
 	/***********************************************************************************/
 
-
+/*
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value="/getUserCreatedQuiz", method = RequestMethod.GET)
 	@ResponseBody
@@ -465,7 +466,7 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 
 	}
 
-
+	
 	/***********************************************************************************************/	
 
 	/* Test API */ 

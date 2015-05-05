@@ -7,7 +7,7 @@
 				Top Scorers : 
 			</div>
 			<div  class="col-md-12" style="padding-top: 10px; padding-bottom: 40px">
-				<table st-safe-src="queue.transactions" st-table="emptyArray" class="table table-striped" >
+				<table st-safe-src="queue1.transactions" st-table="emptyArray" class="table table-striped" >
 					<thead>
 					<tr >
 						<th style="width: 10%">No.</th>
@@ -19,17 +19,17 @@
 					</thead>
 					<tbody ng-hide="isLoading">
 						<tr ng-repeat="row in emptyArray track by $index">
-							<td>{{$index1+1}}</td>
-							<td>{{row.gname}}</td>
-							<td>{{row.gscore}}</td>
-							<td>{{row.grank}}</td>
-							<td>{{row.gcountry}}</td>
+							<td>{{$index+1}}</td>
+							<td>{{row.email}}</td>
+							<td>{{row.totalScore}}</td>
+							<td>{{$index+1}}</td>
+							<td>{{row.country}}</td>
 						</tr>
 					</tbody>
 					<tfoot>
 						<tr>
 							<td colspan="5" class="text-center">
-								<div st-pagination="" st-items-by-page="itemsByPage" ></div>
+								<div st-pagination="" st-items-by-page="itemsByPage1" ></div>
 							</td>
 						</tr>
 					</tfoot>
@@ -54,11 +54,12 @@
 				<div class="col-md-5">
 					<select id="globaldashboard_category" class="form-control"
 						data-role="listview" ng-model="globaldashboard_category" required>
-
-						<option value="">Select Category</option>
-						<option value="1">Programming</option>
-						<option value="2">Mathematics</option>
-						<option value="3">Science</option>
+							<option value="">Select Category</option>
+							<option value="Technology">Technology</option>
+							<option value="Science">Science</option>
+							<option value="History">History</option>
+							<option value="Geography">Geography</option>
+							<option value="Language">Language</option>
 					</select>
 				</div>
 				<div class="col-md-1"></div>
@@ -67,9 +68,9 @@
 				</div>
 				<div class="col-md-2"></div>
 			</div>
-			<div class="col-md-12" style="padding-top: 20px; padding-bottom: 40px;">
+			<div class="col-md-12" style="padding-top: 20px; padding-bottom: 40px;" ng-hide="showCategoryTop">
 				<div class="col-md-12">
-					<table st-safe-src="queue2.transactions" st-table="emptyArray"
+					<table st-safe-src="queue2.transactions" st-table="emptyArray2"
 					class="table table-striped"
 					style="width: 250; display: inline-block;">
 					<thead>
@@ -78,21 +79,26 @@
 							<th style="width: 25%">Name</th>
 							<th style="width: 25%">Category Score</th>
 							<th style="width: 25%">Category Rank</th>
-							<th style="width: 25%">Global Rank</th>
 							<th style="width: 25%">Country</th>
 						</tr>
 					</thead>
 
 					<tbody ng-hide="isLoading">
-						<tr ng-repeat="row in emptyArray track by $index2">
-							<td>{{$index2+1}}</td>
-							<td>{{row.gn2}}</td>
-							<td>{{row.gs2}}</td>
-							<td>{{row.cr2}}</td>
-							<td>{{row.gr2}}</td>
-							<td>{{row.gc2}}</td>
+						<tr ng-repeat="row in emptyArray2 track by $index">
+							<td>{{$index+1}}</td>
+							<td>{{row.email}}</td>
+							<td>{{row.totalScore}}</td>
+							<td>{{$index+1}}</td>
+							<td>{{row.country}}</td>
 						</tr>
 					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="5" class="text-center">
+								<div st-pagination="" st-items-by-page="itemsByPage2" ></div>
+							</td>
+						</tr>
+					</tfoot>
 				</table>
 				</div>
 			</div>		

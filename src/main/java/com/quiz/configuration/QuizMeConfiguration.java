@@ -35,6 +35,7 @@ import com.quiz.dao.interfaces.ITestDao;
 import com.quiz.implementation.AttemptedQuizImpl;
 import com.quiz.implementation.AuthImplementation;
 import com.quiz.implementation.CommentImpl;
+import com.quiz.implementation.GlobalDashboardImpl;
 import com.quiz.implementation.QuizImpl;
 import com.quiz.implementation.QuizResultsImpl;
 import com.quiz.implementation.SearchImpl;
@@ -84,7 +85,11 @@ public class QuizMeConfiguration {
 	public CommentImpl getCommentImpl(){
 		return new CommentImpl();
 	}
-	
+
+	@Bean
+	public GlobalDashboardImpl getGlobalDashboardImpl(){
+		return new GlobalDashboardImpl();
+	}
 	
 /********************************************************************************************************************/
 

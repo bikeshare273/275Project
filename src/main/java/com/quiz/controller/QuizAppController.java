@@ -31,6 +31,7 @@ import com.quiz.dto.CommentDTO;
 import com.quiz.dto.LoginDTO;
 import com.quiz.dto.QuizDTO;
 import com.quiz.dto.QuizSubmitDTO;
+import com.quiz.dto.RankingDTO;
 import com.quiz.dto.ResultDTO;
 import com.quiz.dto.SearchDTO;
 import com.quiz.dto.UserDTO;
@@ -39,6 +40,7 @@ import com.quiz.entities.Test;
 import com.quiz.entities.User;
 import com.quiz.implementation.AttemptedQuizImpl;
 import com.quiz.implementation.CommentImpl;
+import com.quiz.implementation.GlobalDashboardImpl;
 import com.quiz.implementation.QuizImpl;
 import com.quiz.implementation.QuizResultsImpl;
 import com.quiz.implementation.SearchImpl;
@@ -84,6 +86,9 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	
 	@Autowired
 	CommentImpl commentImpl;
+	
+	@Autowired
+	GlobalDashboardImpl globalDashboardImpl;
 		
 	@Autowired
 	ITestDao testDao;
@@ -270,6 +275,22 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	public List<Comment> getAllCommentsForQuiz(@RequestBody CommentDTO commentDTO) {
 		return commentImpl.getAllCommentsForQuiz(commentDTO.getQuizid());		
 	}
+	
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/getTopScoreCategorywise", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity getTopScoreUserForCategory(@RequestBody RankingDTO rankingDTO) {
+		return globalDashboardImpl.getTopScoreUserForCategory(rankingDTO);
+	}
+	
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/getTopScorer", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity getTopScoreUsers() {
+		return globalDashboardImpl.getTopScoreUsers();
+	}
+	
+	
 	
 	
 	

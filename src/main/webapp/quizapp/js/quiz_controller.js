@@ -520,53 +520,64 @@ quizapp.controller('globalDashboardController',
 	$rootScope.hideUserNavTabs = false;
 	$rootScope.hideStaticTabs = true;
 
-	//get quiz details of a user
-	var dataFormServer = new Array();
-	for(var i=0; i<20; i++){
-		dataFormServer[i] = {
-				//"quizname":"quiz"+i,
-				"gname":"puneet",
-				"gscore":"100",
-				"grank":"1",
-				"gcountry":"India"
+	$scope.showCategoryTop = true;
+	
+	//get toppers
+	var response = $http.get("../../quizme/getTopScorer");
+	response.success(function(dataFromServer, status,
+					headers, config) {
+		$scope.queue1 = {
+				transactions: []
 		};
-	}
-
-	$scope.queue1 = {
-			transactions: []
-	};
-	for(var i=0; i<20; i++){
-		$scope.queue1.transactions.push(dataFormServer[i]);
-	}
-
+		for(var i=0; i<dataFromServer.length; i++){
+			$scope.queue1.transactions.push(dataFromServer[i]);
+		}
+		$scope.itemsByPage1 = 10;
+	});
+	response.error(function(data, status, headers, config) {
+		if (status == 400) {
+			$scope.error = data.errorMessage;
+			$location.url('/');
+			return $q.reject(response);
+		}else{
+			$scope.error = status+": "+data.errorMessage;
+			return $q.reject(response);
+		}
+	});
+	
 	/*
 	 * Select category and populate table.
 	 */
 
-	$scope.searchCategory = function(item, event) {
+	$scope.searchCategory = function() {
 		console.log("search category");	
-
-		//10 users
-		var dataFormServer1 = new Array();
-		for(var i=0; i<10; i++){
-			dataFormServer[i] = {
-					//"quizname":"quiz"+i,
-					"gn2":"puneet", // name
-					"gs2":"100", //category score
-					"cr2":"1", //category rank
-					"gr2":"10",//global rank
-					"gc2":"India"	//country
+		
+		//gettopscorecategorywise
+		var data ={
+				"category":$scope.globaldashboard_category
 			};
-		}
-
-		$scope.queue2 = {
-				transactions: []
-		};
-
-
-		for(var i=0; i<10; i++){
-			$scope.queue2.transactions.push(dataFormServer1[i]);
-		}
+		response = $http.post("../../quizme/getTopScoreCategorywise", data);
+		response.success(function(dataFromServer, status,
+						headers, config) {
+			$scope.queue2 = {
+					transactions: []
+			};
+			for(var i=0; i<dataFromServer.length; i++){
+				$scope.queue2.transactions.push(dataFromServer[i]);
+			}
+			$scope.itemsByPage2 = 10;
+			$scope.showCategoryTop = false;
+		});
+		response.error(function(data, status, headers, config) {
+			if (status == 400) {
+				$scope.error = data.errorMessage;
+				$location.url('/');
+				return $q.reject(response);
+			}else{
+				$scope.error = status+": "+data.errorMessage;
+				return $q.reject(response);
+			}
+		});
 	};
 
 	console.log('globalDashboardController end');

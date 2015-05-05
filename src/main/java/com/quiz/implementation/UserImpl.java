@@ -188,4 +188,34 @@ public Integer getUserIdByUsername(String username)
 
 /************************************************************************************/
 
+public void updateUserQuizAndScoreProfile(int userid, int score, int flag)
+{
+
+	User user = usersDao.getUserById(userid);
+
+	switch(flag)
+	{
+	case 0 : 	
+	{
+		int totalQuizTaken = user.getTotalQuizTaken();
+		totalQuizTaken = totalQuizTaken + 1;
+		user.setTotalQuizTaken(totalQuizTaken);
+	}
+	break;
+
+	case 1 : 	
+
+	{
+		int totalScore = user.getTotalScore();
+		totalScore = totalScore + score;
+		user.setTotalScore(totalScore);
+
+		int totalQuizTaken = user.getTotalQuizTaken();
+		totalQuizTaken = totalQuizTaken + 1;
+		user.setTotalQuizTaken(totalQuizTaken);
+	}
+	break;
+	}
+}
+
 }

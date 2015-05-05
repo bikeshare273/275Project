@@ -39,9 +39,14 @@ public class QuizImpl {
 
 	@Autowired
 	IDaoInterfaceForQuestionCorrectAnswer correctAnswerReferenceDao;
+	
+	@Autowired
+	UserImpl userImpl;
 
-	static Integer InitialPopularityCount = 0;
-
+	static int InitialPopularityCount = 0;
+	static int quizCreationFlag = 0;
+	static int noScoreToReportFlag = 0;
+	
 /************************************************************************************************************/
 
 	public QuizDTO createQuiz(QuizDTO quizDTO, Integer userid) {
@@ -71,6 +76,8 @@ public class QuizImpl {
 		createQuestions(questionDTOs, quizid); // Fetch and create questions.
 
 		quizDTO.setQuizid(quizid);
+		
+		userImpl.updateUserQuizAndScoreProfile(userid, noScoreToReportFlag, quizCreationFlag);
 		
 		return quizDTO;
 	}

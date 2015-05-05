@@ -5,9 +5,10 @@ public class CommentDTO
 	
 	/**********************************************/
 	private Integer commentid;
+	private String comment;
 	private Integer quizid;
 	private Integer userid;
-	private String comment;
+	
 	/**********************************************/
 	public Integer getCommentid() {
 		return commentid;

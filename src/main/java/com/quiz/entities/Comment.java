@@ -1,11 +1,8 @@
 package com.quiz.entities;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -24,15 +21,14 @@ public class Comment
 			PRIMARY KEY(commentid));*/
 
 	
-	/**************************************************/
+/***************************************************************************************/
 
 	private Integer commentid;
 	private String comment;
 	private Integer quizid;
 	private Integer userid;
 	
-	/**************************************************/
-
+/***************************************************************************************/
 	
 	@Id
 	@Column(name = "commentid", unique = true, nullable= false)
@@ -47,7 +43,9 @@ public class Comment
 	public String getComment() {
 		return comment;
 	}
-	
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 	
 	@Column(name = "quizid", unique = false, nullable= true)
 	public Integer getQuizid() {
@@ -64,8 +62,5 @@ public class Comment
 	public void setUserid(Integer userid) {
 		this.userid = userid;
 	}
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-	
+/***************************************************************************************/
 }

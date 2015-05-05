@@ -16,10 +16,11 @@ import com.quiz.entities.Option;
 import com.quiz.entities.QuestionConrrectAnswerRef;
 import com.quiz.entities.Quiz;
 import com.quiz.entities.QuizAttemptTracking;
+import com.quiz.entities.User;
 import com.quiz.utils.QuizMeUtils;
 
 public class QuizResultsImpl {
-	
+
 	@Autowired
 	IDaoInterfaceForUser usersDao;
 
@@ -37,72 +38,88 @@ public class QuizResultsImpl {
 
 	@Autowired
 	IDaoInterfaceForQuestionCorrectAnswer correctAnswerReferenceDao;
-	
+
 	@Autowired
 	IDaoInterfaceForQuizAttemptTracking quizAttemptTrackingDao;
 	
-/******************************************************************************************/
-	
-	public QuizSubmitDTO evaluatteQuiz(Integer userid, QuizSubmitDTO submittedQuiz){
+	@Autowired
+	UserImpl userImpl;
+
+	static int quizSubmissionFlag = 1;
 		
+	/******************************************************************************************/
+
+	public QuizSubmitDTO evaluatteQuiz(Integer userid, QuizSubmitDTO submittedQuiz){
+
 		
 		List<QuestionAnswerDTO> questionanswers = submittedQuiz.getSetOfQuestionAndAnswers();
-		
-		Integer totalScoreForQuiz = 0;
-		
+
+		int totalScoreForQuiz = 0;
+
 		for(QuestionAnswerDTO qa : questionanswers )
 		{
-			
-			Integer questionid = qa.getQuestionid();
-			Integer selectedoptionid = qa.getUserselectedoptionoid();
+
+			int questionid = qa.getQuestionid();
+			System.out.println("Question ID => " + questionid);
+			int selectedoptionid = qa.getUserselectedoptionoid();
+			System.out.println("Selected Option ID => " + selectedoptionid);
 			QuestionConrrectAnswerRef qaref = correctAnswerReferenceDao.getCorrectOptionForQuestion(questionid);
-			Integer correctoptionid = qaref.getOptionid();
-			
-			if(selectedoptionid == correctoptionid) { totalScoreForQuiz += 1; }
-			
+			int correctoptionid = qaref.getOptionid();
+			System.out.println("Correct Option ID => " + correctoptionid);
+
+			if(selectedoptionid == correctoptionid) 
+			{ 
+
+				totalScoreForQuiz  = totalScoreForQuiz + 5 ; 
+				System.out.println("Updated Total Score => " + totalScoreForQuiz );
+			}
+
 			Option selectedOption = optionDao.getOptionById(selectedoptionid);
 			Option correctOption = optionDao.getOptionById(correctoptionid);
-			
+
 			qa.setUserselectedoptionstring(selectedOption.getOptionvalue()); // User selected option string
 			qa.setAnsweroptionstring(correctOption.getOptionvalue());		// Correct option string
-			
+
 		}
-		
+
 		submittedQuiz.setTotalScoreForquiz(totalScoreForQuiz);
 		submittedQuiz.setSetOfQuestionAndAnswers(questionanswers);
-		
+
 		submittedQuiz.setCategoryRank(0); // Category wise ranking
 		submittedQuiz.setGlobalRank(0);  // Global Ranking
-				
-		Integer quizid = submittedQuiz.getQuizid();
-				
+
+		int quizid = submittedQuiz.getQuizid();
+
 		updateAttemptTracker(userid, quizid, totalScoreForQuiz);
-		
+		userImpl.updateUserQuizAndScoreProfile(userid, totalScoreForQuiz, quizSubmissionFlag );
+
+
+
 		return submittedQuiz;
 	}
-	
-/******************************************************************************************/
-	
+
+	/******************************************************************************************/
+
 	public void updateAttemptTracker(int userid, int quizid, int score)
 	{
-		
+
 		QuizAttemptTracking quizAttempt = new QuizAttemptTracking();
-		
+
 		Quiz quiz = quizDao.getQuizById(quizid);
 		String category = quiz.getCategory(); 
-		
-		Integer quizattemptid = appUtils.generateIdValue(500); 
-		
+
+		int quizattemptid = appUtils.generateIdValue(500); 
+
 		quizAttempt.setQuizattemptid(quizattemptid);
 		quizAttempt.setUserid(userid);
 		quizAttempt.setQuizid(quizid);
 		quizAttempt.setCategory(category);
 		quizAttempt.setScore(score);
-		
+
 		quizAttemptTrackingDao.save(quizAttempt);
-		
+
 	}
-	
-/******************************************************************************************/
+
+	/******************************************************************************************/
 
 }

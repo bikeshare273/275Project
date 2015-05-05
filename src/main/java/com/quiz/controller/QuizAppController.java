@@ -48,6 +48,7 @@ import com.quiz.implementation.QuizImpl;
 import com.quiz.implementation.QuizResultsImpl;
 import com.quiz.implementation.QuizSharingImpl;
 import com.quiz.implementation.SearchImpl;
+import com.quiz.implementation.UserCreatedQuizImpl;
 import com.quiz.implementation.UserImpl;
 import com.quiz.implementation.interfaces.IAuthInterfaceForLogin;
 import com.quiz.interceptor.SessionValidatorInterceptor;
@@ -97,6 +98,9 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	@Autowired
 	QuizSharingImpl quizSharingImpl;
 		
+	@Autowired
+	UserCreatedQuizImpl userCreatedQuizImpl;
+	
 	@Autowired
 	ITestDao testDao;
 	

@@ -34,6 +34,7 @@ import com.quiz.dto.QuizSubmitDTO;
 import com.quiz.dto.ResultDTO;
 import com.quiz.dto.SearchDTO;
 import com.quiz.dto.UserDTO;
+import com.quiz.entities.Comment;
 import com.quiz.entities.Test;
 import com.quiz.entities.User;
 import com.quiz.implementation.AttemptedQuizImpl;
@@ -263,6 +264,12 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 		return commentImpl.createComment(commentDTO, userid, commentDTO.getQuizid());
 	}
 	
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/getAllComments", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Comment> getAllCommentsForQuiz(@RequestBody CommentDTO commentDTO) {
+		return commentImpl.getAllCommentsForQuiz(commentDTO.getQuizid());		
+	}
 	
 	
 	

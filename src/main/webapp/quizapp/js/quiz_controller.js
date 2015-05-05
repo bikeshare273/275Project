@@ -593,6 +593,35 @@ quizapp.controller('mycomment',
 		dataSharing.set(dataTransfer);
 	}
 	
+	//get all comments for quiz
+	//update user data
+	var data = {
+		"quizid":$scope.quizData.quizid,
+	};
+	var response = $http.post("../../quizme/getAllComments", data);
+	response.success(function(dataFromServer, status,
+					headers, config) {
+			$scope.queue = {
+					transactions: []
+			};
+			for(var i=0; i<dataFromServer.length; i++){
+				$scope.queue.transactions.push(dataFromServer[i]);
+			}
+			console.log(dataFromServer);
+			
+		
+	});
+	response.error(function(data, status, headers, config) {
+		if (status == 400) {
+			$scope.error = data.errorMessage;
+			$location.url('/');
+			return $q.reject(response);
+		}else{
+			$scope.error = status+": "+data.errorMessage;
+			return $q.reject(response);
+		}
+	});
+	
 	$scope.commentform_postComment = function(){
 		console.log("commentform_postComment");	
 		//update user data

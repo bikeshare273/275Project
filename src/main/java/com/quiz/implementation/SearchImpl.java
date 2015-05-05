@@ -42,9 +42,9 @@ public class SearchImpl {
 			// based on serach criteria fetch quizes
 			List<Quiz> quizes = null;
 			switch (Integer.parseInt(searchDTO.getSearchId())) {
-			case 0:	quizes = searchQuizByCategory(searchDTO); // Search by Category
-			case 1:	quizes = searchQuizByDiffLevel(searchDTO); // Search by Level
-			case 2:	quizes = searchQuizByCreatedUser(searchDTO); // Search by User Name
+			case 0:	quizes = searchQuizByCategory(searchDTO); break; // Search by Category
+			case 1:	quizes = searchQuizByDiffLevel(searchDTO); break; // Search by Level
+			case 2:	quizes = searchQuizByCreatedUser(searchDTO); break;// Search by User Name
 			}
 			// get topper for each quiz
 			if (quizes == null) {
@@ -106,7 +106,7 @@ public class SearchImpl {
 		// get list of quiz for category id
 		List<Quiz> quizes = quizDao.getAllQuizzesByCategory(searchDTO
 				.getSerachString());
-		if (quizes == null && quizes.size() == 0) {
+		if (quizes == null || quizes.size() == 0) {
 			throw new QuizAppException(400, "No Quizes Found for this Criteria");
 		}
 		return quizes;
@@ -124,7 +124,7 @@ public class SearchImpl {
 		// get list of quiz for category id
 		List<Quiz> quizes = quizDao.getAllQuizzesByLevel(searchDTO
 				.getSerachString());
-		if (quizes == null && quizes.size() == 0) {
+		if (quizes == null || quizes.size() == 0) {
 			throw new QuizAppException(400, "No Quizes Found for this Criteria");
 		}
 		return quizes;

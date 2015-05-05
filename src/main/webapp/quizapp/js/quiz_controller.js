@@ -708,27 +708,36 @@ quizapp.controller('quizSearchController',
 	$rootScope.hideStaticTabs = true;
 	$scope.hideSearch = true;
 	
-	$scope.hideSearchTextBox = false;
-	$scope.hideSearchCategoryDropDown = true;
+	$scope.searchCategory = "0";
+	$scope.hideSearchTextBox = true;
+	$scope.hideSearchCategoryDropDown = false;
+	$scope.hideSearchQuizLevelDropDown = true;
 	
 	$scope.changedQuizSearch = function(){
 		if($scope.searchCategory == "0"){
 			$scope.hideSearchTextBox = true;
 			$scope.hideSearchCategoryDropDown = false;
+			$scope.hideSearchQuizLevelDropDown = true;
+		}else if($scope.searchCategory == "1"){
+			$scope.hideSearchTextBox = true;
+			$scope.hideSearchCategoryDropDown = true;
+			$scope.hideSearchQuizLevelDropDown = false;
 		}else{
 			$scope.hideSearchTextBox = false;
 			$scope.hideSearchCategoryDropDown = true;
+			$scope.hideSearchQuizLevelDropDown = true;
 		}
 	}
 	
 	$scope.searchQuiz = function(){
+		$scope.error = "";
 		$scope.hideSearch = false;
 		var searchString = $scope.searchText;
 		if($scope.searchCategory == "0"){
-			console.log("0");
 			searchString = $scope.searchTextForCategory;
+		}else if($scope.searchCategory == "1"){
+			searchString = $scope.searchTextForQuizLevel;
 		}else{
-			console.log("1");
 			searchString = $scope.searchText;
 		}
 		var data ={
@@ -749,8 +758,11 @@ quizapp.controller('quizSearchController',
 			});
 			response.error(function(data, status, headers, config) {
 				if (status == 400) {
+					$scope.queue = {
+							transactions: []
+					};
 					$scope.error = data.errorMessage;
-					$location.url('/');
+					$scope.hideSearch = true;
 					return $q.reject(response);
 				}else{
 					$scope.error = status+": "+data.errorMessage;

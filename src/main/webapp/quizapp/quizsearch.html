@@ -16,7 +16,9 @@
 							id="searchCategory" name="searchCategory" class="form-control" data-role="listview"
 							ng-model="searchCategory" ng-change="changedQuizSearch()" required>
 							<option value="">Select Search Category</option>
-							<option value="0">By Quiz Category</option>
+							<option value="0" selected>By Quiz Category</option>
+							<option value="1" selected>By Quiz Difficulty Level</option>
+							<option value="2" selected>By User Created Quiz</option>
 						</select>
 						<div class="error-container"
 							ng-show="searchQuizForm.searchCategory.$dirty && searchQuizForm.searchCategory.$invalid">
@@ -50,6 +52,21 @@
 							ng-show="searchQuizForm.searchTextForCategory.$dirty && searchQuizForm.searchTextForCategory.$invalid">
 								<small class="errorbox"
 								ng-show="searchQuizForm.searchTextForCategory.$error.required">Search Criteria is required</small> 
+						</div>
+					</div>
+					
+					<div class="col-md-4" ng-hide="hideSearchQuizLevelDropDown" > 
+						<select id="searchTextForQuizLevel" name="searchTextForQuizLevel" class="form-control" data-role="listview"
+							ng-model="searchTextForQuizLevel" required>
+							<option value="">Select Quiz Difficulty</option>
+							<option value="Hard">Hard</option>
+							<option value="Medium">Medium</option>
+							<option value="Easy">Easy</option>
+						</select>
+						<div class="error-container"
+							ng-show="searchQuizForm.searchTextForQuizLevel.$dirty && searchQuizForm.searchTextForQuizLevel.$invalid">
+								<small class="errorbox"
+								ng-show="searchQuizForm.searchTextForQuizLevel.$error.required">Search Criteria is required</small> 
 						</div>
 					</div>
 					
@@ -111,6 +128,22 @@
 				</table>
 			</div> 
 			<div class="col-md-1"></div> 
+	</div>
+	
+	<div class="col-md-12"  style="padding-top:20px;" >
+		<div class="col-md-4" ></div>
+		<div class="col-md-4">
+				<!-- error and success message -->
+		       	<div>
+					<div class="errorbox" style="position:relative;padding-top:10px; padding-left:80px;">
+						{{ error }}
+					</div>
+					<div class="successbox" style="position:relative;padding-top:10px;  padding-left:80px;">
+						{{success}}
+					</div>
+				</div>
+		</div>
+		<div class="col-md-4"></div>
 	</div>
 	
 </div>

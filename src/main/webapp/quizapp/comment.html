@@ -122,11 +122,9 @@
 								<!-- error and success message -->
 						       	<div>
 									<div class="errorbox" style="position:relative;padding-top:10px;">
-										Comment posted successfully
 										{{ error }}
 									</div>
 									<div class="successbox" style="position:relative;padding-top:10px;">
-										Comment posted successfully
 										{{success}}
 									</div>
 								</div>
@@ -139,11 +137,18 @@
 			</div>
 			
 			<div class="col-md-12" style="padding-top:10px;">
+				<div class="col-md-8" style="font-style: italic; font-weight: bold; font-size: 18px;">
+					Comment by others :
+				</div>
+				<div class="col-md-4"></div>
+			</div>
+			
+			<div class="col-md-12" style="padding-top:10px;">
 				<div class="col-md-8">
 					<table st-safe-src="queue.transactions" st-table="emptyArray" class="table table-striped" >
 						<tbody ng-hide="isLoading">
 							<tr ng-repeat="row in emptyArray track by $index">
-								<td >{{$index+1}}</td>
+								<td >{{row.comment}}</td>
 							</tr>
 						</tbody>
 						<tfoot>

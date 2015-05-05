@@ -27,6 +27,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.quiz.configuration.QuizMeConfiguration;
 import com.quiz.dao.interfaces.ITestDao;
+import com.quiz.dto.CommentDTO;
 import com.quiz.dto.LoginDTO;
 import com.quiz.dto.QuizDTO;
 import com.quiz.dto.QuizSubmitDTO;
@@ -36,6 +37,7 @@ import com.quiz.dto.UserDTO;
 import com.quiz.entities.Test;
 import com.quiz.entities.User;
 import com.quiz.implementation.AttemptedQuizImpl;
+import com.quiz.implementation.CommentImpl;
 import com.quiz.implementation.QuizImpl;
 import com.quiz.implementation.QuizResultsImpl;
 import com.quiz.implementation.SearchImpl;
@@ -78,6 +80,9 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	
 	@Autowired
 	AttemptedQuizImpl attemptedQuizImpl;
+	
+	@Autowired
+	CommentImpl commentImpl;
 		
 	@Autowired
 	ITestDao testDao;
@@ -250,8 +255,13 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 		return attemptedQuizImpl.getAllQuizAttemptsForUser(userid);		
 	}
 	
-	
-	
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/postComment", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity getQuiz(@CookieValue("userid") int userid, @RequestBody CommentDTO commentDTO) {
+		System.out.println("comment "+commentDTO.getQuizid()+" "+commentDTO.getComment());
+		return commentImpl.createComment(commentDTO, userid, commentDTO.getQuizid());
+	}
 	
 	
 	

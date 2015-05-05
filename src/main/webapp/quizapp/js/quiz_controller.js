@@ -583,40 +583,6 @@ quizapp.controller('mycomment',
 	$scope.quizResult = dataSharing.get().quizResult;
 	$scope.questionNo = 0;
 	
-	/*$scope.quizData = {
-			"quizName":"science quiz",
-			"quizDescription":"this is my first quiz",
-			"quizDiffficulty":"Hard",
-			"quizCategory":"science",
-			"quizQuestionDTOs":[
-				                    {"question":"first question",
-				                    "options":["option 1","option 2", "option 3","option 4"],
-				                    "correctOptionId":"1",
-				                    "userAnswerId":"3"},
-				                    
-				                    {"question":"first question",
-				                    "options":["option 1","option 2", "option 3","option 4"],
-				                    "correctOptionId":"2",
-				                    "userAnswerId":"1"},
-				                    
-				                    {"question":"first question",
-				                    "options":["option 1","option 2", "option 3","option 4"],
-				                    "correctOptionId":"2",
-				                    "userAnswerId":"1"},
-				                    
-				                    {"question":"first question",
-				                    "options":["option 1","option 2", "option 3","option 4"],
-				                    "correctOptionId":"3",
-				                    "userAnswerId":"3"},
-				                    
-				                    {"question":"first question",
-				                    "options":["option 1","option 2", "option 3","option 4"],
-				                    "correctOptionId":"2",
-				                    "userAnswerId":"1"},
-			                    ],
-			"quizCreator":"amol"
-	};*/
-	
 	$scope.parseInt = parseInt;
 	
 	$scope.recommendToFriend = function(){
@@ -625,6 +591,30 @@ quizapp.controller('mycomment',
 		var dataTransfer = new Array();
 		dataTransfer["quizData"] = $scope.quizData;
 		dataSharing.set(dataTransfer);
+	}
+	
+	$scope.commentform_postComment = function(){
+		console.log("commentform_postComment");	
+		//update user data
+		var data = {
+			"quizid":$scope.quizData.quizid,
+			"comment":$scope.commentform_comment
+		};
+		var response = $http.post("../../quizme/postComment", data);
+		response.success(function(dataFromServer, status,
+						headers, config) {
+			$scope.success = "Comment Posted Successfully";
+		});
+		response.error(function(data, status, headers, config) {
+			if (status == 400) {
+				$scope.error = data.errorMessage;
+				$location.url('/');
+				return $q.reject(response);
+			}else{
+				$scope.error = status+": "+data.errorMessage;
+				return $q.reject(response);
+			}
+		});
 	}
 	
 });

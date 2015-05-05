@@ -49,8 +49,7 @@ public class Comment
 	}
 	
 	
-	@ManyToOne(targetEntity = Quiz.class, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "quizid", referencedColumnName = "quizid")
+	@Column(name = "quizid", unique = false, nullable= true)
 	public Integer getQuizid() {
 		return quizid;
 	}
@@ -58,8 +57,7 @@ public class Comment
 		this.quizid = quizid;
 	}
 	
-	@ManyToOne(targetEntity = User.class, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "userid", referencedColumnName = "userid")
+	@Column(name = "userid", unique = false, nullable= true)
 	public Integer getUserid() {
 		return userid;
 	}

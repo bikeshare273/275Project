@@ -41,9 +41,10 @@ public class CommentImpl
 	{
 		Comment commentObject = new Comment();
 		
+		String commentDescription = commentDTO.getComment();
 		BeanUtils.copyProperties(commentObject, commentDTO);
 		Integer commentId = appUtils.generateIdValue(0);
-		String commentDescription = commentDTO.getComment();
+		
 		
 		commentObject.setCommentid(commentId);
 		commentObject.setComment(commentDescription);
@@ -54,6 +55,7 @@ public class CommentImpl
 		commentObject.setUserid(userObject.getUserid());
 		commentObject.setQuizid(quizObject.getQuizid());
 		
+		System.out.println("comment save "+commentObject.getComment());
 		commentDao.save(commentObject);
 		
 		return new ResponseEntity<CommentDTO>(commentDTO, HttpStatus.OK);

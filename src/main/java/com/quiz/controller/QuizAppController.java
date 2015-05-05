@@ -62,53 +62,53 @@ import com.quiz.interceptor.SessionValidatorInterceptor;
 @Import(QuizMeConfiguration.class)
 public class QuizAppController extends WebMvcConfigurerAdapter {	
 
-/***********************************************************************************************/
-		
-						     /*	Spring - Beans Auto-Wiring */
+	/***********************************************************************************************/
 
-/***********************************************************************************************/
+	/*	Spring - Beans Auto-Wiring */
+
+	/***********************************************************************************************/
 
 	@Autowired
 	IAuthInterfaceForLogin authInterfaceForLogin;
 
 	@Autowired
 	SessionValidatorInterceptor sessionValidatorInterceptor;
-	
+
 	@Autowired
 	UserImpl userImpl;
-	
+
 	@Autowired
 	SearchImpl searchImpl;
-	
+
 	@Autowired
 	QuizImpl quizImpl;
-	
+
 	@Autowired
 	QuizResultsImpl quizResultsImpl;
-	
+
 	@Autowired
 	AttemptedQuizImpl attemptedQuizImpl;
-	
+
 	@Autowired
 	CommentImpl commentImpl;
-	
+
 	@Autowired
 	GlobalDashboardImpl globalDashboardImpl;
-	
+
 	@Autowired
 	QuizSharingImpl quizSharingImpl;
-		
+
 	@Autowired
 	UserCreatedQuizImpl userCreatedQuizImpl;
-	
+
 	@Autowired
 	ITestDao testDao;
-	
-/***********************************************************************************************/
 
-						/* Login, Logout and Session Management */
+	/***********************************************************************************************/
 
-/***********************************************************************************************/
+	/* Login, Logout and Session Management */
+
+	/***********************************************************************************************/
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -118,7 +118,7 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	@RequestMapping(value="/loggedin", method = RequestMethod.GET)
 	@ResponseBody
 	private boolean logeedin() {
-	return true;
+		return true;
 	}
 
 	@RequestMapping("/login")
@@ -133,7 +133,7 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 		return responseEntity;
 	}
 
-	
+
 	@RequestMapping("/logout")
 	@ResponseBody
 	private boolean logout(HttpServletResponse response) {
@@ -150,23 +150,23 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	@RequestMapping(value = "/verifyUniqueUsername", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean checkUniqueUsername(@RequestParam ("email") String username) {
-				
+
 		return userImpl.checkUniqueUsername(username);
-		
+
 	}
-	
 
-/***********************************************************************************************/
 
-									/* User Entity APIs */
+	/***********************************************************************************************/
 
-/***********************************************************************************************/
-	
+	/* User Entity APIs */
+
+	/***********************************************************************************************/
+
 	@ResponseStatus(HttpStatus.CREATED)
 	@RequestMapping(value = "/createuser", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity createUser(@Valid @RequestBody UserDTO user) {
-		
+
 		return userImpl.createUser(user);
 	}
 
@@ -206,72 +206,72 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 		return userImpl.getAllUsers();		
 
 	}
-	
-	
+
+
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/deleteuser", method = RequestMethod.POST)
 	@ResponseBody
 	public void deleteUser(@RequestBody SearchDTO searchDTO) {
 
 		Integer userid = Integer.parseInt(searchDTO.getSerachString());
-		
+
 		userImpl.deleteUser(userid);
 	}
 
-	
+
 	//swapnil
-	
+
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/searchQuiz", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity searchQuiz(@RequestBody SearchDTO searchDTO) {
 		return searchImpl.searchQuiz(searchDTO);		
 	}
-	
+
 	//swapnil
 
-/***********************************************************************************************/
+	/***********************************************************************************************/
 
-								  /* Application REST APIs  */
+	/* Application REST APIs  */
 
-/***********************************************************************************************/
-	
-	
+	/***********************************************************************************************/
+
+
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/createQuiz", method = RequestMethod.POST)
 	@ResponseBody
 	public QuizDTO createQuiz(@CookieValue("userid") int userid, @RequestBody QuizDTO quizDTO) {
-						
+
 		return quizImpl.createQuiz(quizDTO, userid);
 	}
-	
+
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/getQuiz", method = RequestMethod.POST)
 	@ResponseBody
 	public QuizDTO getQuiz(@RequestBody SearchDTO searchDTO) {
-				
+
 		Integer quizid = Integer.parseInt(searchDTO.getSearchId());
-		
+
 		return quizImpl.getQuiz(quizid);
 	}
-	
-	
+
+
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/submitQuiz", method = RequestMethod.POST)
 	@ResponseBody
 	public QuizSubmitDTO getQuiz(@CookieValue("userid") int userid, @RequestBody QuizSubmitDTO questionanswers) {
-				
+
 		return quizResultsImpl.evaluatteQuiz(userid, questionanswers);
 	}
-	
-	
+
+
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/getAttemptedQuizes", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity getAllQuizAttemptedByUser(@CookieValue("userid") int userid) {
 		return attemptedQuizImpl.getAllQuizAttemptsForUser(userid);		
 	}
-	
+
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/postComment", method = RequestMethod.POST)
 	@ResponseBody
@@ -279,28 +279,28 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 		System.out.println("comment "+commentDTO.getQuizid()+" "+commentDTO.getComment());
 		return commentImpl.createComment(commentDTO, userid, commentDTO.getQuizid());
 	}
-	
+
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/getAllComments", method = RequestMethod.POST)
 	@ResponseBody
 	public List<Comment> getAllCommentsForQuiz(@RequestBody CommentDTO commentDTO) {
 		return commentImpl.getAllCommentsForQuiz(commentDTO.getQuizid());		
 	}
-	
+
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/getTopScoreCategorywise", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity getTopScoreUserForCategory(@RequestBody RankingDTO rankingDTO) {
 		return globalDashboardImpl.getTopScoreUserForCategory(rankingDTO);
 	}
-	
+
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/getTopScorer", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity getTopScoreUsers() {
 		return globalDashboardImpl.getTopScoreUsers();
 	}
-	
+
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/getGlobalRank", method = RequestMethod.GET)
 	@ResponseBody
@@ -308,91 +308,101 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 
 		return userImpl.getGlobalRankingForUser(userid);		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-/***********************************************************************************************/	
-	
+
+
+
+
+
+	/***********************************************************************************/
+
+
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value="/getUserCreatedQuiz", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity getUserCreatedQuiz(@CookieValue("userid") int userid)
+	{
+		return userCreatedQuizImpl.getUserCreatedQuiz(userid);
+	}
+	/********************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/***********************************************************************************************/	
+
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/shareQuiz", method = RequestMethod.POST)
 	@ResponseBody
@@ -400,68 +410,68 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 
 		Integer quizid = quizShareEntry.getQuizid();		
 		String username = quizShareEntry.getUsername();
-				
+
 		Integer userIdToShare = userImpl.getUserIdByUsername(username);
-		
+
 		if(userIdToShare == null )
 		{	
 			quizShareEntry.setApplicationMessage("User does not exist !");
 			quizShareEntry.setSuccessFlag(false);
 			return quizShareEntry; 
 		}
-		
+
 		if(username == userImpl.getUsernameByUserId(userid))
 		{	
 			quizShareEntry.setApplicationMessage("Invalid request. You cannot enter you email id here !");
 			quizShareEntry.setSuccessFlag(false);
 			return quizShareEntry; 
 		}
-		
-		
+
+
 		quizSharingImpl.addQuizSharingEntry(userIdToShare, quizid, userid);
 		quizShareEntry.setApplicationMessage("Recommendation sent to : " + username);
 		quizShareEntry.setSuccessFlag(true);
-				
+
 		return quizShareEntry; 
 
 	}
-	
+
 	/***********************************************************************************************/	
-	
+
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/getSharedQuizzes", method = RequestMethod.POST)
 	@ResponseBody
 	public List<Quiz> getSharedQuizzes(@CookieValue("userid") int userid)
 	{
-		
+
 		boolean recoFlag = quizSharingImpl.verifyUnAttemptedQuizzesExistForUser(userid);
-		
+
 		if(recoFlag == false ) { return null; }
-		
+
 		List<Quiz> sharedQuizzes = quizSharingImpl.getUnattemptedQuizSharingEntries(userid);
-		
+
 		return sharedQuizzes;
 	}
-	
-/***********************************************************************************************/
-	
+
+	/***********************************************************************************************/
+
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/getCategoryTopScoreAndRank", method = RequestMethod.GET)
 	@ResponseBody
 	public List<CategoryScoreAndRankingDTO> getCategoryScoreAndRanking(@CookieValue("userid") int userid)
 	{	
-	
+
 		return userImpl.getCategoryScoreAndRanking(userid);
-	
+
 	}
-	
-	
-/***********************************************************************************************/	
-	
-									/* Test API */ 
-	
-/***********************************************************************************************/
-	
+
+
+	/***********************************************************************************************/	
+
+	/* Test API */ 
+
+	/***********************************************************************************************/
+
 	@RequestMapping(value = "/test/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public Test dbtest(@PathVariable int id) {
@@ -477,7 +487,7 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 
 		return savedTest;
 	}
-	
-/***********************************************************************************************/
-	
+
+	/***********************************************************************************************/
+
 }

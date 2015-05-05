@@ -90,6 +90,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-integration</artifactId>
 		</dependency>
+
+		<!-- Java Mail -->
+		<dependency>
+    		<groupId>javax.mail</groupId>
+    		<artifactId>mail</artifactId>
+    		<version>1.5.0-b01</version>
+		</dependency>
 		<!-- Mongodb driver -->
 		<dependency>
 			<groupId>org.mongodb</groupId>
@@ -159,7 +166,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
-		</dependency>		
+		</dependency>
 
 	</dependencies>
 

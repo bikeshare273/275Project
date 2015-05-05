@@ -44,6 +44,9 @@ public class QuizResultsImpl {
 	
 	@Autowired
 	UserImpl userImpl;
+	
+	@Autowired
+	QuizSharingImpl quizSharingImpl;
 
 	static int quizSubmissionFlag = 1;
 		
@@ -92,7 +95,8 @@ public class QuizResultsImpl {
 
 		updateAttemptTracker(userid, quizid, totalScoreForQuiz);
 		userImpl.updateUserQuizAndScoreProfile(userid, totalScoreForQuiz, quizSubmissionFlag );
-
+		
+		quizSharingImpl.updateQuizSharingEntry(userid, quizid);
 
 
 		return submittedQuiz;

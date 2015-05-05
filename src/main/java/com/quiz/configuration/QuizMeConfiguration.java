@@ -38,10 +38,12 @@ import com.quiz.implementation.CommentImpl;
 import com.quiz.implementation.GlobalDashboardImpl;
 import com.quiz.implementation.QuizImpl;
 import com.quiz.implementation.QuizResultsImpl;
+import com.quiz.implementation.QuizSharingImpl;
 import com.quiz.implementation.SearchImpl;
 import com.quiz.implementation.UserImpl;
 import com.quiz.implementation.interfaces.IAuthInterfaceForLogin;
 import com.quiz.interceptor.SessionValidatorInterceptor;
+import com.quiz.utils.EmailNotification;
 import com.quiz.utils.QuizMeUtils;
 
 import javax.sql.DataSource;
@@ -89,6 +91,16 @@ public class QuizMeConfiguration {
 	@Bean
 	public GlobalDashboardImpl getGlobalDashboardImpl(){
 		return new GlobalDashboardImpl();
+	}
+	
+	@Bean
+	public QuizSharingImpl getQuizSharingImpl(){
+		return new QuizSharingImpl();
+	}
+	
+	@Bean
+	public EmailNotification getEmailNotification(){
+		return new EmailNotification();
 	}
 	
 /********************************************************************************************************************/

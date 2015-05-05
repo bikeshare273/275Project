@@ -16,6 +16,7 @@ import com.quiz.dto.SearchDTO;
 import com.quiz.dto.UserDTO;
 import com.quiz.entities.Login;
 import com.quiz.entities.User;
+import com.quiz.utils.EmailNotification;
 import com.quiz.utils.QuizMeUtils;
 
 public class UserImpl {
@@ -29,6 +30,8 @@ public class UserImpl {
 	@Autowired
 	QuizMeUtils appUtils;
 	
+	@Autowired
+	EmailNotification emailNotification;
 	
 /***********************************************************************************/
 	
@@ -69,6 +72,9 @@ public class UserImpl {
 				return new ResponseEntity<QuizAppException>(new QuizAppException(500, "Unexpected Error Encountered"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
+		/*  Email Start  */
+		emailNotification.sendEmailonSignUp(user.getEmail(), user.getName());
+		/*  Email Complete  */
 		return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
 		
 	}
@@ -259,5 +265,20 @@ public SearchDTO getGlobalRankingForUser(int userid)
 
 	return globaRnak;
 }
+
+/************************************************************************************/
+
+public String getUsernameByUserId(Integer userid)
+{
+	Login login = loginDao.getLoginByUserId(userid);
+	
+	if(login == null) { return null; }
+	
+	String username = login.getUsername();
+	
+	return username;	
+}
+
+/************************************************************************************/
 
 }

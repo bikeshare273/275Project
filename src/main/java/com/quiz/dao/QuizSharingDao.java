@@ -97,7 +97,7 @@ public class QuizSharingDao implements IDaoInterfaceForQuizSharing {
 
 	@Override
 	public QuizSharing getQuizSharingByUserIdAndQuizId(Integer userid, Integer quizid) {
-		String query = "from QuizSharing q where q.userid = ? and q.quiz = ?";
+		String query = "from QuizSharing q where q.userid = ? and q.quizid = ?";
 		@SuppressWarnings("unchecked")
 		List<QuizSharing> quizSharingEntries = (List<QuizSharing>) hibernateTemplate.find(query, userid, quizid);
 
@@ -111,7 +111,7 @@ public class QuizSharingDao implements IDaoInterfaceForQuizSharing {
 	@Override
 	public List<QuizSharing> getQuizSharingByQuizId(Integer quizid) {
 
-		String query = "from QuizSharing q where q.quiz = ?";
+		String query = "from QuizSharing q where q.quizid = ?";
 		@SuppressWarnings("unchecked")
 		List<QuizSharing> quizSharingEntries = (List<QuizSharing>) hibernateTemplate
 				.find(query, quizid);
@@ -127,7 +127,7 @@ public class QuizSharingDao implements IDaoInterfaceForQuizSharing {
 	@Override
 	public List<QuizSharing> getQuizSharingByUserIdAndQuizIdAndRecommenderId(Integer userid, Integer quizid, Integer recommenderid) {
 
-		String query = "from QuizSharing q where q.userid = ? and q.quiz = ? and recommenderid = ?";
+		String query = "from QuizSharing q where q.userid = ? and q.quizid = ? and recommenderid = ?";
 		@SuppressWarnings("unchecked")
 		List<QuizSharing> quizSharingEntries = (List<QuizSharing>) hibernateTemplate
 				.find(query, userid, quizid, recommenderid);

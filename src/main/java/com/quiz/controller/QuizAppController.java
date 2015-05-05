@@ -30,12 +30,14 @@ import com.quiz.dao.interfaces.ITestDao;
 import com.quiz.dto.CommentDTO;
 import com.quiz.dto.LoginDTO;
 import com.quiz.dto.QuizDTO;
+import com.quiz.dto.QuizSharingDTO;
 import com.quiz.dto.QuizSubmitDTO;
 import com.quiz.dto.RankingDTO;
 import com.quiz.dto.ResultDTO;
 import com.quiz.dto.SearchDTO;
 import com.quiz.dto.UserDTO;
 import com.quiz.entities.Comment;
+import com.quiz.entities.Quiz;
 import com.quiz.entities.Test;
 import com.quiz.entities.User;
 import com.quiz.implementation.AttemptedQuizImpl;
@@ -43,6 +45,7 @@ import com.quiz.implementation.CommentImpl;
 import com.quiz.implementation.GlobalDashboardImpl;
 import com.quiz.implementation.QuizImpl;
 import com.quiz.implementation.QuizResultsImpl;
+import com.quiz.implementation.QuizSharingImpl;
 import com.quiz.implementation.SearchImpl;
 import com.quiz.implementation.UserImpl;
 import com.quiz.implementation.interfaces.IAuthInterfaceForLogin;
@@ -89,6 +92,9 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	
 	@Autowired
 	GlobalDashboardImpl globalDashboardImpl;
+	
+	@Autowired
+	QuizSharingImpl quizSharingImpl;
 		
 	@Autowired
 	ITestDao testDao;
@@ -321,6 +327,120 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/***********************************************************************************************/	
+	
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/shareQuiz", method = RequestMethod.POST)
+	@ResponseBody
+	public QuizSharingDTO addQuizSharingEntry(@RequestBody QuizSharingDTO quizShareEntry, @CookieValue("userid") int userid) {
+
+		Integer quizid = quizShareEntry.getQuizid();		
+		String username = quizShareEntry.getUsername();
+				
+		Integer userIdToShare = userImpl.getUserIdByUsername(username);
+		
+		if(userIdToShare == null )
+		{	
+			quizShareEntry.setApplicationMessage("User does not exist !");
+			quizShareEntry.setSuccessFlag(false);
+			return quizShareEntry; 
+		}
+		
+		if(username == userImpl.getUsernameByUserId(userid))
+		{	
+			quizShareEntry.setApplicationMessage("Invalid request. You cannot enter you email id here !");
+			quizShareEntry.setSuccessFlag(false);
+			return quizShareEntry; 
+		}
+		
+		
+		quizSharingImpl.addQuizSharingEntry(userIdToShare, quizid, userid);
+		quizShareEntry.setApplicationMessage("Recommendation sent to : " + username);
+		quizShareEntry.setSuccessFlag(true);
+				
+		return quizShareEntry; 
+
+	}
+	
+	/***********************************************************************************************/	
+	
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/getSharedQuizzes", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Quiz> getSharedQuizzes(@CookieValue("userid") int userid)
+	{
+		
+		boolean recoFlag = quizSharingImpl.verifyUnAttemptedQuizzesExistForUser(userid);
+		
+		if(recoFlag == false ) { return null; }
+		
+		List<Quiz> sharedQuizzes = quizSharingImpl.getUnattemptedQuizSharingEntries(userid);
+		
+		return sharedQuizzes;
+	}
+	
+/***********************************************************************************************/
+	
+		
 	
 	
 	

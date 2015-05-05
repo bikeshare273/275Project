@@ -5,10 +5,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.quiz.dao.UserDao;
 import com.quiz.dao.interfaces.IDaoInterfaceForQuiz;
 import com.quiz.dao.interfaces.IDaoInterfaceForQuizSharing;
+import com.quiz.dao.interfaces.IDaoInterfaceForUser;
 import com.quiz.entities.Quiz;
 import com.quiz.entities.QuizSharing;
+import com.quiz.entities.User;
+import com.quiz.utils.EmailNotification;
 import com.quiz.utils.QuizMeUtils;
 
 public class QuizSharingImpl {
@@ -21,6 +25,12 @@ public class QuizSharingImpl {
 
 	@Autowired
 	QuizMeUtils appUtils;
+	
+	@Autowired
+	EmailNotification emailNotification;
+	
+	@Autowired
+	IDaoInterfaceForUser userDao;
 
 /*************************************************************************************************************/
 
@@ -42,10 +52,17 @@ public class QuizSharingImpl {
 			quizSharingEntry.setRecommenderid(recommenderid);
 
 			quizSharingDao.save(quizSharingEntry);
+			
+
+			/* Email Start */
+			//sendEmailOnQuizSharing(userid, quizid, recommenderid);
+			/* Email Complete */
+			
+			
 		}
 	}
 
-	public void updateRecommendations(Integer userid, Integer quizid) {
+	public void updateQuizSharingEntry(Integer userid, Integer quizid) {
 	
 		boolean recoFlag = verifyQuizSharingEntiesForUserWithQuizExists(userid,	quizid);
 
@@ -76,6 +93,10 @@ public class QuizSharingImpl {
 		}
 		quizSharingEntry.setRecommenderid(recommenderid);
 
+		/* Email Start */
+		//sendEmailOnQuizSharing(userid, quizid, recommenderid);
+		/* Email Complete */
+		
 		quizSharingDao.update(quizSharingEntry);
 	}
 
@@ -91,7 +112,7 @@ public class QuizSharingImpl {
 		return true;
 	}
 
-	public boolean verifyUnseenRecommendationsExistForUser(Integer userid) {
+	public boolean verifyUnAttemptedQuizzesExistForUser(Integer userid) {
 		List<QuizSharing> quizSharingEntries = quizSharingDao.getUnttemptedQuizSharings(userid);
 			
 		if (quizSharingEntries == null) {
@@ -162,5 +183,31 @@ public class QuizSharingImpl {
 
 	}
 
+	/*************************************************************************************************************/
+	
+	public void sendEmailOnQuizSharing(Integer userid, Integer quizid, Integer recommenderid){
+		
+		System.out.println("User id => " + userid);
+		
+		
+		User user = userDao.getUserById(userid);
+		Quiz quiz = quizDao.getQuizById(quizid);
+		User recommender = userDao.getUserById(recommenderid);
+		
+		String userEmail = user.getEmail();
+		String name = user.getName();
+		String recommenderName = recommender.getName();
+		String quizName = quiz.getQuizname();
+		
+		System.out.println("User Email To Send => " + user.getEmail());
+		System.out.println("User Name =>" + user.getName());
+		System.out.println("Recommender => " + recommender.getName());
+		System.out.println("Quiz Name => " + quiz.getQuizname());
+		
+		emailNotification.sendEmailOnQuizSharing(userEmail, name, recommenderName, quizName);
+		
+	}
+	
+	
 
 }

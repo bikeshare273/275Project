@@ -3,10 +3,14 @@ package com.quiz.aop;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
 
 @Aspect
 public class QuizLogging {
 
+	
+	/*
 	@Around("execution(* *.*(..))")
 	public void quizAppBasicLogging(ProceedingJoinPoint proceedingJoinPoint){
 		try{
@@ -16,6 +20,6 @@ public class QuizLogging {
 		}catch(Throwable e){
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 }

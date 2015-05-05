@@ -7,10 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.quiz.dao.interfaces.IDaoInterfaceForQuizAttemptTracking;
 import com.quiz.dao.interfaces.IDaoInterfaceForUser;
 import com.quiz.dto.RankingDTO;
+import com.quiz.dto.ResultDTO;
 import com.quiz.dto.UserDTO;
+import com.quiz.entities.QuizAttemptTracking;
 import com.quiz.entities.User;
+
+/*
+ * 
+ * @author: Puneet Popli.
+ * 05/04/2015
+ */
+
 
 public class GlobalDashboardImpl 
 {
@@ -18,6 +28,9 @@ public class GlobalDashboardImpl
 	@Autowired
 	IDaoInterfaceForUser userDao;
 	
+	
+	@Autowired
+	IDaoInterfaceForQuizAttemptTracking attemptTrackingDao;
 	
 	/*
 	 * 
@@ -55,5 +68,32 @@ public class GlobalDashboardImpl
 	 * 
 	 */
 	
+	public ResponseEntity getTopScoreUserForCategory(RankingDTO rankingDTO)
+	{
+		List<UserDTO> userDTOList = new ArrayList<UserDTO>();
+		
+		List<QuizAttemptTracking> quizTrackingList = attemptTrackingDao.getAllQuizAttemptsByScoreDescForCategory
+				(rankingDTO.getCategory());
+		
+		for(QuizAttemptTracking quizAttempTrackingObject: quizTrackingList)
+		{
+			
+			UserDTO userDTO = new UserDTO();
+			
+			Integer userId = quizAttempTrackingObject.getUserid();
+			
+			User user = userDao.getUserById(userId);
+			
+			userDTO.setName(user.getName());
+			userDTO.setCountry(user.getCountry());
+			userDTO.setTotalScore(user.getTotalScore());
+			
+			
+			userDTOList.add(userDTO);
+		}
+		
+		
+		return new ResponseEntity<List<UserDTO>>(userDTOList, HttpStatus.OK);
+	}
 	
 }

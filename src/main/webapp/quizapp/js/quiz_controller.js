@@ -428,24 +428,34 @@ quizapp.controller('homeUserController',
 		return $q.reject(response);
 	});	
 	
-
-	/*
-	 * Get category ranking
-	 */
-	var dataFormServer1 = new Array();
-	for(var j=0; j<20; j++){
-		dataFormServer1[j]={
-				"quizcategory1":"programming",
-				"quizrank1":"10000",
-				"quizscore1":"100"
-		};
-	}
-	$scope.queue2 = {
-			transactions: []
-	};
-	for(var i=0; i<20; i++){
-		$scope.queue2.transactions.push(dataFormServer1[i]);
-	}
+	
+	//get category wise score and rank
+	//get quiz details of a user
+	response = $http.get("../../quizme/getCategoryTopScoreAndRank");
+	response.success(function(dataFromServer, status,
+					headers, config) {
+				
+				console.log("getCategoryTopScoreAndRank dataFormServer "+dataFromServer);
+				if(dataFromServer.length > 0){
+					$scope.queue2 = {
+							transactions: []
+					};
+					for(var i=0; i<dataFromServer.length; i++){
+						$scope.queue2.transactions.push(dataFromServer[i]);
+					}
+				}else{
+					
+				}
+				
+			});
+	response.error(function(data, status, headers, config) {
+		console.log(data.errorMessage);
+		console.log(status);
+		if(status === 400){
+			$scope.error = data.errorMessage;
+		}
+		return $q.reject(response);
+	});	
 
 	console.log("--> Populating global rank text box "
 			+ $scope.global_rank);

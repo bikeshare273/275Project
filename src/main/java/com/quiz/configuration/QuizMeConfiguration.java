@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 
+import com.quiz.aop.QuizLogging;
 import com.quiz.dao.CommentDao;
 import com.quiz.dao.LoginDao;
 import com.quiz.dao.OptionDao;
@@ -50,6 +52,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
+@EnableAspectJAutoProxy
 public class QuizMeConfiguration {
 
 /********************************************************************************************************************/
@@ -58,6 +61,12 @@ public class QuizMeConfiguration {
 	
 /********************************************************************************************************************/
 
+	@Bean
+	public QuizLogging getQuizLogging(){
+		return new QuizLogging();
+	}
+	
+	
 	@Bean
 	public UserImpl getUserImpl(){
 		return new UserImpl();

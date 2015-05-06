@@ -117,7 +117,6 @@ public class QuizMeConfiguration {
 	public UserCreatedQuizImpl getUserCreatedQuizImpl(){
 		return new UserCreatedQuizImpl();
 	}
-	
 /********************************************************************************************************************/
 
 											   /* DAO Beans */

@@ -2,6 +2,10 @@ package com.quiz.configuration;
 
 import java.util.Properties;
 
+import javax.sql.DataSource;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -10,8 +14,6 @@ import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.apache.commons.dbcp2.BasicDataSource;
-import org.hibernate.SessionFactory;
 
 import com.quiz.aop.QuizLogging;
 import com.quiz.dao.CommentDao;
@@ -42,13 +44,12 @@ import com.quiz.implementation.QuizImpl;
 import com.quiz.implementation.QuizResultsImpl;
 import com.quiz.implementation.QuizSharingImpl;
 import com.quiz.implementation.SearchImpl;
+import com.quiz.implementation.UserCreatedQuizImpl;
 import com.quiz.implementation.UserImpl;
 import com.quiz.implementation.interfaces.IAuthInterfaceForLogin;
 import com.quiz.interceptor.SessionValidatorInterceptor;
 import com.quiz.utils.EmailNotification;
 import com.quiz.utils.QuizMeUtils;
-
-import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
@@ -110,6 +111,11 @@ public class QuizMeConfiguration {
 	@Bean
 	public EmailNotification getEmailNotification(){
 		return new EmailNotification();
+	}
+	
+	@Bean
+	public UserCreatedQuizImpl getUserCreatedQuizImpl(){
+		return new UserCreatedQuizImpl();
 	}
 	
 /********************************************************************************************************************/

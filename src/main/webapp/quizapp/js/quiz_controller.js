@@ -215,24 +215,6 @@ quizapp.controller('quizhomeController',
 	$scope.success = "";
 	$scope.hideUserCreatedQuizTable = true;
 
-	//getUserCreatedQuiz
-	/*var dataForGetUserCreatedQuiz = {
-			"scoreForUser":{
-				"email":"swap@localhost.com",
-			},
-			"scoreForQuiz":{
-				"quizId":"100",
-				"quizName":"Tech Quiz",
-				"quizCategory":"Computer"
-			},
-			"score":100000,
-			"rankForQuiz":{
-				"rank":"10000",
-				"category":"quizwise",
-				"score":"99"
-			}
-	};
-	*/
 	//get user created quiz
 	var response = $http.get("../../quizme/getUserCreatedQuiz");
 	response
@@ -275,8 +257,32 @@ quizapp.controller('quizhomeController',
 	
 	$scope.showQuizStats = function(quizid) {
 		console.log("showQuizStats");
+		
 		//get data for quiz and pass to next page
-		var quizStatsData = {
+		var data = {
+				quizid : quizid
+			};
+		
+		var response = $http.post("../../quizme/getQuizStats", data,
+				{});
+		response
+				.success(function(dataFromServer, status,
+						headers, config) {
+					var shareData = new Array();
+					shareData["quizStatsData"] = dataFromServer;
+					dataSharing.set(shareData);
+					$location.url("/quizStats");
+				});
+		response.error(function(data, status, headers, config) {
+			console.log(data.errorMessage);
+			console.log(status);
+			if(status === 400){
+				$scope.error = data.errorMessage;
+			}
+			return $q.reject(response);
+		});	
+		
+		/*var quizStatsData = {
 				"quiz": {
 					"quizName":"science quiz",
 					"quizDescription":"this is my first quiz",
@@ -287,11 +293,7 @@ quizapp.controller('quizhomeController',
 				"highestScore":80,
 				"averageScore":50.76,
 				"totalQuizTakers":200
-		};
-		var shareData = new Array();
-		shareData["quizStatsData"] = quizStatsData;
-		dataSharing.set(shareData);
-		$location.url("/quizStats");
+		};*/
 	};
 	
 	console.log('quizhomeController end');

@@ -3,6 +3,7 @@ package com.quiz.implementation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.quiz.dao.interfaces.IDaoInterfaceForOption;
@@ -129,34 +130,40 @@ public class QuizResultsImpl {
 	public QuizStatDTO getQuizStat(QuizDTO quizDTO)
 	{
 		List<QuizAttemptTracking> quizAttemptList=new ArrayList<QuizAttemptTracking>();
-		quizAttemptList=quizAttemptTrackingDao.getAllQuizAttemptsByQuizId(quizDTO.getQuizid());
-		
-		long totalQuizTakers=quizAttemptList.size();
-		long lowestScore=100000;
-		long highestScore=-50;
-		int sum=0;
-		for (QuizAttemptTracking quizAttemptTracking : quizAttemptList) 
-		{
-			if(quizAttemptTracking.getScore()<lowestScore)
-			lowestScore=quizAttemptTracking.getScore();
-		}
-		for (QuizAttemptTracking quizAttemptTracking : quizAttemptList) 
-		{
-			if(quizAttemptTracking.getScore()>highestScore)
-			highestScore=quizAttemptTracking.getScore();
-		}
-		for (QuizAttemptTracking quizAttemptTracking : quizAttemptList) 
-		{
-			sum=sum+quizAttemptTracking.getScore();
-		}
-		double averageScore=sum/quizAttemptList.size();	
-
 		QuizStatDTO quizStatDTO=new QuizStatDTO();
-		quizStatDTO.setAverageScore(averageScore);
-		quizStatDTO.setHighestScore(highestScore);
-		quizStatDTO.setLowestScore(lowestScore);
-		quizStatDTO.setQuiz(quizDTO);
-		quizStatDTO.setTotalQuizTakers(totalQuizTakers);
+		try{
+			quizAttemptList=quizAttemptTrackingDao.getAllQuizAttemptsByQuizId(quizDTO.getQuizid());
+			
+			long totalQuizTakers=quizAttemptList.size();
+			long lowestScore=100000;
+			long highestScore=-50;
+			int sum=0;
+			for (QuizAttemptTracking quizAttemptTracking : quizAttemptList) 
+			{
+				if(quizAttemptTracking.getScore()<lowestScore)
+				lowestScore=quizAttemptTracking.getScore();
+			}
+			for (QuizAttemptTracking quizAttemptTracking : quizAttemptList) 
+			{
+				if(quizAttemptTracking.getScore()>highestScore)
+				highestScore=quizAttemptTracking.getScore();
+			}
+			for (QuizAttemptTracking quizAttemptTracking : quizAttemptList) 
+			{
+				sum=sum+quizAttemptTracking.getScore();
+			}
+			double averageScore=sum/quizAttemptList.size();	
+
+			quizStatDTO.setAverageScore(averageScore);
+			quizStatDTO.setHighestScore(highestScore);
+			quizStatDTO.setLowestScore(lowestScore);
+			BeanUtils.copyProperties(quizDTO, quizDao.getQuizById(quizDTO.getQuizid()));
+			quizStatDTO.setQuiz(quizDTO);
+			quizStatDTO.setTotalQuizTakers(totalQuizTakers);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		
 		return quizStatDTO;
 

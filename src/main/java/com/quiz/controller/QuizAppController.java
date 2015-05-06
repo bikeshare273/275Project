@@ -32,6 +32,7 @@ import com.quiz.dto.CommentDTO;
 import com.quiz.dto.LoginDTO;
 import com.quiz.dto.QuizDTO;
 import com.quiz.dto.QuizSharingDTO;
+import com.quiz.dto.QuizStatDTO;
 import com.quiz.dto.QuizSubmitDTO;
 import com.quiz.dto.RankingDTO;
 import com.quiz.dto.ResultDTO;
@@ -467,6 +468,17 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 
 		return userImpl.getCategoryScoreAndRanking(userid);
 
+	}
+	
+	
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/getQuizStats", method = RequestMethod.POST)
+	@ResponseBody
+	public QuizStatDTO getQuizStats(@RequestBody QuizDTO quizDTO)
+	{	
+
+		return quizResultsImpl.getQuizStat(quizDTO);
+		
 	}
 
 	

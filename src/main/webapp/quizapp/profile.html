@@ -2,14 +2,13 @@
 	- Puneet Popli - 04/27/2015
  -->
 
-<div class="container-fluid profile_container"
-	ng-controller="profileController">
+<div ng-controller="profileController" style="padding-top: 70px;">
 
-	<div
-		style="text-align: center; color: black; font-size: 25px; padding-bottom: 5px; padding-top: 70px;">
+	<div class="col-md-12"
+		style="text-align: center; color: black; font-size: 25px; padding-top: 10px;">
 		Edit Profile</div>
 
-	<div class="col-md-12">
+	<div class="col-md-12" style="padding-top: 20px;  padding-bottom: 100px;">
 
 		<div class="col-md-4"></div>
 		<div class="col-md-4">
@@ -130,7 +129,7 @@
 				</div>
 
 				<!-- error and success message -->
-		       	<div>
+		       	<div >
 					<div class="errorbox" style="position:relative;padding-top:10px;; padding-left:80px;">
 						{{ error }}
 					</div>

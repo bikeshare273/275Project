@@ -319,6 +319,22 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 
 
 
+	/***********************************************************************************/
+
+	
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value="/getUserCreatedQuiz", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity getUserCreatedQuiz(@CookieValue("userid") Integer userid) 
+	{
+		
+		return userCreatedQuizImpl.getUserCreatedQuiz(userid);
+	
+	}
+
+	/********************************************************************************/
+
+
 
 
 

@@ -5,7 +5,7 @@
 			<div class="col-md-12">
 				<span style="font-weight: bold; font-size: 15px;">Attempted Quiz :</span>
 			</div>
-			<div class="col-md-12"  style="; padding-bottom: 30px;">
+			<div class="col-md-12"  style="; padding-bottom: 30px;" ng-hide="hideAttemptedQuizTable">
 				<table st-safe-src="queue1.transactions" st-table="emptyArray" class="table table-striped" >
 					<thead>
 					<tr >
@@ -36,6 +36,21 @@
 					</tfoot>
 				</table>
 			</div>
+			<div class="col-md-12"  style="padding-top:20px;" >
+				<div class="col-md-4" ></div>
+				<div class="col-md-4">
+						<!-- error and success message -->
+				       	<div>
+							<div class="errorbox" style="position:relative;padding-top:10px; padding-left:80px;">
+								{{ error1 }}
+							</div>
+							<div class="successbox" style="position:relative;padding-top:10px;  padding-left:80px;">
+								{{success1 }}
+							</div>
+						</div>
+				</div>
+				<div class="col-md-4"></div>
+			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="col-md-12" style="height: 200px; padding: 10px 10px 50px 10px; border: 1px solid black;">
@@ -43,7 +58,11 @@
 					{{"Global Ranking : "+ globalRank}}
 				</div>
 			</div>
+			
 			<div class="col-md-12" style="padding-top: 20px;">
+				<span style="font-weight: bold; font-size: 15px;">Categorywise Ranking :</span>
+			</div>
+			<div class="col-md-12" style="padding-top: 10px;" ng-hide="hideCategoryAttemptedQuizTable">
 				<div class="col-md-1"></div>
 				<div class="col-md-10">
 					<table st-safe-src="queue2.transactions" st-table="emptyArray1" class="table table-striped" >
@@ -71,6 +90,21 @@
 				</table>
 				</div>
 				<div class="col-md-1"></div>
+			</div>
+			<div class="col-md-12"  style="padding-top:20px;" >
+				<div class="col-md-4" ></div>
+				<div class="col-md-4">
+						<!-- error and success message -->
+				       	<div>
+							<div class="errorbox" style="position:relative;padding-top:10px; padding-left:80px;">
+								{{ error2 }}
+							</div>
+							<div class="successbox" style="position:relative;padding-top:10px;  padding-left:80px;">
+								{{success2 }}
+							</div>
+						</div>
+				</div>
+				<div class="col-md-4"></div>
 			</div>
 		</div>	
 	</div>

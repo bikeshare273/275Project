@@ -385,6 +385,11 @@ quizapp.controller('homeUserController',
 	$rootScope.hideUserNavTabs = false;
 	$rootScope.hideStaticTabs = true;
 
+	$scope.hideAttemptedQuizTable = false;
+	$scope.hideCategoryAttemptedQuizTable = false;
+	$scope.success1 = "";
+	$scope.success2 ="";
+	
 	//get global rank
 	var response = $http.get("../../quizme/getGlobalRank");
 	response
@@ -424,7 +429,11 @@ quizapp.controller('homeUserController',
 		console.log(data.errorMessage);
 		console.log(status);
 		if(status === 400){
-			$scope.error = data.errorMessage;
+			$scope.success1 = data.errorMessage;
+			$scope.queue1 = {
+					transactions: []
+			};
+			$scope.hideAttemptedQuizTable = true;
 		}
 		return $q.reject(response);
 	});	
@@ -453,7 +462,11 @@ quizapp.controller('homeUserController',
 		console.log(data.errorMessage);
 		console.log(status);
 		if(status === 400){
-			$scope.error = data.errorMessage;
+			$scope.success2 = data.errorMessage;
+			$scope.queue2 = {
+					transactions: []
+			};
+			$scope.hideCategoryAttemptedQuizTable = true;
 		}
 		return $q.reject(response);
 	});	

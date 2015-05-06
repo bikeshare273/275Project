@@ -1,5 +1,6 @@
 package com.quiz.implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import com.quiz.dao.interfaces.IDaoInterfaceForQuiz;
 import com.quiz.dao.interfaces.IDaoInterfaceForQuizAttemptTracking;
 import com.quiz.dao.interfaces.IDaoInterfaceForUser;
 import com.quiz.dto.QuestionAnswerDTO;
+import com.quiz.dto.QuizDTO;
+import com.quiz.dto.QuizStatDTO;
 import com.quiz.dto.QuizSubmitDTO;
 import com.quiz.entities.Option;
 import com.quiz.entities.QuestionConrrectAnswerRef;
@@ -122,6 +125,42 @@ public class QuizResultsImpl {
 
 		quizAttemptTrackingDao.save(quizAttempt);
 
+	}
+	public QuizStatDTO getQuizStat(QuizDTO quizDTO)
+	{
+		List<QuizAttemptTracking> quizAttemptList=new ArrayList<QuizAttemptTracking>();
+		quizAttemptList=quizAttemptTrackingDao.getAllQuizAttemptsByQuizId(quizDTO.getQuizid());
+		
+		long totalQuizTakers=quizAttemptList.size();
+		long lowestScore=100000;
+		long highestScore=-50;
+		int sum=0;
+		for (QuizAttemptTracking quizAttemptTracking : quizAttemptList) 
+		{
+			if(quizAttemptTracking.getScore()<lowestScore)
+			lowestScore=quizAttemptTracking.getScore();
+		}
+		for (QuizAttemptTracking quizAttemptTracking : quizAttemptList) 
+		{
+			if(quizAttemptTracking.getScore()>highestScore)
+			highestScore=quizAttemptTracking.getScore();
+		}
+		for (QuizAttemptTracking quizAttemptTracking : quizAttemptList) 
+		{
+			sum=sum+quizAttemptTracking.getScore();
+		}
+		double averageScore=sum/quizAttemptList.size();	
+
+		QuizStatDTO quizStatDTO=new QuizStatDTO();
+		quizStatDTO.setAverageScore(averageScore);
+		quizStatDTO.setHighestScore(highestScore);
+		quizStatDTO.setLowestScore(lowestScore);
+		quizStatDTO.setQuiz(quizDTO);
+		quizStatDTO.setTotalQuizTakers(totalQuizTakers);
+		
+		return quizStatDTO;
+
+			
 	}
 
 	/******************************************************************************************/

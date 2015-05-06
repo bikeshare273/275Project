@@ -11,13 +11,17 @@ import com.quiz.dao.interfaces.IDaoInterfaceForOption;
 import com.quiz.dao.interfaces.IDaoInterfaceForQuestion;
 import com.quiz.dao.interfaces.IDaoInterfaceForQuestionCorrectAnswer;
 import com.quiz.dao.interfaces.IDaoInterfaceForQuiz;
+import com.quiz.dao.interfaces.IDaoInterfaceForQuizAttemptTracking;
 import com.quiz.dao.interfaces.IDaoInterfaceForUser;
 import com.quiz.dto.QuestionDTO;
 import com.quiz.dto.QuizDTO;
+import com.quiz.dto.TopperDTO;
 import com.quiz.entities.Option;
 import com.quiz.entities.Question;
 import com.quiz.entities.QuestionConrrectAnswerRef;
 import com.quiz.entities.Quiz;
+import com.quiz.entities.QuizAttemptTracking;
+import com.quiz.entities.User;
 import com.quiz.utils.QuizMeUtils;
 
 public class QuizImpl {
@@ -42,6 +46,9 @@ public class QuizImpl {
 	
 	@Autowired
 	UserImpl userImpl;
+	
+	@Autowired
+	IDaoInterfaceForQuizAttemptTracking quizAttemptTracking;
 
 	static int InitialPopularityCount = 0;
 	static int quizCreationFlag = 0;
@@ -156,10 +163,10 @@ public class QuizImpl {
 		try {
 			BeanUtils.copyProperties(quizDTO, quiz);
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -172,7 +179,7 @@ public class QuizImpl {
 		
 	}
 	
-	public List<QuestionDTO> fetchQuestionsAndOptions(Integer quizid){
+public List<QuestionDTO> fetchQuestionsAndOptions(Integer quizid){
 		
 		List<Question> questions = questionDao.getAllQuestionsForQuiz(quizid);
 		List<QuestionDTO> questionDTOs = new ArrayList<QuestionDTO>();
@@ -210,6 +217,36 @@ public class QuizImpl {
 		}
 		return questionDTOs;
 	}
+
+/************************************************************************************************************/
+
+	public TopperDTO getMaxScoreAndTopperByQuiz(Integer quizid)
+	{
+		
+		List<QuizAttemptTracking> quizAttempts = quizAttemptTracking.getAllQuizAttemptsByScoreDescForQuiz(quizid);
+		
+		if(quizAttempts == null) {return null; }
+		
+		QuizAttemptTracking topQuizAttempt = quizAttempts.get(0);
+		
+		int userid = topQuizAttempt.getUserid();
+		
+		User user = usersDao.getUserById(userid); 
+		
+		String topperName = user.getName();
+				
+		int maxscore = topQuizAttempt.getScore();
+				
+		
+		TopperDTO topper = new TopperDTO();
+		
+		topper.setMaxscore(maxscore);
+		topper.setTopperName(topperName);
+		
+		return topper;
+	}
 	
-	/************************************************************************************************************/
+
+/************************************************************************************************************/
+
 }

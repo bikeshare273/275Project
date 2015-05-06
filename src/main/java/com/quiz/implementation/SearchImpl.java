@@ -61,8 +61,6 @@ public class SearchImpl {
 				quizDTO.setQuizcreatoruser(userDTOForQuizCreator);
 				searchResultDTO.setQuizDTO(quizDTO);
 				// find max scorer
-				
-				
 				List<QuizAttemptTracking> topAttemptTrackings = quizAttemptTrackingDao
 						.getAllQuizAttemptsByScoreDescForQuizWithLimit(
 								quizDTO.getQuizid(), 1);

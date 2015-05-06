@@ -16,9 +16,12 @@ import com.quiz.dao.interfaces.IDaoInterfaceForUser;
 import com.quiz.dto.QuizAppException;
 import com.quiz.dto.QuizDTO;
 import com.quiz.dto.ResultDTO;
+import com.quiz.dto.TopperDTO;
+import com.quiz.dto.UserCreatedDTO;
 import com.quiz.dto.UserDTO;
 import com.quiz.entities.Quiz;
 import com.quiz.entities.QuizAttemptTracking;
+import com.quiz.entities.User;
 
 
 public class UserCreatedQuizImpl 
@@ -33,49 +36,54 @@ public class UserCreatedQuizImpl
 	@Autowired
 	IDaoInterfaceForQuizAttemptTracking quizAttemptTrackingDao;
 
+	@Autowired
+	QuizImpl quizImpl;
+
+	
 	public ResponseEntity getUserCreatedQuiz(Integer creatorid)
 	{
 		List<Quiz> quizList = quizDao.getAllQuizzesByCreatorId(creatorid);
-		List<ResultDTO> resultDTOList = new ArrayList<ResultDTO>();
-		int numberOfQuiz = 20;
-
-		if(quizList.size() < numberOfQuiz)
+		
+		List<UserCreatedDTO> userCreatedDTOList = new ArrayList<UserCreatedDTO>();
+		
+		for(Quiz quiz : quizList)
 		{
-			numberOfQuiz=quizList.size();
-		}
-
-		for(int i=0; i<numberOfQuiz; i++)
-		{
-			try{
-				Quiz quiz = quizList.get(i);
-
-				ResultDTO resultDTO = new ResultDTO();
-				QuizDTO quizDTO = new QuizDTO();
-				UserDTO userDTO = new UserDTO();
+			
+			
+			UserCreatedDTO userCreatedDTO = new UserCreatedDTO();
+			
+			userCreatedDTO.setCategory(quiz.getCategory());
+			
+			User user = userDao.getUserById(quiz.getQuizcreator());
+			
+			userCreatedDTO.setQuizCreator(user.getName());
+			
+			userCreatedDTO.setQuizName(quiz.getQuizname());
+			
+			TopperDTO topperDTO = quizImpl.getMaxScoreAndTopperByQuiz(quiz.getQuizid());
+			
+			if(topperDTO!=null)
+			{
+				userCreatedDTO.setTopper(topperDTO.getTopperName());
 				
-				
-				BeanUtils.copyProperties(quizDTO, quiz);
-				//get the name of quiz creator
-				BeanUtils.copyProperties(userDTO, userDao.getUserById(quizDTO.getQuizcreator()));
-				quizDTO.setQuizcreatoruser(userDTO);
-				
-				
-				resultDTO.setScoreForQuiz(quizDTO);
-				
-				resultDTOList.add(resultDTO);
+				userCreatedDTO.setMaxScore(topperDTO.getMaxscore());
 			}
-			catch(Exception e){
-				e.printStackTrace();
-				if(e instanceof QuizAppException)
-					return new ResponseEntity<QuizAppException>((QuizAppException)e, HttpStatus.BAD_REQUEST);
-				else
-					return new ResponseEntity<QuizAppException>(new QuizAppException(500, "Unexpected Error Encountered"), HttpStatus.INTERNAL_SERVER_ERROR);
+			else
+			{
+				userCreatedDTO.setTopper("NO RECORD");
+				userCreatedDTO.setMaxScore(0);
 			}
+			userCreatedDTOList.add(userCreatedDTO);
+			
 			
 		}
-
-		return new ResponseEntity<List<ResultDTO>>(resultDTOList,HttpStatus.OK);
-
+		
+		
+		
+		
+		
+		return new ResponseEntity<List<UserCreatedDTO>>(userCreatedDTOList,HttpStatus.OK);
 	}
+	
 
 }

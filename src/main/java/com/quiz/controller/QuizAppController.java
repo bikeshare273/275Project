@@ -99,8 +99,8 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	@Autowired
 	QuizSharingImpl quizSharingImpl;
 
-	//@Autowired
-	//UserCreatedQuizImpl userCreatedQuizImpl;
+	@Autowired
+	UserCreatedQuizImpl userCreatedQuizImpl;
 
 	@Autowired
 	ITestDao testDao;
@@ -312,19 +312,6 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 
 
 
-
-
-	/***********************************************************************************/
-
-/*
-	@ResponseStatus(HttpStatus.OK)
-	@RequestMapping(value="/getUserCreatedQuiz", method = RequestMethod.GET)
-	@ResponseBody
-	public ResponseEntity getUserCreatedQuiz(@CookieValue("userid") int userid)
-	{
-		return userCreatedQuizImpl.getUserCreatedQuiz(userid);
-	}
-	/********************************************************************************/
 
 
 

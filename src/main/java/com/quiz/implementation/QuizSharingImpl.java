@@ -55,7 +55,7 @@ public class QuizSharingImpl {
 			
 
 			/* Email Start */
-			//sendEmailOnQuizSharing(userid, quizid, recommenderid);
+			sendEmailOnQuizSharing(userid, quizid, recommenderid);
 			/* Email Complete */
 			
 			

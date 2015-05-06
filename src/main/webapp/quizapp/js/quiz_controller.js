@@ -211,31 +211,56 @@ quizapp.controller('quizhomeController',
 	console.log('quizhomeController start');
 	$rootScope.hideUserNavTabs = false;
 	$rootScope.hideStaticTabs = true;
+	
+	$scope.success = "";
+	$scope.hideUserCreatedQuizTable = true;
 
 	//getUserCreatedQuiz
-	$scope.queue = {
-			transactions: []
+	/*var dataForGetUserCreatedQuiz = {
+			"scoreForUser":{
+				"email":"swap@localhost.com",
+			},
+			"scoreForQuiz":{
+				"quizId":"100",
+				"quizName":"Tech Quiz",
+				"quizCategory":"Computer"
+			},
+			"score":100000,
+			"rankForQuiz":{
+				"rank":"10000",
+				"category":"quizwise",
+				"score":"99"
+			}
 	};
-	for(var i=0; i<20; i++){
-		var dataForGetUserCreatedQuiz = {
-				"scoreForUser":{
-					"email":"swap@localhost.com",
-				},
-				"scoreForQuiz":{
-					"quizId":"100",
-					"quizName":"Tech Quiz",
-					"quizCategory":"Computer"
-				},
-				"score":100000,
-				"rankForQuiz":{
-					"rank":"10000",
-					"category":"quizwise",
-					"score":"99"
+	*/
+	//get user created quiz
+	var response = $http.get("../../quizme/getUserCreatedQuiz");
+	response
+			.success(function(dataFromServer, status,
+					headers, config) {
+				if(dataFromServer != ""){
+					$scope.queue = {
+							transactions: []
+					};
+					for(var i=0; i<dataFromServer.length; i++){
+						
+						$scope.queue.transactions.push(dataFromServer[i]);
+					}
+					$scope.hideUserCreatedQuizTable = false;
+				}else{
+					$scope.success = "User hasn't created any quiz yet !!";
+					$scope.hideUserCreatedQuizTable = true;
 				}
-		};
-		$scope.queue.transactions.push(dataForGetUserCreatedQuiz);
-	}
-	
+				
+			});
+	response.error(function(data, status, headers, config) {
+		console.log(data.errorMessage);
+		console.log(status);
+		if(status === 400){
+			$scope.error = data.errorMessage;
+		}
+		return $q.reject(response);
+	});	
 
 	$scope.createQuiz = function(item, event) {
 		console.log("create quiz");
@@ -387,8 +412,8 @@ quizapp.controller('homeUserController',
 
 	$scope.hideAttemptedQuizTable = false;
 	$scope.hideCategoryAttemptedQuizTable = false;
-	$scope.success1 = "";
-	$scope.success2 ="";
+	$scope.message1 = "";
+	$scope.message2 ="";
 	
 	//get global rank
 	var response = $http.get("../../quizme/getGlobalRank");
@@ -421,7 +446,11 @@ quizapp.controller('homeUserController',
 						$scope.queue1.transactions.push(dataFromServer[i]);
 					}
 				}else{
-					
+					$scope.message1 = "User hasn't attempted any quiz yet !!";
+					$scope.queue1 = {
+							transactions: []
+					};
+					$scope.hideAttemptedQuizTable = true;
 				}
 				
 			});
@@ -429,7 +458,7 @@ quizapp.controller('homeUserController',
 		console.log(data.errorMessage);
 		console.log(status);
 		if(status === 400){
-			$scope.success1 = data.errorMessage;
+			$scope.message1 = data.errorMessage;
 			$scope.queue1 = {
 					transactions: []
 			};
@@ -454,7 +483,11 @@ quizapp.controller('homeUserController',
 						$scope.queue2.transactions.push(dataFromServer[i]);
 					}
 				}else{
-					
+					$scope.message2 = "User hasn't attempted any quiz yet !!";
+					$scope.queue2 = {
+							transactions: []
+					};
+					$scope.hideCategoryAttemptedQuizTable = true;
 				}
 				
 			});
@@ -462,7 +495,7 @@ quizapp.controller('homeUserController',
 		console.log(data.errorMessage);
 		console.log(status);
 		if(status === 400){
-			$scope.success2 = data.errorMessage;
+			$scope.message2 = data.errorMessage;
 			$scope.queue2 = {
 					transactions: []
 			};
@@ -625,7 +658,7 @@ quizapp.controller('globalDashboardController',
 });
 
 quizapp.controller('mycomment',
-		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
+		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope, $route) {
 	console.log('mycomment start');
 	$rootScope.hideUserNavTabs = false;
 	$rootScope.hideStaticTabs = true;
@@ -639,10 +672,10 @@ quizapp.controller('mycomment',
 	
 	$scope.recommendToFriend = function(){
 		console.log("recommendToFriend");	
-		$location.url('/recommendToFriend');
 		var dataTransfer = new Array();
 		dataTransfer["quizData"] = $scope.quizData;
 		dataSharing.set(dataTransfer);
+		$location.url('/recommendToFriend');
 	}
 	
 	//get all comments for quiz
@@ -684,7 +717,8 @@ quizapp.controller('mycomment',
 		var response = $http.post("../../quizme/postComment", data);
 		response.success(function(dataFromServer, status,
 						headers, config) {
-			$scope.success = "Comment Posted Successfully";
+			//$location.url("/quizsolution");
+			$route.reload();
 		});
 		response.error(function(data, status, headers, config) {
 			if (status == 400) {
@@ -708,10 +742,34 @@ quizapp.controller('recommendToFriendController',
 	$rootScope.hideStaticTabs = true;
 	
 	$scope.quizData = dataSharing.get().quizData;
+	console.log("data re "+$scope.quizData);
 	
 	$scope.sendRecommendation = function(){
 		console.log("sendRecommendation");	
-		$scope.recommendationform_success = "Recommendation sent to your friend !!!!";
+		var data = {
+				"quizid":$scope.quizData.quizid,
+				"username":$scope.recommendationform_recemail
+			};
+			var response = $http.post("../../quizme/shareQuiz", data);
+			response.success(function(dataFromServer, status,
+							headers, config) {
+				console.log(dataFromServer.successFlag);
+				if(dataFromServer.successFlag == true){
+					$scope.recommendationform_success = "Recommendation sent to your friend !!!!";
+				}else{
+					$scope.recommendationform_error = dataFromServer.applicationMessage;
+				}
+			});
+			response.error(function(data, status, headers, config) {
+				if (status == 400) {
+					$scope.error = data.errorMessage;
+					$location.url('/');
+					return $q.reject(response);
+				}else{
+					$scope.error = status+": "+data.errorMessage;
+					return $q.reject(response);
+				}
+			});
 	}
 	
 });

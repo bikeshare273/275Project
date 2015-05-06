@@ -3,7 +3,7 @@ package com.quiz.dto;
 public class UserCreatedDTO 
 {
 
-	
+	Integer quizId;
 	String quizName;
 	String quizCreator;
 	String category;
@@ -41,6 +41,14 @@ public class UserCreatedDTO
 	}
 	public void setTopper(String topper) {
 		this.topper = topper;
+	}
+
+	public Integer getQuizId() {
+		return quizId;
+	}
+
+	public void setQuizId(Integer quizId) {
+		this.quizId = quizId;
 	}
 	
 }

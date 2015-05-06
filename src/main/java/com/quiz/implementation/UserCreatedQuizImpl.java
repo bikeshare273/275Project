@@ -44,13 +44,19 @@ public class UserCreatedQuizImpl
 	{
 		List<Quiz> quizList = quizDao.getAllQuizzesByCreatorId(creatorid);
 		
-		List<UserCreatedDTO> userCreatedDTOList = new ArrayList<UserCreatedDTO>();
+		List<UserCreatedDTO> userCreatedDTOList = null;
 		
+		if(quizList == null){
+			return new ResponseEntity<List<UserCreatedDTO>>(userCreatedDTOList,HttpStatus.OK);
+		}
+		userCreatedDTOList = new ArrayList<UserCreatedDTO>();
 		for(Quiz quiz : quizList)
 		{
 			
 			
 			UserCreatedDTO userCreatedDTO = new UserCreatedDTO();
+			
+			userCreatedDTO.setQuizId(quiz.getQuizid());
 			
 			userCreatedDTO.setCategory(quiz.getCategory());
 			

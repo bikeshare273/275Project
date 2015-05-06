@@ -61,6 +61,8 @@ public class SearchImpl {
 				quizDTO.setQuizcreatoruser(userDTOForQuizCreator);
 				searchResultDTO.setQuizDTO(quizDTO);
 				// find max scorer
+				
+				
 				List<QuizAttemptTracking> topAttemptTrackings = quizAttemptTrackingDao
 						.getAllQuizAttemptsByScoreDescForQuizWithLimit(
 								quizDTO.getQuizid(), 1);
@@ -75,7 +77,7 @@ public class SearchImpl {
 					searchResultDTO.setScore(Long.parseLong(topAttempt
 							.getScore().toString()));
 					UserDTO userDTO = new UserDTO();
-					BeanUtils.copyProperties(userDTO, topAttempt.getUserid());
+					BeanUtils.copyProperties(userDTO, userDao.getUserById(topAttempt.getUserid()));
 					searchResultDTO.setUserDTO(userDTO);
 				}
 				searchResultDTOs.add(searchResultDTO);

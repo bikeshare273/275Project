@@ -134,27 +134,38 @@ public class QuizResultsImpl {
 		try{
 			quizAttemptList=quizAttemptTrackingDao.getAllQuizAttemptsByQuizId(quizDTO.getQuizid());
 			
-			long totalQuizTakers=quizAttemptList.size();
-			long lowestScore=100000;
-			long highestScore=-50;
+			long totalQuizTakers = 0l;
+			if(quizAttemptList != null && quizAttemptList.size() > 0){
+				totalQuizTakers = quizAttemptList.size();
+			}
+			long lowestScore=Long.MAX_VALUE;
+			long highestScore=0l;
 			int sum=0;
-			for (QuizAttemptTracking quizAttemptTracking : quizAttemptList) 
-			{
-				if(quizAttemptTracking.getScore()<lowestScore)
-				lowestScore=quizAttemptTracking.getScore();
+			double averageScore = 0.0;
+			if(quizAttemptList != null){
+				for (QuizAttemptTracking quizAttemptTracking : quizAttemptList) 
+				{
+					if(quizAttemptTracking.getScore()<lowestScore)
+					lowestScore=quizAttemptTracking.getScore();
+				}
+				for (QuizAttemptTracking quizAttemptTracking : quizAttemptList) 
+				{
+					if(quizAttemptTracking.getScore()>highestScore)
+					highestScore=quizAttemptTracking.getScore();
+				}
+				for (QuizAttemptTracking quizAttemptTracking : quizAttemptList) 
+				{
+					sum=sum+quizAttemptTracking.getScore();
+				}
+				if(quizAttemptList.size() > 0){
+					averageScore=sum/quizAttemptList.size();	
+				}
 			}
-			for (QuizAttemptTracking quizAttemptTracking : quizAttemptList) 
-			{
-				if(quizAttemptTracking.getScore()>highestScore)
-				highestScore=quizAttemptTracking.getScore();
-			}
-			for (QuizAttemptTracking quizAttemptTracking : quizAttemptList) 
-			{
-				sum=sum+quizAttemptTracking.getScore();
-			}
-			double averageScore=sum/quizAttemptList.size();	
-
+			
 			quizStatDTO.setAverageScore(averageScore);
+			if(lowestScore==Long.MAX_VALUE){
+				lowestScore = 0l;
+			}
 			quizStatDTO.setHighestScore(highestScore);
 			quizStatDTO.setLowestScore(lowestScore);
 			BeanUtils.copyProperties(quizDTO, quizDao.getQuizById(quizDTO.getQuizid()));

@@ -305,6 +305,8 @@ quizapp.controller('createquizController',
 	$rootScope.hideUserNavTabs = false;
 	$rootScope.hideStaticTabs = true;
 
+	$scope.disableCreateQuiz = true;
+	
 	//structure to generate quiz
 	var questionCounter = 0;
 	$scope.questionData = {
@@ -341,6 +343,7 @@ quizapp.controller('createquizController',
 
 	//add question
 	$scope.addQuestion = function() {
+		
 		console.log("add question");
 		var addQuestionData = {
 				"no":questionCounter+1,
@@ -362,19 +365,39 @@ quizapp.controller('createquizController',
 		$scope.questionData.optionStringFromUI = new Array();
 		$scope.questionData.optionStringFromUI[0] = " ";
 		$scope.questionData.correctionoptionstring = new Object(" ");
+		
+		if(questionCounter < 5){
+			$scope.disableCreateQuiz = true;
+		}else{
+			$scope.disableCreateQuiz = false;
+		}
 	};
 
 
 	//add question
 	$scope.deleteQuestion = function(questionid) {
+		
 		console.log("delete question");
 		console.log("delete Question length "+$scope.quizData.questions.length);
 		$scope.quizData.questions.splice(questionid, 1);
 		console.log("delete Question length after "+$scope.quizData.questions.length);
+		questionCounter = questionCounter - 1;
+		
+		if(questionCounter < 5){
+			$scope.disableCreateQuiz = true;
+		}else{
+			$scope.disableCreateQuiz = false;
+		}
 	};
 	
 	//create quiz
 	$scope.createQuiz = function() {
+		
+		if(questionCounter < 5){
+			$scope.disableCreateQuiz = true;
+		}else{
+			$scope.disableCreateQuiz = false;
+		}
 		
 		var data = $scope.quizData;
 		

@@ -97,6 +97,7 @@ public class GlobalDashboardImpl
 				Integer userId = quizAttempTrackingObject.getUserid();
 				User user = userDao.getUserById(userId);
 				BeanUtils.copyProperties(userDTO, user);
+				userDTO.setTotalScore(quizAttempTrackingObject.getScore());
 				userDTOList.add(userDTO);
 			}catch(Exception e){ 
 				e.printStackTrace();

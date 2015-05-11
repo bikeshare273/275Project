@@ -226,8 +226,8 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/searchQuiz", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity searchQuiz(@RequestBody SearchDTO searchDTO) {
-		return searchImpl.searchQuiz(searchDTO);		
+	public ResponseEntity searchQuiz(@CookieValue("userid") int userid, @RequestBody SearchDTO searchDTO) {
+		return searchImpl.searchQuiz(userid, searchDTO);		
 	}
 
 	//swapnil
@@ -480,7 +480,6 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 		return quizResultsImpl.getQuizStat(quizDTO);
 		
 	}
-
 	
 	/***********************************************************************************************/	
 

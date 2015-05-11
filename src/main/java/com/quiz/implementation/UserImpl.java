@@ -15,6 +15,7 @@ import com.quiz.dao.interfaces.IDaoInterfaceForQuizAttemptTracking;
 import com.quiz.dao.interfaces.IDaoInterfaceForUser;
 import com.quiz.dto.CategoryScoreAndRankingDTO;
 import com.quiz.dto.QuizAppException;
+import com.quiz.dto.RankingDTO;
 import com.quiz.dto.ResultDTO;
 import com.quiz.dto.SearchDTO;
 import com.quiz.dto.UserDTO;
@@ -398,6 +399,45 @@ public List<CategoryScoreAndRankingDTO>getUserScoreAndRankingForAllAttemptedCate
 		return categoryScoreAndRank;
 		
 	}
+	
+	
+	public RankingDTO getQuizScoreAndRanking(int userid, int quizid)
+	{
+		
+		List <QuizAttemptTracking> rankedQuizAttemptsByQuiz = quizAttemptTrackingDao.getAllQuizAttemptsByScoreDescForQuiz(quizid);
+		
+		
+		RankingDTO quizScoreAndRank = null;
+		
+		int rank = 0;
+		int counter = 0;
+		
+		for(QuizAttemptTracking quizAttemptTrackingEntry : rankedQuizAttemptsByQuiz)
+		{
+			counter++;
+			
+			if(quizAttemptTrackingEntry.getUserid().equals(userid))
+			{
+			
+				rank = counter;
+				
+				quizScoreAndRank = new RankingDTO();
+				
+				quizScoreAndRank.setCategory(quizAttemptTrackingEntry.getCategory());
+				quizScoreAndRank.setRank((long)rank);
+				quizScoreAndRank.setScore(quizAttemptTrackingEntry.getScore());
+							
+				break;
+			}
+				
+		}
+		
+		return quizScoreAndRank;
+		
+	}
+
+	
+	
 
 
 

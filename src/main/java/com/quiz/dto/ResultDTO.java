@@ -15,6 +15,7 @@ public class ResultDTO
 	private UserDTO scoreForUser;
 	private QuizDTO scoreForQuiz;
 	private RankingDTO rankForQuiz;
+	private Long rank;
 	
 	/**************************************************/
 	public Integer getScore() {
@@ -47,6 +48,12 @@ public class ResultDTO
 	public void setRankForQuiz(RankingDTO rankForQuiz)
 	{
 		this.rankForQuiz = rankForQuiz;
+	}
+	public Long getRank() {
+		return rank;
+	}
+	public void setRank(Long rank) {
+		this.rank = rank;
 	}
 	
 	

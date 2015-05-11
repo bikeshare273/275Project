@@ -47,6 +47,9 @@ public class AttemptedQuizImpl
 	@Autowired
 	QuizMeUtils appUtils;
 	
+	@Autowired
+	UserImpl userImpl;
+	
 	
 	/*
 	 * 
@@ -74,7 +77,7 @@ public class AttemptedQuizImpl
 				Quiz quiz = quizDao.getQuizById(quizId);
 				QuizDTO quizDTO = new QuizDTO();
 				
-				RankingDTO rankDTO = new RankingDTO();
+				RankingDTO rankDTO = userImpl.getQuizScoreAndRanking(userid, quizId);
 				ResultDTO resultDTO = new ResultDTO();
 				
 				Long rank = rankDTO.getRank();
@@ -94,6 +97,8 @@ public class AttemptedQuizImpl
 				UserDTO userDTO = new UserDTO();
 				BeanUtils.copyProperties(userDTO, userDao.getUserById(quizDTO.getQuizcreator()));
 				quizDTO.setQuizcreatoruser(userDTO);
+				
+				resultDTO.setRank(rank);
 				
 				resultDTOList.add(resultDTO);
 			}

@@ -31,7 +31,8 @@ public class SearchImpl {
 	@Autowired
 	IDaoInterfaceForQuizAttemptTracking quizAttemptTrackingDao;
 
-	public ResponseEntity searchQuiz(SearchDTO searchDTO) {
+	public ResponseEntity searchQuiz(int userid, SearchDTO searchDTO) {
+	
 		ResponseEntity responseEntity = null;
 		List<SearchResultDTO> searchResultDTOs = new ArrayList<SearchResultDTO>();
 		try {
@@ -80,6 +81,13 @@ public class SearchImpl {
 					BeanUtils.copyProperties(userDTO, userDao.getUserById(topAttempt.getUserid()));
 					searchResultDTO.setUserDTO(userDTO);
 				}
+				
+				int quizid = quizDTO.getQuizid();
+				boolean attemptFlag = verifyQuizAttemptForUser(userid, quizid);
+				
+				if(attemptFlag) {searchResultDTO.setAttemptFlag(true);}
+				else{searchResultDTO.setAttemptFlag(false);}
+				
 				searchResultDTOs.add(searchResultDTO);
 			}
 		} catch (Exception e) {
@@ -173,6 +181,18 @@ public class SearchImpl {
 			throw new QuizAppException(400, "No Quizes Found for this Criteria");
 		}
 		return listOfQuizzes;
+	}
+	
+	
+	public boolean verifyQuizAttemptForUser(int userid, int quizid)
+	{
+	
+		QuizAttemptTracking quizAttempt =  quizAttemptTrackingDao.getQuizAttemptByUserIdAndQuizId(userid, quizid);
+		
+		if(quizAttempt == null) { return false; }
+		
+		else return true;
+		
 	}
 
 }

@@ -5,6 +5,9 @@ public class SearchResultDTO {
 	private QuizDTO quizDTO;
 	private UserDTO userDTO;
 	private Long score;
+	private boolean attemptFlag;
+	
+	
 	public QuizDTO getQuizDTO() {
 		return quizDTO;
 	}
@@ -22,6 +25,12 @@ public class SearchResultDTO {
 	}
 	public void setScore(Long score) {
 		this.score = score;
+	}
+	public boolean isAttemptFlag() {
+		return attemptFlag;
+	}
+	public void setAttemptFlag(boolean attemptFlag) {
+		this.attemptFlag = attemptFlag;
 	}
 	
 }

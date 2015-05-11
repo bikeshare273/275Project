@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
-Built-By: Swapnil
-Build-Jdk: 1.8.0_11
+Implementation-Title: Quiz Webapp
+Implementation-Version: 1.0-SNAPSHOT
+Built-By: Viresh
+Implementation-Vendor-Id: com.quiz
+Build-Jdk: 1.8.0_40
 Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
 

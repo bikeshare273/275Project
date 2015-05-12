@@ -114,7 +114,24 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/loggedin");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/getGlobalRank");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/searchQuiz");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/createQuiz");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/getQuiz");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/submitQuiz");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/getAttemptedQuizes");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/postComment");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/getAllComments");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/getTopScoreCategorywise");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/getTopScorer");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/getGlobalRank");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/getUserCreatedQuiz");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/shareQuiz");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/getSharedQuizzes");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/getCategoryTopScoreAndRank");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/getQuizStats");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/fetchuser");
+		registry.addInterceptor(sessionValidatorInterceptor).addPathPatterns("/quizme/updateuser");
 	}
 
 	@RequestMapping(value="/loggedin", method = RequestMethod.GET)
@@ -136,7 +153,7 @@ public class QuizAppController extends WebMvcConfigurerAdapter {
 	}
 
 
-	@RequestMapping("/logout")
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	@ResponseBody
 	private boolean logout(HttpServletResponse response) {
 

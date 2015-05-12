@@ -72,7 +72,12 @@ body {
 }
 .backgroundImage{
     /* background-size : cover; */
+	background-size: 100% 80%; 
     background-attachment: fixed;
+    -webkit-filter: blur(5px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
 }
 .signup_container{
 	padding-top:50px;

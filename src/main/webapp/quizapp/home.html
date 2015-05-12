@@ -1,4 +1,5 @@
-<div ng-controller="homeController" class="backgroundImage" ng-style="{{image_path1}}">
+<div ng-controller="homeController" class="backgroundImage" 
+  ng-style="{'background-image': 'url(http://localhost:8082/quizapp/img/bgimage.jpg)'}">
 
 
     <div class="container" id="loginbox">
@@ -50,7 +51,7 @@
 
     </div> <!-- /container -->
 
-
+<div style="padding-top: 50px;" ng-include src="'footer.html'"></div>
 </div>
 
-<div style="padding-top: 50px;" ng-include src="'footer.html'"></div>
+

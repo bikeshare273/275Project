@@ -113,6 +113,11 @@ quizapp.config(function($routeProvider) {
 		controller : 'startQuizController'
 	})
 	
+	.when('/logout', {
+		templateUrl : 'home.html',
+		controller : 'logoutController'
+	})
+	
 	.otherwise({
 		redirectTo : '/'
 	});
@@ -212,6 +217,7 @@ quizapp.controller('quizhomeController',
 	$rootScope.hideUserNavTabs = false;
 	$rootScope.hideStaticTabs = true;
 	
+	
 	$scope.success = "";
 	$scope.hideUserCreatedQuizTable = true;
 
@@ -241,6 +247,7 @@ quizapp.controller('quizhomeController',
 		if(status === 400){
 			$scope.error = data.errorMessage;
 		}
+		$location.url("/");
 		return $q.reject(response);
 	});	
 
@@ -279,6 +286,7 @@ quizapp.controller('quizhomeController',
 			if(status === 400){
 				$scope.error = data.errorMessage;
 			}
+			$location.url("/");
 			return $q.reject(response);
 		});	
 		
@@ -414,6 +422,7 @@ quizapp.controller('createquizController',
 			if(status === 400){
 				$scope.error = data.errorMessage;
 			}
+			$location.url("/");
 			return $q.reject(response);
 		});	
 		
@@ -450,9 +459,10 @@ quizapp.controller('homeUserController',
 	response.error(function(data, status, headers, config) {
 		console.log(data.errorMessage);
 		console.log(status);
-		if(status === 400){
+		if(status == 400){
 			$scope.error = data.errorMessage;
 		}
+		$location.url("/");
 		return $q.reject(response);
 	});
 	
@@ -489,6 +499,7 @@ quizapp.controller('homeUserController',
 			};
 			$scope.hideAttemptedQuizTable = true;
 		}
+		$location.url("/");
 		return $q.reject(response);
 	});	
 	
@@ -526,6 +537,7 @@ quizapp.controller('homeUserController',
 			};
 			$scope.hideCategoryAttemptedQuizTable = true;
 		}
+		$location.url("/");
 		return $q.reject(response);
 	});	
 
@@ -573,6 +585,7 @@ quizapp.controller('profileController',
 			$scope.error = status+": "+data.errorMessage;
 			return $q.reject(response);
 		}
+		$location.url("/");
 	});
 	
 
@@ -600,18 +613,13 @@ quizapp.controller('profileController',
 				$scope.error = status+": "+data.errorMessage;
 				return $q.reject(response);
 			}
+			$location.url("/");
 		});
 			
 	};
 	console.log('profileController end');
 });
 
-
-/*
- * -Puneet Popli 04/27/2015
- * Global Dashboard Controller
- * 
- */
 
 quizapp.controller('globalDashboardController',
 		function($scope, $http, $location, $q, dataSharing, $timeout, $rootScope) {
@@ -642,6 +650,7 @@ quizapp.controller('globalDashboardController',
 			$scope.error = status+": "+data.errorMessage;
 			return $q.reject(response);
 		}
+		$location.url("/");
 	});
 	
 	/*
@@ -676,6 +685,7 @@ quizapp.controller('globalDashboardController',
 				$scope.error = status+": "+data.errorMessage;
 				return $q.reject(response);
 			}
+			$location.url("/");
 		});
 	};
 
@@ -730,6 +740,7 @@ quizapp.controller('mycomment',
 			$scope.error = status+": "+data.errorMessage;
 			return $q.reject(response);
 		}
+		$location.url("/");
 	});
 	
 	$scope.commentform_postComment = function(){
@@ -754,6 +765,7 @@ quizapp.controller('mycomment',
 				$scope.error = status+": "+data.errorMessage;
 				return $q.reject(response);
 			}
+			$location.url("/");
 		});
 	}
 	
@@ -794,6 +806,7 @@ quizapp.controller('recommendToFriendController',
 					$scope.error = status+": "+data.errorMessage;
 					return $q.reject(response);
 				}
+				$location.url("/");
 			});
 	}
 	
@@ -876,6 +889,7 @@ quizapp.controller('quizSearchController',
 					$scope.error = status+": "+data.errorMessage;
 					return $q.reject(response);
 				}
+				$location.url("/");
 			});
 			
 	}
@@ -905,6 +919,7 @@ quizapp.controller('quizSearchController',
 					$scope.error = status+": "+data.errorMessage;
 					return $q.reject(response);
 				}
+				$location.url("/");
 			});
 		
 		/*$scope.quizData = {
@@ -1022,6 +1037,7 @@ quizapp.controller('submitQuizConfirmController',
 				$scope.error = status+": "+data.errorMessage;
 				return $q.reject(response);
 			}
+			$location.url("/");
 		});
 		
 	  };
@@ -1031,4 +1047,28 @@ quizapp.controller('submitQuizConfirmController',
 	  };
 });
 
+
+quizapp.controller('logoutController', function($scope, $http, $location, $q,
+		dataSharing, $timeout, $rootScope) {
+	console.log('logoutController start');
+	$rootScope.hideUserNavTabs = true;
+	$rootScope.hideStaticTabs = false;
+
+	var response = $http.get("../../quizme/logout");
+    
+	response
+			.success(function(dataFromServer, status,
+					headers, config) {
+				$location.url('/');
+			});
+	response.error(function(data, status, headers, config) {
+		if (response.status === 401
+				|| response.status === 400) {
+			$location.url('/');
+			return $q.reject(response);
+		}
+	});
+
+	console.log('homeController end');
+});
 

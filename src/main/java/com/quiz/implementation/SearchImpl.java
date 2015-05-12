@@ -82,12 +82,17 @@ public class SearchImpl {
 					searchResultDTO.setUserDTO(userDTO);
 				}
 				
+				if(userid == quizDTO.getQuizcreator()) {searchResultDTO.setAttemptFlag(true);}
+				else
+				{
 				int quizid = quizDTO.getQuizid();
 				boolean attemptFlag = verifyQuizAttemptForUser(userid, quizid);
 				
 				if(attemptFlag) {searchResultDTO.setAttemptFlag(true);}
 				else{searchResultDTO.setAttemptFlag(false);}
+				}
 				
+								
 				searchResultDTOs.add(searchResultDTO);
 			}
 		} catch (Exception e) {

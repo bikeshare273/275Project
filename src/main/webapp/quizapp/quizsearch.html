@@ -113,7 +113,7 @@
 							<td >{{row.userDTO.email}}</td>
 							<td >
 							<div style="padding-top:1px;padding-bottom:1px">
-								<button class="btn btn-default" ng-click="startQuiz(row.quizDTO.quizid)"><span >Start</span></button>
+								<button class="btn btn-default" ng-click="startQuiz(row.quizDTO.quizid)" ng-disabled="row.attemptFlag"><span >Start</span></button>
 							</div style="padding-top:1px;padding-bottom:1px">
 							</td>
 						</tr>
